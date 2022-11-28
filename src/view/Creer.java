@@ -287,7 +287,7 @@ public class Creer extends JFrame {
     }
 }
 
-// TODO essayer de configurer également les keys messagebox
+// TODO essayer de configurer également les keys messageboxs
 // TODO event escape + enter sur quitter et enregistrer respectivement -> enlever l'utilisation de la touche espace dans les deux cas
 // TODO customiser les boutons
 

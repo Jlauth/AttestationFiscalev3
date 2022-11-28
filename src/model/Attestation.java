@@ -38,7 +38,7 @@ public class Attestation {
         addParagraph(document, page, data, 0, 625);
         // Draw Line
         drawLines(document, page, 25, 500);
-        // Draw Rectangle
+        // Draw Rectangles
         drawRectangle(document, page, 25, 450);
     }
 

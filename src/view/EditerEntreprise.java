@@ -31,7 +31,7 @@ public class EditerEntreprise extends JFrame {
     public EditerEntreprise() {
 
          /*
-          Editer entreprise
+          Editer entreprises
          */
         JPanel editerEntreprisePane = new JPanel();
         setTitle("Edition des données entreprise");

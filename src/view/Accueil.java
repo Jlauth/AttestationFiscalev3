@@ -9,7 +9,7 @@ public class Accueil extends JFrame {
     public Accueil() {
 
          /*
-          Création Accueil
+          Création Accueils
          */
         JPanel accueilPane = new JPanel();
         setTitle("Creer Fiscale");

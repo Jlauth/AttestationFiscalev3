@@ -107,7 +107,7 @@ public class EditerClient extends JFrame {
         });
 
         /*
-          Btn importer data client
+          Btn importer data clients
          */
         JButton btnImportClient = new JButton(("Importer client"));
         btnImportClient.setFont(new Font("Tahoma", Font.BOLD, 14));
