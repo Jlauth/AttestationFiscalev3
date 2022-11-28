@@ -71,14 +71,7 @@
       <option name="presentableId" value="Default" />
       <updated>1669644605209</updated>
     </task>
-    <task id="LOCAL-00001" summary="Changement vers PDFBox">
-      <created>1669676244340</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1669676244340</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
+    <option name="localTasksCounter" value="3" />
     <servers>
       <GitHub url="https://github.com/Jlauth/AttestationsFiscalesv2.git">
         <option name="repoAuthor" value="Jlauth" />
