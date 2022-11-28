@@ -4,21 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AttestationsFiscalesv3.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/Attestation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/Accueil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/Creer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/EditerClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/EditerEntreprise.java" afterDir="false" />
+    <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Changement vers PDFBox">
+      <change afterPath="$PROJECT_DIR$/Test.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/media/en-construction.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/media/logoArkadiaPc.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/media/signature.jpg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +71,14 @@
       <option name="presentableId" value="Default" />
       <updated>1669644605209</updated>
     </task>
+    <task id="LOCAL-00001" summary="Changement vers PDFBox">
+      <created>1669676244340</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1669676244340</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers>
       <GitHub url="https://github.com/Jlauth/AttestationsFiscalesv2.git">
         <option name="repoAuthor" value="Jlauth" />
@@ -98,5 +96,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Changement vers PDFBox" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changement vers PDFBox" />
   </component>
 </project>
