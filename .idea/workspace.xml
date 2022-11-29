@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Changement vers PDFBox">
-      <change afterPath="$PROJECT_DIR$/src/media/logoArkadiaPc-transformed.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Attestation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Attestation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/Accueil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Accueil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/Creer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Creer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/EditerEntreprise.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/EditerEntreprise.java" afterDir="false" />
     </list>
@@ -79,18 +76,11 @@
       <option name="presentableId" value="Default" />
       <updated>1669644605209</updated>
     </task>
-    <task id="LOCAL-00003" summary="Changement vers PDFBox">
-      <created>1669676901543</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1669676901543</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="5" />
     <servers>
-      <GitHub url="https://github.com/Jlauth/AttestationsFiscalesv2.git">
+      <GitHub url="https://github.com">
         <option name="repoAuthor" value="Jlauth" />
-        <option name="repoName" value="AttestationsFiscalesv2" />
+        <option name="repoName" value="AttestationsFiscalesv3" />
       </GitHub>
     </servers>
   </component>
