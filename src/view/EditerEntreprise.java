@@ -7,31 +7,52 @@ import java.awt.*;
 public class EditerEntreprise extends JFrame {
 
     private JTextField txtNomEntreprise;
+    private JTextField txtAdresseEntreprise;
+    private JTextField txtCPEntreprise;
+    private JTextField txtVilleEntreprise;
+    private JTextField txtTelEntreprise;
+    private JTextField txtMailEntreprise;
     private JTextField txtAgrement;
     private JTextField txtNomGerant;
     private JTextField txtPrenomGerant;
+    private JComboBox<String> cmbTitreGerant;
 
-
-    public JTextField getTxtNomGerant() {
-        return txtNomGerant;
+    public String getTxtNomEntreprise() {
+        return "Arkadia PC";
+    }
+    public String getTxtAdresseEntreprise() {
+        return "4, rue des Pyrénées";
+    }
+    public String getTxtCPEntreprise() {
+        return "92500";
+    }
+    public String getTxtVilleEntreprise() {
+        return "Rueil Malmaison";
+    }
+    public String getTxtTelEntreprise() {
+        return "+33 (1) 47 08 98 38";
+    }
+    public String getTxtMailEntreprise() {
+        return "contact@arkadia-pc.fr";
+    }
+    public String getTxtNomGerant() {
+        return "ARAUJO";
+    }
+    public String getTxtPrenomGerant() {
+        return "Adelino";
+    }
+    public String getTxtAgrement() {
+        return "Agrément N° SAP524160330";
     }
 
-    public JTextField getTxtPrenomGerant() {
-        return txtPrenomGerant;
-    }
-
-    public JTextField getTxtNomEntreprise() {
-        return txtNomEntreprise;
-    }
-
-    public JTextField getTxtAgrement() {
-        return txtAgrement;
+    public String getCmbTitreGerant() {
+        return "Monsieur";
     }
 
     public EditerEntreprise() {
 
          /*
-          Editer entreprises
+          Editer entreprise
          */
         JPanel editerEntreprisePane = new JPanel();
         setTitle("Edition des données entreprise");
@@ -49,11 +70,10 @@ public class EditerEntreprise extends JFrame {
         lblAgrement.setBounds(40, 10, 120, 14);
         editerEntreprisePane.add(lblAgrement);
 
-        JTextField txtAgrement = new JTextField();
-        txtAgrement.setColumns(10);
+        txtAgrement = new JTextField();
         txtAgrement.setBounds(40, 30, 150, 22);
         editerEntreprisePane.add(txtAgrement);
-
+        
         /*
           Nom entreprise
          */
@@ -61,11 +81,23 @@ public class EditerEntreprise extends JFrame {
         lblNomEntreprise.setBounds(40, 60, 120, 14);
         editerEntreprisePane.add(lblNomEntreprise);
 
-        JTextField txtNomEntreprise = new JTextField();
+        txtNomEntreprise = new JTextField();
         txtNomEntreprise.setBounds(40, 80, 150, 20);
         editerEntreprisePane.add(txtNomEntreprise);
-        txtNomEntreprise.setColumns(10);
 
+        /*
+          Titre gérant
+         */
+        JLabel lblTitreGerant = new JLabel("Titre du gérant");
+        lblTitreGerant.setBounds(150, 110, 120, 14);
+        editerEntreprisePane.add(lblTitreGerant);
+
+        cmbTitreGerant = new JComboBox<>();
+        cmbTitreGerant.setModel(new DefaultComboBoxModel<>(new String[]{"Madame", "Mademoiselle", "Monsieur", "Aucun titre"}));
+        cmbTitreGerant.setBounds(40, 80, 150, 20);
+        editerEntreprisePane.add(cmbTitreGerant);
+                
+        
         /*
           Nom gérant
          */
@@ -73,61 +105,53 @@ public class EditerEntreprise extends JFrame {
         lblNomGerant.setBounds(40, 110, 120, 14);
         editerEntreprisePane.add(lblNomGerant);
 
-        JTextField txtNomGerant = new JTextField();
+        txtNomGerant = new JTextField();
         txtNomGerant.setBounds(40, 130, 150, 20);
         editerEntreprisePane.add(txtNomGerant);
-        txtNomGerant.setColumns(10);
-
 
         /*
-          Prénom
+          Prénom gérant
          */
         JLabel lblPrenom = new JLabel("Prénom du gérant");
         lblPrenom.setBounds(40, 160, 46, 14);
         editerEntreprisePane.add(lblPrenom);
 
-        JTextField txtPrenom = new JTextField();
-        txtPrenom.setColumns(10);
-        txtPrenom.setBounds(40, 180, 153, 20);
-        editerEntreprisePane.add(txtPrenom);
+        txtPrenomGerant = new JTextField();
+        txtPrenomGerant.setBounds(40, 180, 153, 20);
+        editerEntreprisePane.add(txtPrenomGerant);
 
         /*
-          Adresse
+          Adresse entreprise
          */
-        JLabel lblAdresse = new JLabel("Adresse");
-        lblAdresse.setBounds(40, 210, 120, 14);
-        editerEntreprisePane.add(lblAdresse);
+        JLabel lblAdresseEntreprise = new JLabel("Adresse");
+        lblAdresseEntreprise.setBounds(40, 210, 120, 14);
+        editerEntreprisePane.add(lblAdresseEntreprise);
 
-        JTextField txtAdresse = new JTextField();
-        txtAdresse.setColumns(10);
-        txtAdresse.setBounds(40, 230, 150, 20);
-        editerEntreprisePane.add(txtAdresse);
+        txtAdresseEntreprise = new JTextField();
+        txtAdresseEntreprise.setBounds(40, 230, 150, 20);
+        editerEntreprisePane.add(txtAdresseEntreprise);
 
         /*
-          Ville
+          Ville entreprise
          */
-        JLabel lblVille = new JLabel("Ville");
-        lblVille.setBounds(40, 260, 120, 14);
-        editerEntreprisePane.add(lblVille);
+        JLabel lblVilleEntreprise = new JLabel("Ville");
+        lblVilleEntreprise.setBounds(40, 260, 120, 14);
+        editerEntreprisePane.add(lblVilleEntreprise);
 
-        JTextField txtVille = new JTextField();
-        txtVille.setColumns(10);
-        txtVille.setBounds(40, 280, 150, 20);
-        editerEntreprisePane.add(txtVille);
+        txtVilleEntreprise = new JTextField();
+        txtVilleEntreprise.setBounds(40, 280, 150, 20);
+        editerEntreprisePane.add(txtVilleEntreprise);
 
         /*
-          Code Postal
+          Code Postal entreprise
          */
-        JLabel lblCP = new JLabel("Code Postal");
-        lblCP.setBounds(40, 310, 120, 14);
-        editerEntreprisePane.add(lblCP);
+        JLabel lblCPEntreprise = new JLabel("Code Postal");
+        lblCPEntreprise.setBounds(40, 310, 120, 14);
+        editerEntreprisePane.add(lblCPEntreprise);
 
-        JTextField txtCP = new JTextField();
-        txtCP.setColumns(10);
-        txtCP.setBounds(40, 330, 150, 20);
-        editerEntreprisePane.add(txtCP);
-
-
+        txtCPEntreprise = new JTextField();
+        txtCPEntreprise.setBounds(40, 330, 150, 20);
+        editerEntreprisePane.add(txtCPEntreprise);
 
         /*
           Btn enregistrer
