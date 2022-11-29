@@ -20,70 +20,56 @@ public class Creer extends JFrame {
     /**
      * Variables du JFrame
      */
+    private final JComboBox<String> cmbTitre;
     private final JTextField txtNom;
     private final JTextField txtPrenom;
     private final JTextField txtAdresse;
     private final JTextField txtVille;
     private final JTextField txtCP;
     private final JTextField txtMontantAttest;
-    private final JComboBox<String> cmbTitre;
+    private final JYearChooser exerciceFiscal;
     private final Calendar calendar = Calendar.getInstance();
 
     /**
      * Getters
      */
+    public String getCmbTitre() {
+        if (cmbTitre.getSelectedItem() == "Aucun titre") {
+            return "";
+        }
+        return "Monsieur";
+    }
     public String getTxtNomClient() {
-        return txtNom.getText();
+        return "Lauth";
     }
 
     public String getTxtPrenomClient() {
-        return txtPrenom.getText();
+        return "Jean";
     }
 
     public String getTxtAdresseClient() {
-        return txtAdresse.getText();
+        return "18, rue Leconte de Lisle";
     }
 
     public String getTxtVilleClient() {
-        return txtVille.getText();
+        return "Romans-sur-Isère";
     }
 
     public String getTxtCPClient() {
-        return txtCP.getText();
+        return "26100";
     }
 
     public String getTxtMontantAttest() {
         return txtMontantAttest.getText();
     }
 
-    public String getCmbTitre() {
-        if (cmbTitre.getSelectedItem() == "Aucun titre") {
-            return "";
-        }
-        return (String) cmbTitre.getSelectedItem();
-    }
-
     public String getDateAttestation() {
         return calendar.get(Calendar.DAY_OF_MONTH) + " " + getMonthForInt(calendar.get(Calendar.MONTH)) + " " + calendar.get(Calendar.YEAR);
     }
-
     public String getExerciceFiscal() {
         return String.valueOf(calendar.get(Calendar.YEAR));
     }
 
-    String getMonthForInt(int m) {
-        String month = "invalid";
-        DateFormatSymbols dfs = new DateFormatSymbols();
-        String[] months = dfs.getMonths();
-        if (m >= 0 && m <= 11) {
-            month = months[m];
-        }
-        return month;
-    }
-
-    public int getYearChooser() {
-        return calendar.get(Calendar.YEAR);
-    }
 
 
     /**
@@ -114,6 +100,7 @@ public class Creer extends JFrame {
         cmbTitre.setModel(new DefaultComboBoxModel<>(new String[]{"Madame", "Mademoiselle", "Monsieur", "Aucun titre"}));
         cmbTitre.setBounds(40, 80, 150, 20);
         contentPane.add(cmbTitre);
+
         /*
           Nom
          */
@@ -135,7 +122,6 @@ public class Creer extends JFrame {
         txtPrenom = new JTextField();
         txtPrenom.setBounds(40, 180, 150, 20);
         contentPane.add(txtPrenom);
-
 
         /*
           Adresse
@@ -188,7 +174,7 @@ public class Creer extends JFrame {
         lblExerciceFinancier.setBounds(250, 160, 120, 14);
         contentPane.add(lblExerciceFinancier);
 
-        JYearChooser exerciceFiscal = new JYearChooser();
+        exerciceFiscal = new JYearChooser();
         exerciceFiscal.setBounds(250, 180, 150, 20);
         contentPane.add(exerciceFiscal);
         exerciceFiscal.setEnabled(true);
@@ -263,6 +249,18 @@ public class Creer extends JFrame {
 
     }
 
+    // parse du mois de String vers int
+    public String getMonthForInt(int m) {
+        String month = "invalid";
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        String[] months = dfs.getMonths();
+        if (m >= 0 && m <= 11) {
+            month = months[m];
+        }
+        return month;
+    }
+
+    // vérification champs complétés
     public void isInputValid() throws InvalidFormatException, IOException {
        /* if (("".equals(getTxtNom())) || "".equals(getTxtPrenom()) || "".equals(getTxtVille()) || "".equals(getTxtAdresse()) || "".equals(getTxtMontantAttest())) {
             JOptionPane.showMessageDialog(contentPane, "Merci de remplir tous les champs");
@@ -270,6 +268,7 @@ public class Creer extends JFrame {
         save();
     }
 
+    // fermeture de l'application
     public void close() {
         int n = JOptionPane.showOptionDialog(new JFrame(), "Fermer application?", "Quitter", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
         if (n == JOptionPane.YES_OPTION) {
@@ -277,8 +276,9 @@ public class Creer extends JFrame {
         }
     }
 
+    // sauvegarde de l'application
     public void save() throws IOException {
-        Attestation attestation = new Attestation(this);
+        Attestation attestation = new Attestation(this, new EditerEntreprise());
         int n = JOptionPane.showOptionDialog(new JFrame(), "Confirmer enregistrement", "Enregistrer",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
         if (n == JOptionPane.YES_OPTION) {
@@ -286,9 +286,5 @@ public class Creer extends JFrame {
         }
     }
 }
-
-// TODO essayer de configurer également les keys messageboxs
-// TODO event escape + enter sur quitter et enregistrer respectivement -> enlever l'utilisation de la touche espace dans les deux cas
-// TODO customiser les boutons
 
 

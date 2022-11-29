@@ -9,8 +9,8 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import view.Creer;
+import view.EditerEntreprise;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,28 +18,65 @@ import java.util.GregorianCalendar;
 
 public class Attestation {
 
-    private Creer creer;
-    static float MARGIN = 25;
+    static float MARGIN = 50;
     PDDocument document = new PDDocument();
 
-    public Attestation(Creer creer) {
-        this.creer = creer;
-        // Set document properties
+    public Attestation(Creer creer, EditerEntreprise editerEntreprise) {
+        // Set propriétés du doc
         setDocumentProperties(document);
-        // Add a page to the document with proper size
+        // Ajout d'une page
         PDPage page = new PDPage(PDRectangle.LETTER);
         document.addPage(page);
-        // Insert an Image
-        insertImage(document, page, "src/media/logoArkadiaPc.jpg", 500, 780);
-        // Add some Text
-        addText(document, page, "My sample TEXT for PDF", MARGIN, 650);
+
+        // Header droit
+        // Import logo
+        insertImage(document, page, "src/media/logoArkadiaPc-transformed.jpeg", 420, 780);
+        // Infos client
+        addText(document, page, "" + creer.getCmbTitre(), 420, 650);
+        addText(document, page, "" + creer.getTxtNomClient() + " " + creer.getTxtPrenomClient(), 420, 635);
+        addText(document, page, "" + creer.getTxtAdresseClient(), 420, 620);
+        addText(document, page, "" + creer.getTxtCPClient() + " " + creer.getTxtVilleClient(), 420, 605);
+        // Date émission attestation
+        addText(document, page, "le " + creer.getDateAttestation() + ",", 380, 570);
+
+        // Titre
+        addTitle(document, page, "Attestation destinée au Centre des Impôts", 150, 530);
+
+        // Header gauche
+        // Infos entreprise
+        addText(document, page, "" + editerEntreprise.getTxtNomEntreprise(), MARGIN, 750);
+        addText(document, page, "" + editerEntreprise.getTxtAdresseEntreprise(), MARGIN, 735);
+        addText(document, page, "" + editerEntreprise.getTxtCPEntreprise() + " " + editerEntreprise.getTxtVilleEntreprise(), MARGIN, 720);
+        addText(document, page, "" + editerEntreprise.getTxtTelEntreprise(), MARGIN, 705);
+        addText(document, page, "" + editerEntreprise.getTxtMailEntreprise(), MARGIN, 690);
+        addText(document, page, "" + editerEntreprise.getTxtAgrement(), MARGIN, 670);
+
         // Add paragraph
-        String data = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-        addParagraph(document, page, data, 0, 625);
-        // Draw Line
-        drawLines(document, page, 25, 500);
-        // Draw Rectangles
-        drawRectangle(document, page, 25, 450);
+        String p1 = "Je soussigné " + editerEntreprise.getCmbTitreGerant() + " " + editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant() + ", " +
+                "gérant de l'organisme agréé " + editerEntreprise.getTxtNomEntreprise() + ", certifie que " + creer.getCmbTitre() + " " + creer.getTxtPrenomClient() + " " +
+                creer.getTxtNomClient() + " a bénéficié d'assistance informatique à domicile, service à la personne.";
+        String p2 = "Montant total des factures pour l'année " + creer.getExerciceFiscal() + " : " + creer.getTxtMontantAttest() + "€";
+        String p3 = "Montant total payé en CESU préfinancé : 0 €";
+        String p4 = "Intervenants : ";
+        String p5 = editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant();
+        String p6 = "Prestations : ";
+        String p7 = "Les sommes perçues pour financer les services à la personne sont à déduire de la valeur indiquée précédemment.";
+        String p8 = "La déclaration engage la responsabilité du seul contribuable";
+        String p9 = "* Pour les personnes utilisant le Chèque Emploi Service Universel, seul le montant financé personnellement est déductible. " +
+                "Une attestation est délivrée par les établissements préfinançant le CESU.";
+        String p10 = "Fait pour valoir ce que de droit,";
+        String p11 = editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant() + ", gérant.";
+        addParagraph(document, page, p1, MARGIN, 480);
+        addParagraph(document, page, p2, MARGIN, 430);
+        addParagraph(document, page, p3, MARGIN, 415);
+        addParagraph(document, page, p4, MARGIN, 385);
+        addParagraph(document, page, p5, MARGIN, 355);
+        addParagraph(document, page, p6, MARGIN, 325);
+        addParagraph(document, page, p7, MARGIN, 295);
+        addParagraph(document, page, p8, MARGIN, 265);
+        addParagraph(document, page, p9, MARGIN, 235);
+        addParagraph(document, page, p10, MARGIN, 185);
+        addParagraph(document, page, p11, MARGIN, 145);
     }
 
     public void setDocumentProperties(PDDocument document) {
@@ -84,7 +121,7 @@ public class Attestation {
             // Begin the Content stream
             contentStream.beginText();
             // Setting the font to the Content stream
-            contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+            contentStream.setFont(PDType1Font.HELVETICA, 10);
             // Setting the position for the line
             contentStream.newLineAtOffset(x, y);
             // Adding text in the form of string
@@ -98,13 +135,33 @@ public class Attestation {
         }
     }
 
+    public void addTitle(PDDocument document, PDPage page, String myTitle, float x, float y) {
+        try {
+            // Get Content Stream for Writing Data
+            PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
+            // Begin the Content stream
+            contentStream.beginText();
+            // Setting the font to the Content stream
+            contentStream.setFont(PDType1Font.HELVETICA, 16);
+            // Setting the position for the line
+            contentStream.newLineAtOffset(x, y);
+            // Adding text in the form of string
+            contentStream.showText(myTitle);
+            // Ending the content stream
+            contentStream.endText();
+            // Closing the content stream
+            contentStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addParagraph(PDDocument document, PDPage page, String myText, float x, float y) {
         try {
             // Setting the font
-            PDFont pdfFont = PDType1Font.TIMES_ROMAN;
-            float fontSize = 12;
+            PDFont pdfFont = PDType1Font.HELVETICA;
+            float fontSize = 11;
             float leading = 1.5f * fontSize;
-
             // Get the Width and X/Y coordinates
             PDRectangle mediabox = page.getMediaBox();
             float margin = MARGIN;
@@ -143,10 +200,8 @@ public class Attestation {
             }
             // Get Content Stream for Writing Data
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
-
             contentStream.beginText();
             contentStream.setFont(pdfFont, fontSize);
-            contentStream.setNonStrokingColor(Color.RED);
             contentStream.newLineAtOffset(startX, startY);
             for (String line : lines) {
                 contentStream.showText(line);
@@ -159,58 +214,13 @@ public class Attestation {
         }
     }
 
-    public void drawLines(PDDocument document, PDPage page, float x, float y) {
-        try {
-            PDRectangle mediabox = page.getMediaBox();
-            float margin = MARGIN;
-            float width = mediabox.getWidth() - (2 * margin);
-
-            // Get Content Stream for Writing Data
-            PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
-
-            // Setting the non stroking color
-            contentStream.setStrokingColor(Color.GREEN);
-
-            // lets make some lines
-            contentStream.moveTo(x, y);
-            contentStream.lineTo(x + width, y);
-            contentStream.lineTo(x + width, y + 25);
-            contentStream.lineTo(x, y + 25);
-            contentStream.stroke();
-
-            contentStream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void drawRectangle(PDDocument document, PDPage page, float x, float y) {
-        try {
-            PDRectangle mediabox = page.getMediaBox();
-            float margin = MARGIN;
-            float width = mediabox.getWidth() - (2 * margin);
-
-            // Get Content Stream for Writing Data
-            PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
-
-            // Setting the non stroking color
-            contentStream.setNonStrokingColor(Color.LIGHT_GRAY);
-
-            // Drawing a rectangle
-            contentStream.addRect(x, y, width, 25);
-
-            // Drawing a rectangle
-            // contentStream.fill();
-            contentStream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void save() throws IOException {
-        document.save("Test.pdf");
+        Creer creer = new Creer();
+        String filePath = "C:\\Users\\Jean\\Documents\\AttestationsFiscalesTest\\";
+        String fileName = "AttestationFiscale-" +
+                creer.getExerciceFiscal() + "-" + creer.getTxtNomClient() + "-" + creer.getTxtPrenomClient() + ".pdf";
+        document.save(filePath+fileName);
+        System.out.println("Sauvegardé, path : " + fileName );
         // Closing the document
         document.close();
     }
