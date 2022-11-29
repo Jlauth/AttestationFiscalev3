@@ -20,71 +20,58 @@ public class Creer extends JFrame {
     /**
      * Variables du JFrame
      */
-    private final JTextField txtNom;
-    private final JTextField txtPrenom;
-    private final JTextField txtAdresse;
-    private final JTextField txtVille;
-    private final JTextField txtCP;
+    private final JComboBox<String> cmbTitreClient;
+    private final JTextField txtNomClient;
+    private final JTextField txtPrenomClient;
+    private final JTextField txtAdresseClient;
+    private final JTextField txtVilleClient;
+    private final JTextField txtCpClient;
     private final JTextField txtMontantAttest;
-    private final JComboBox<String> cmbTitre;
-    private final Calendar calendar = Calendar.getInstance();
+    private final JDateChooser dateAttestation;
+    private final JYearChooser anneeFiscale;
 
     /**
      * Getters
      */
+    public String getCmbTitre() {
+        if (cmbTitreClient.getSelectedItem() == "Aucun titre") {
+            return "";
+        }
+        return "Monsieur";
+    }
+
     public String getTxtNomClient() {
-        return txtNom.getText();
+        return "Lauth";
     }
 
     public String getTxtPrenomClient() {
-        return txtPrenom.getText();
+        return "Jean";
     }
 
     public String getTxtAdresseClient() {
-        return txtAdresse.getText();
+        return "18, rue Leconte de Lisle";
     }
 
     public String getTxtVilleClient() {
-        return txtVille.getText();
+        return "Romans-sur-Isère";
     }
 
     public String getTxtCPClient() {
-        return txtCP.getText();
+        return "26100";
     }
 
     public String getTxtMontantAttest() {
         return txtMontantAttest.getText();
     }
 
-    public String getCmbTitre() {
-        if (cmbTitre.getSelectedItem() == "Aucun titre") {
-            return "";
-        }
-        return (String) cmbTitre.getSelectedItem();
-    }
-
     public String getDateAttestation() {
+        Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.DAY_OF_MONTH) + " " + getMonthForInt(calendar.get(Calendar.MONTH)) + " " + calendar.get(Calendar.YEAR);
     }
 
-    public String getExerciceFiscal() {
-        return String.valueOf(calendar.get(Calendar.YEAR));
+    public int getExerciceFiscal() {
+        return getYearChooser();
     }
-
-    String getMonthForInt(int m) {
-        String month = "invalid";
-        DateFormatSymbols dfs = new DateFormatSymbols();
-        String[] months = dfs.getMonths();
-        if (m >= 0 && m <= 11) {
-            month = months[m];
-        }
-        return month;
-    }
-
-    public int getYearChooser() {
-        return calendar.get(Calendar.YEAR);
-    }
-
 
     /**
      * Création du Frame
@@ -106,69 +93,69 @@ public class Creer extends JFrame {
         /*
           Titre
          */
-        JLabel lblTitre = new JLabel("Titre");
-        lblTitre.setBounds(40, 60, 120, 14);
-        contentPane.add(lblTitre);
+        JLabel lblTitreClient = new JLabel("Titre");
+        lblTitreClient.setBounds(40, 60, 120, 14);
+        contentPane.add(lblTitreClient);
 
-        cmbTitre = new JComboBox<>();
-        cmbTitre.setModel(new DefaultComboBoxModel<>(new String[]{"Madame", "Mademoiselle", "Monsieur", "Aucun titre"}));
-        cmbTitre.setBounds(40, 80, 150, 20);
-        contentPane.add(cmbTitre);
+        cmbTitreClient = new JComboBox<>();
+        cmbTitreClient.setModel(new DefaultComboBoxModel<>(new String[]{"Madame", "Mademoiselle", "Monsieur", "Aucun titre"}));
+        cmbTitreClient.setBounds(40, 80, 150, 20);
+        contentPane.add(cmbTitreClient);
+
         /*
           Nom
          */
-        JLabel lblNom = new JLabel("Nom");
-        lblNom.setBounds(40, 110, 120, 14);
-        contentPane.add(lblNom);
+        JLabel lblNomClient = new JLabel("Nom");
+        lblNomClient.setBounds(40, 110, 120, 14);
+        contentPane.add(lblNomClient);
 
-        txtNom = new JTextField();
-        txtNom.setBounds(40, 130, 150, 20);
-        contentPane.add(txtNom);
+        txtNomClient = new JTextField();
+        txtNomClient.setBounds(40, 130, 150, 20);
+        contentPane.add(txtNomClient);
 
         /*
           Prénom
          */
-        JLabel lblPrenom = new JLabel("Prénom");
-        lblPrenom.setBounds(40, 160, 120, 14);
-        contentPane.add(lblPrenom);
+        JLabel lblPrenomClient = new JLabel("Prénom");
+        lblPrenomClient.setBounds(40, 160, 120, 14);
+        contentPane.add(lblPrenomClient);
 
-        txtPrenom = new JTextField();
-        txtPrenom.setBounds(40, 180, 150, 20);
-        contentPane.add(txtPrenom);
-
+        txtPrenomClient = new JTextField();
+        txtPrenomClient.setBounds(40, 180, 150, 20);
+        contentPane.add(txtPrenomClient);
 
         /*
           Adresse
          */
-        JLabel lblAdresse = new JLabel("Adresse");
-        lblAdresse.setBounds(40, 210, 120, 14);
-        contentPane.add(lblAdresse);
+        JLabel lblAdresseClient = new JLabel("Adresse");
+        lblAdresseClient.setBounds(40, 210, 120, 14);
+        contentPane.add(lblAdresseClient);
 
-        txtAdresse = new JTextField();
-        txtAdresse.setBounds(40, 230, 150, 20);
-        contentPane.add(txtAdresse);
+        txtAdresseClient = new JTextField();
+        txtAdresseClient.setBounds(40, 230, 150, 20);
+        contentPane.add(txtAdresseClient);
 
         /*
           Ville
          */
-        JLabel lblVille = new JLabel("Ville");
-        lblVille.setBounds(40, 260, 120, 14);
-        contentPane.add(lblVille);
+        JLabel lblVilleClient = new JLabel("Ville");
+        lblVilleClient.setBounds(40, 260, 120, 14);
+        contentPane.add(lblVilleClient);
 
-        txtVille = new JTextField();
-        txtVille.setBounds(40, 280, 150, 20);
-        contentPane.add(txtVille);
+        txtVilleClient = new JTextField();
+        txtVilleClient.setBounds(40, 280, 150, 20);
+        contentPane.add(txtVilleClient);
 
         /*
           Code Postal
          */
-        JLabel lblCP = new JLabel("Code Postal");
-        lblCP.setBounds(40, 310, 120, 14);
-        contentPane.add(lblCP);
+        JLabel lblCpClient = new JLabel("Code Postal");
+        lblCpClient.setBounds(40, 310, 120, 14);
+        contentPane.add(lblCpClient);
 
-        txtCP = new JTextField();
-        txtCP.setBounds(40, 330, 150, 20);
-        contentPane.add(txtCP);
+        txtCpClient = new JTextField();
+        txtCpClient.setBounds(40, 330, 150, 20);
+        contentPane.add(txtCpClient);
 
           /*
           Montant attestation
@@ -184,14 +171,14 @@ public class Creer extends JFrame {
         /*
           Choix exercice fiscal
          */
-        JLabel lblExerciceFinancier = new JLabel("Année fiscale");
-        lblExerciceFinancier.setBounds(250, 160, 120, 14);
-        contentPane.add(lblExerciceFinancier);
+        JLabel lblAnneeFiscale = new JLabel("Année fiscale");
+        lblAnneeFiscale.setBounds(250, 160, 120, 14);
+        contentPane.add(lblAnneeFiscale);
 
-        JYearChooser exerciceFiscal = new JYearChooser();
-        exerciceFiscal.setBounds(250, 180, 150, 20);
-        contentPane.add(exerciceFiscal);
-        exerciceFiscal.setEnabled(true);
+        anneeFiscale = new JYearChooser();
+        anneeFiscale.setBounds(250, 180, 150, 20);
+        contentPane.add(anneeFiscale);
+        anneeFiscale.setEnabled(true);
 
         /*
           Date attestation
@@ -200,13 +187,12 @@ public class Creer extends JFrame {
         lblDateAttestation.setBounds(250, 210, 120, 14);
         contentPane.add(lblDateAttestation);
 
-        JDateChooser dateAttestation = new JDateChooser();
+        dateAttestation = new JDateChooser();
         dateAttestation.setDateFormatString("dd MMMM yyyy");
         dateAttestation.setCalendar(Calendar.getInstance()); // set la date du jour dans le frame
         dateAttestation.setBounds(250, 230, 150, 20);
         contentPane.add(dateAttestation);
         dateAttestation.setEnabled(true);
-
 
         /*
           Bouton enregistrer
@@ -258,11 +244,46 @@ public class Creer extends JFrame {
                 close();
             }
         });
-        // Méthode close() lors de l'event clic button quitter
         btnQuitter.addActionListener(e -> close());
 
     }
 
+    /**
+     * Méthode getDateChooser() implémentée de la méthode getMontForInt()
+     *
+     * @return la date jour int, mois letters, année int
+     */
+    public String getDateChooser() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.DAY_OF_MONTH) + " " + getMonthForInt(calendar.get(Calendar.MONTH)) + " " + calendar.get(Calendar.YEAR);
+    }
+
+    /**
+     * Méthode changement des mois number en mois letters
+     */
+    public String getMonthForInt(int m) {
+        String month = "invalid";
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        String[] months = dfs.getMonths();
+        if (m >= 0 && m <= 11) {
+            month = months[m];
+        }
+        return month;
+    }
+
+    /**
+     * Méthode sélection de l'année uniquement
+     *
+     * @return l'année indiquée dans le calendrier
+     */
+    public int getYearChooser() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.YEAR);
+    }
+
+    /**
+     * Vérification de la validité des champs
+     */
     public void isInputValid() throws InvalidFormatException, IOException {
        /* if (("".equals(getTxtNom())) || "".equals(getTxtPrenom()) || "".equals(getTxtVille()) || "".equals(getTxtAdresse()) || "".equals(getTxtMontantAttest())) {
             JOptionPane.showMessageDialog(contentPane, "Merci de remplir tous les champs");
@@ -270,6 +291,9 @@ public class Creer extends JFrame {
         save();
     }
 
+    /**
+     * Fermeture de l'application
+     */
     public void close() {
         int n = JOptionPane.showOptionDialog(new JFrame(), "Fermer application?", "Quitter", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
         if (n == JOptionPane.YES_OPTION) {
@@ -277,8 +301,11 @@ public class Creer extends JFrame {
         }
     }
 
+    /**
+     * Sauvegarde de l'application
+     */
     public void save() throws IOException {
-        Attestation attestation = new Attestation(this);
+        Attestation attestation = new Attestation(this, new EditerEntreprise());
         int n = JOptionPane.showOptionDialog(new JFrame(), "Confirmer enregistrement", "Enregistrer",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
         if (n == JOptionPane.YES_OPTION) {
@@ -286,9 +313,3 @@ public class Creer extends JFrame {
         }
     }
 }
-
-// TODO essayer de configurer également les keys messageboxs
-// TODO event escape + enter sur quitter et enregistrer respectivement -> enlever l'utilisation de la touche espace dans les deux cas
-// TODO customiser les boutons
-
-

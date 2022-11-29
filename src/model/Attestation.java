@@ -9,8 +9,8 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import view.Creer;
+import view.EditerEntreprise;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,96 +18,134 @@ import java.util.GregorianCalendar;
 
 public class Attestation {
 
-    private Creer creer;
-    static float MARGIN = 25;
+    static float MARGIN = 50;
+    static String breakingSPace = "\u00A0";
     PDDocument document = new PDDocument();
 
-    public Attestation(Creer creer) {
-        this.creer = creer;
-        // Set document properties
+    public Attestation(Creer creer, EditerEntreprise editerEntreprise) {
+
+        // Set propriétés du doc
         setDocumentProperties(document);
-        // Add a page to the document with proper size
+
+        // Ajout d'une page
         PDPage page = new PDPage(PDRectangle.LETTER);
         document.addPage(page);
-        // Insert an Image
-        insertImage(document, page, "src/media/logoArkadiaPc.jpg", 500, 780);
-        // Add some Text
-        addText(document, page, "My sample TEXT for PDF", MARGIN, 650);
-        // Add paragraph
-        String data = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-        addParagraph(document, page, data, 0, 625);
-        // Draw Line
-        drawLines(document, page, 25, 500);
-        // Draw Rectangles
-        drawRectangle(document, page, 25, 450);
+
+        // Header partie gauche infos entreprise
+        // TODO prévoir insert logo
+        addHeader(document, page, editerEntreprise.getTxtNomEntreprise(), MARGIN, 750);
+        addHeader(document, page, editerEntreprise.getTxtAdresseEntreprise(), MARGIN, 735);
+        addHeader(document, page, editerEntreprise.getTxtCpEntreprise() + " " + editerEntreprise.getTxtVilleEntreprise(), MARGIN, 720);
+        addHeader(document, page, editerEntreprise.getTxtTelEntreprise(), MARGIN, 705);
+        addHeader(document, page, editerEntreprise.getTxtMailEntreprise(), MARGIN, 690);
+        addHeader(document, page, editerEntreprise.getTxtAgrement(), MARGIN, 660);
+
+        // Header droit import logo et infos client
+        addImage(document, page, "src/media/logoArkadiaPc-transformed.jpeg", 420, 780); // logo
+        addHeader(document, page, creer.getCmbTitre() + " " + creer.getTxtNomClient() + " " + creer.getTxtPrenomClient(), 420, 660);
+        addHeader(document, page, creer.getTxtAdresseClient(), 420, 645);
+        addHeader(document, page, creer.getTxtCPClient() + " " + creer.getTxtVilleClient(), 420, 630);
+        addHeader(document, page, "le " + creer.getDateAttestation() + ",", 380, 605);
+
+        // Titre
+        addTitle(document, page, "Attestation destinée au Centre des Impôts", 150, 550);
+
+        // Body
+        String p1 = "       Je soussigné " + editerEntreprise.getCmbTitreGerant() + " " + editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant() + ", " +
+                "gérant de l'organisme agréé " + editerEntreprise.getTxtNomEntreprise() + ", certifie que " + creer.getCmbTitre() + " " + creer.getTxtPrenomClient() + " " +
+                creer.getTxtNomClient() + " a bénéficié d'assistance informatique à domicile, service à la personne :";
+        String p2 = "               Montant total des factures pour l'année " + creer.getExerciceFiscal() + " : " + creer.getTxtMontantAttest() + "€";
+        String p3 = "               Montant total payé en CESU préfinancé : 0 €";
+        String p4 = "Intervenants : ";
+        String p5 = "           "+editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant();
+        String p6 = "Prestations : ";
+        String p7 = "       Les sommes perçues pour financer les services à la personne sont à déduire de la valeur indiquée précédemment.";
+        String p8 = "       La déclaration engage la responsabilité du seul contribuable";
+        String p9 = "* Pour les personnes utilisant le Chèque Emploi Service Universel, seul le montant financé personnellement est déductible. " +
+                "Une attestation est délivrée par les établissements préfinançant le CESU.";
+        String p10 = "      Fait pour valoir ce que de droit,";
+        String p11 = editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant() + ", gérant.";
+        addParagraph(document, page, p1, MARGIN, 480);
+        addParagraph(document, page, p2, MARGIN, 430);
+        addParagraph(document, page, p3, MARGIN, 415);
+        addParagraph(document, page, p4, MARGIN, 385);
+        addParagraph(document, page, p5, MARGIN, 355);
+        addParagraph(document, page, p6, MARGIN, 325);
+        addParagraph(document, page, p7, MARGIN, 295);
+        addParagraph(document, page, p8, MARGIN, 265);
+        addParagraph(document, page, p9, MARGIN, 235);
+        addParagraph(document, page, p10, MARGIN, 185);
+        addParagraph(document, page, p11, MARGIN, 145);
+        // signature gérant
+        addImage(document, page, "src/media/signature.jpg", 300, 120); // signature
     }
 
-    public void setDocumentProperties(PDDocument document) {
-        // Creating the PDDocumentInformation object
-        PDDocumentInformation docInformation = document.getDocumentInformation();
-        // Setting the author of the document
-        docInformation.setAuthor("Araujo Adelino");
-        // Setting the title of the document
-        docInformation.setTitle("Attestation destinée au Centre des Impôts");
-        // Setting the creator of the document
-        docInformation.setCreator("ArkadiaPC");
-        // Setting the subject of the document
-        docInformation.setSubject("Attestation fiscale");
-        // Setting the created date of the document
-        Calendar date = new GregorianCalendar();
-        date.set(2022, 11, 28);
-        docInformation.setCreationDate(date);
-        docInformation.setModificationDate(date);
-        // Setting keywords for the document
-        docInformation.setKeywords("ArkadiaPC, attestation, fiscale");
-    }
-
-    public void insertImage(PDDocument document, PDPage page, String imageName, float x, float y) {
+    /**
+     * Méthode d'ajout d'un titre
+     *
+     * @param document le document visé
+     * @param page     la page visée
+     * @param myTitle  le titre en String
+     * @param x        position x largeur
+     * @param y        position y hauteur
+     */
+    public void addTitle(PDDocument document, PDPage page, String myTitle, float x, float y) {
         try {
-            // Get Content Stream for Writing Data
-            PDPageContentStream contentStream = new PDPageContentStream(document, page);
-            // Creating PDImageXObject object
-            PDImageXObject pdImage = PDImageXObject.createFromFile(imageName, document);
-            // Drawing the image in the PDF document
-            contentStream.drawImage(pdImage, x, y - 100, 100, 100);
-            // Closing the content stream
-            contentStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void addText(PDDocument document, PDPage page, String myText, float x, float y) {
-        try {
-            // Get Content Stream for Writing Data
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
-            // Begin the Content stream
             contentStream.beginText();
-            // Setting the font to the Content stream
-            contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
-            // Setting the position for the line
+            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);
             contentStream.newLineAtOffset(x, y);
-            // Adding text in the form of string
-            contentStream.showText(myText);
-            // Ending the content stream
+            contentStream.showText(myTitle);
             contentStream.endText();
-            // Closing the content stream
             contentStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Méthode d'ajout du header
+     *
+     * @param document le document visé
+     * @param page     la page visée
+     * @param myText   le texte en String
+     * @param x        position x largeur
+     * @param y        position y hauteur
+     */
+    public void addHeader(PDDocument document, PDPage page, String myText, float x, float y) {
+        try {
+            PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
+            contentStream.beginText();
+            if (myText.equals("Arkadia PC")) {
+                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 10);
+            } else {
+                contentStream.setFont(PDType1Font.HELVETICA, 10);
+            }
+            contentStream.newLineAtOffset(x, y);
+            contentStream.showText(myText);
+            contentStream.endText();
+            contentStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Méthode d'ajout d'un paragraphe
+     *
+     * @param document le document visé
+     * @param page     la page visée
+     * @param myText   le texte en String
+     * @param x        position x largeur
+     * @param y        position y hauteur
+     */
     public void addParagraph(PDDocument document, PDPage page, String myText, float x, float y) {
         try {
-            // Setting the font
-            PDFont pdfFont = PDType1Font.TIMES_ROMAN;
-            float fontSize = 12;
+            PDFont pdfFont = PDType1Font.HELVETICA;
+            float fontSize = 11;
             float leading = 1.5f * fontSize;
-
-            // Get the Width and X/Y coordinates
             PDRectangle mediabox = page.getMediaBox();
-            float margin = MARGIN;
+            float margin = MARGIN/2;
             float width = mediabox.getWidth() - (2 * margin);
             float startX = mediabox.getLowerLeftX() + margin;
             float startY = mediabox.getUpperRightY() - margin;
@@ -118,7 +156,7 @@ public class Attestation {
             if (y > 0) {
                 startY = y;
             }
-            // Split the paragraph based on width and font size into multiple lines
+            // Division du paragraphe en plusieurs lignes, en fonction de la largeur et taille police
             ArrayList<String> lines = new ArrayList<>();
             int lastSpace = -1;
             while (myText.length() > 0) {
@@ -141,12 +179,10 @@ public class Attestation {
                     lastSpace = spaceIndex;
                 }
             }
-            // Get Content Stream for Writing Data
+            // Get sur le stream pour écrire les données
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
-
             contentStream.beginText();
             contentStream.setFont(pdfFont, fontSize);
-            contentStream.setNonStrokingColor(Color.RED);
             contentStream.newLineAtOffset(startX, startY);
             for (String line : lines) {
                 contentStream.showText(line);
@@ -159,59 +195,64 @@ public class Attestation {
         }
     }
 
-    public void drawLines(PDDocument document, PDPage page, float x, float y) {
+    /**
+     * Méthode ajout d'une image
+     *
+     * @param document  le document visé
+     * @param page      la page visée
+     * @param imageName le nom de l'image en String
+     * @param x         position x largeur
+     * @param y         position y hauteur
+     */
+    public void addImage(PDDocument document, PDPage page, String imageName, float x, float y) {
         try {
-            PDRectangle mediabox = page.getMediaBox();
-            float margin = MARGIN;
-            float width = mediabox.getWidth() - (2 * margin);
-
             // Get Content Stream for Writing Data
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
-
-            // Setting the non stroking color
-            contentStream.setStrokingColor(Color.GREEN);
-
-            // lets make some lines
-            contentStream.moveTo(x, y);
-            contentStream.lineTo(x + width, y);
-            contentStream.lineTo(x + width, y + 25);
-            contentStream.lineTo(x, y + 25);
-            contentStream.stroke();
-
+            // Creating PDImageXObject object
+            PDImageXObject pdImage = PDImageXObject.createFromFile(imageName, document);
+            // Drawing the image in the PDF document
+            if (imageName.equals("src/media/logoArkadiaPc-transformed.jpeg")) {
+                contentStream.drawImage(pdImage, x, y - 80, 110, 80);
+            } else {
+                contentStream.drawImage(pdImage, x, y - 100, 200, 70);
+            }
+            // Closing the content stream
             contentStream.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void drawRectangle(PDDocument document, PDPage page, float x, float y) {
-        try {
-            PDRectangle mediabox = page.getMediaBox();
-            float margin = MARGIN;
-            float width = mediabox.getWidth() - (2 * margin);
-
-            // Get Content Stream for Writing Data
-            PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
-
-            // Setting the non stroking color
-            contentStream.setNonStrokingColor(Color.LIGHT_GRAY);
-
-            // Drawing a rectangle
-            contentStream.addRect(x, y, width, 25);
-
-            // Drawing a rectangle
-            // contentStream.fill();
-            contentStream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    /**
+     * Définition des meta propriétés
+     *
+     * @param document le document visé
+     */
+    public void setDocumentProperties(PDDocument document) {
+        // TODO par défaut créateur, auteur, titre, sujet
+        PDDocumentInformation docInformation = document.getDocumentInformation();
+        docInformation.setAuthor("Araujo Adelino");
+        docInformation.setTitle("Attestation destinée au Centre des Impôts");
+        docInformation.setCreator("ArkadiaPC");
+        docInformation.setSubject("Attestation fiscale");
+        Calendar date = new GregorianCalendar();
+        date.set(2022, 11, 28);
+        docInformation.setCreationDate(date);
+        /* docInformation.setModificationDate(date);
+           docInformation.setKeywords("ArkadiaPC, attestation, fiscale"); */
     }
 
+    /**
+     * Méthode de sauvegarde du document
+     * Initialisation de la source et nom fichier à sauvegarder
+     */
     public void save() throws IOException {
-        document.save("Test.pdf");
-        // Closing the document
+        Creer creer = new Creer();
+        String filePath = "C:\\Users\\Jean\\Documents\\AttestationsFiscalesTest\\";
+        String fileName = "AttestationFiscale-" + creer.getExerciceFiscal() + "-" + creer.getTxtNomClient() +
+                "-" + creer.getTxtPrenomClient() + ".pdf";
+        document.save(filePath + fileName);
+        System.out.println("Attestation sauvegardée. Chemin : " + filePath + fileName);
         document.close();
     }
 }

@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Changement vers PDFBox">
+      <change afterPath="$PROJECT_DIR$/src/media/logoArkadiaPc-transformed.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Attestation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Attestation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/Accueil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Accueil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/Creer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Creer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/EditerClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/EditerClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/EditerEntreprise.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/EditerEntreprise.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,6 +26,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
