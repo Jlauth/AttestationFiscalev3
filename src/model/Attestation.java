@@ -15,11 +15,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 
 public class Attestation {
 
     static float MARGIN = 50;
-    static String breakingSPace = "\u00A0";
     PDDocument document = new PDDocument();
 
     public Attestation(Creer creer, EditerEntreprise editerEntreprise) {
@@ -45,25 +45,26 @@ public class Attestation {
         addHeader(document, page, creer.getCmbTitre() + " " + creer.getTxtNomClient() + " " + creer.getTxtPrenomClient(), 420, 660);
         addHeader(document, page, creer.getTxtAdresseClient(), 420, 645);
         addHeader(document, page, creer.getTxtCPClient() + " " + creer.getTxtVilleClient(), 420, 630);
-        addHeader(document, page, "le " + creer.getDateAttestation() + ",", 380, 605);
+        addHeader(document, page, "le " + creer.getDateAttestation(), 390, 605);
 
         // Titre
         addTitle(document, page, "Attestation destinée au Centre des Impôts", 150, 550);
+        addTitle(document, page, "____________________________________", 150, 550);
 
         // Body
-        String p1 = "       Je soussigné " + editerEntreprise.getCmbTitreGerant() + " " + editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant() + ", " +
+        String p1 = "               Je soussigné " + editerEntreprise.getCmbTitreGerant() + " " + editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant() + ", " +
                 "gérant de l'organisme agréé " + editerEntreprise.getTxtNomEntreprise() + ", certifie que " + creer.getCmbTitre() + " " + creer.getTxtPrenomClient() + " " +
                 creer.getTxtNomClient() + " a bénéficié d'assistance informatique à domicile, service à la personne :";
-        String p2 = "               Montant total des factures pour l'année " + creer.getExerciceFiscal() + " : " + creer.getTxtMontantAttest() + "€";
-        String p3 = "               Montant total payé en CESU préfinancé : 0 €";
+        String p2 = "                       Montant total des factures pour l'année " + creer.getAnneeFiscale() + " : " + creer.getTxtMontantAttest() + "€";
+        String p3 = "                       Montant total payé en CESU préfinancé : 0 €";
         String p4 = "Intervenants : ";
-        String p5 = "           "+editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant();
+        String p5 = "                       " + editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant();
         String p6 = "Prestations : ";
-        String p7 = "       Les sommes perçues pour financer les services à la personne sont à déduire de la valeur indiquée précédemment.";
-        String p8 = "       La déclaration engage la responsabilité du seul contribuable";
+        String p7 = "               Les sommes perçues pour financer les services à la personne sont à déduire de la valeur indiquée précédemment.";
+        String p8 = "               La déclaration engage la responsabilité du seul contribuable";
         String p9 = "* Pour les personnes utilisant le Chèque Emploi Service Universel, seul le montant financé personnellement est déductible. " +
                 "Une attestation est délivrée par les établissements préfinançant le CESU.";
-        String p10 = "      Fait pour valoir ce que de droit,";
+        String p10 = "              Fait pour valoir ce que de droit,";
         String p11 = editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant() + ", gérant.";
         addParagraph(document, page, p1, MARGIN, 480);
         addParagraph(document, page, p2, MARGIN, 430);
@@ -72,12 +73,12 @@ public class Attestation {
         addParagraph(document, page, p5, MARGIN, 355);
         addParagraph(document, page, p6, MARGIN, 325);
         addParagraph(document, page, p7, MARGIN, 295);
-        addParagraph(document, page, p8, MARGIN, 265);
-        addParagraph(document, page, p9, MARGIN, 235);
-        addParagraph(document, page, p10, MARGIN, 185);
-        addParagraph(document, page, p11, MARGIN, 145);
+        addParagraph(document, page, p8, MARGIN, 255);
+        addParagraph(document, page, p9, MARGIN, 225);
+        addParagraph(document, page, p10, MARGIN, 155);
+        addParagraph(document, page, p11, MARGIN, 115);
         // signature gérant
-        addImage(document, page, "src/media/signature.jpg", 300, 120); // signature
+        addImage(document, page, "src/media/signature.jpg", 280, 150); // signature
     }
 
     /**
@@ -93,7 +94,7 @@ public class Attestation {
         try {
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
             contentStream.beginText();
-            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);
+            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 17);
             contentStream.newLineAtOffset(x, y);
             contentStream.showText(myTitle);
             contentStream.endText();
@@ -140,12 +141,17 @@ public class Attestation {
      * @param y        position y hauteur
      */
     public void addParagraph(PDDocument document, PDPage page, String myText, float x, float y) {
+        float fontSize = 11;
+        PDFont pdfFont = PDType1Font.HELVETICA;
         try {
-            PDFont pdfFont = PDType1Font.HELVETICA;
-            float fontSize = 11;
+            if (Objects.equals(myText, "* Pour les personnes utilisant le Chèque Emploi Service Universel, seul le montant financé personnellement est déductible. " +
+                    "Une attestation est délivrée par les établissements préfinançant le CESU.")) {
+                fontSize = 10;
+                pdfFont = PDType1Font.HELVETICA_OBLIQUE;
+            }
             float leading = 1.5f * fontSize;
             PDRectangle mediabox = page.getMediaBox();
-            float margin = MARGIN/2;
+            float margin = MARGIN / 2;
             float width = mediabox.getWidth() - (2 * margin);
             float startX = mediabox.getLowerLeftX() + margin;
             float startY = mediabox.getUpperRightY() - margin;
@@ -156,6 +162,7 @@ public class Attestation {
             if (y > 0) {
                 startY = y;
             }
+
             // Division du paragraphe en plusieurs lignes, en fonction de la largeur et taille police
             ArrayList<String> lines = new ArrayList<>();
             int lastSpace = -1;
@@ -212,7 +219,7 @@ public class Attestation {
             PDImageXObject pdImage = PDImageXObject.createFromFile(imageName, document);
             // Drawing the image in the PDF document
             if (imageName.equals("src/media/logoArkadiaPc-transformed.jpeg")) {
-                contentStream.drawImage(pdImage, x, y - 80, 110, 80);
+                contentStream.drawImage(pdImage, x + 30, y - 90, 110, 80);
             } else {
                 contentStream.drawImage(pdImage, x, y - 100, 200, 70);
             }
@@ -249,7 +256,7 @@ public class Attestation {
     public void save() throws IOException {
         Creer creer = new Creer();
         String filePath = "C:\\Users\\Jean\\Documents\\AttestationsFiscalesTest\\";
-        String fileName = "AttestationFiscale-" + creer.getExerciceFiscal() + "-" + creer.getTxtNomClient() +
+        String fileName = "AttestationFiscale-" + creer.getAnneeFiscale() + "-" + creer.getTxtNomClient() +
                 "-" + creer.getTxtPrenomClient() + ".pdf";
         document.save(filePath + fileName);
         System.out.println("Attestation sauvegardée. Chemin : " + filePath + fileName);

@@ -10,10 +10,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.Serial;
-import java.text.DateFormatSymbols;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class Creer extends JFrame {
 
@@ -27,8 +31,9 @@ public class Creer extends JFrame {
     private final JTextField txtVilleClient;
     private final JTextField txtCpClient;
     private final JTextField txtMontantAttest;
-    private final JDateChooser dateAttestation;
     private final JYearChooser anneeFiscale;
+    private JDateChooser dateAttestation;
+    private SimpleDateFormat dateFormat;
 
     /**
      * Getters
@@ -64,13 +69,19 @@ public class Creer extends JFrame {
         return txtMontantAttest.getText();
     }
 
+    /**
+     * Méthode de formatage de la date d'attestation
+     */
     public String getDateAttestation() {
-        Calendar calendar = Calendar.getInstance();
-        return calendar.get(Calendar.DAY_OF_MONTH) + " " + getMonthForInt(calendar.get(Calendar.MONTH)) + " " + calendar.get(Calendar.YEAR);
+        DateFormat formaterDateAttest = new SimpleDateFormat("EEEE d MMMM yyyy", Locale.FRANCE);
+        return formaterDateAttest.format(dateAttestation.getDateEditor().getDate());
     }
 
-    public int getExerciceFiscal() {
-        return getYearChooser();
+    /**
+     * Méthode de récupération de l'année fiscale
+     */
+    public int getAnneeFiscale() {
+        return anneeFiscale.getYear();
     }
 
     /**
@@ -191,6 +202,13 @@ public class Creer extends JFrame {
         dateAttestation.setDateFormatString("dd MMMM yyyy");
         dateAttestation.setCalendar(Calendar.getInstance()); // set la date du jour dans le frame
         dateAttestation.setBounds(250, 230, 150, 20);
+        dateAttestation.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+
+            }
+        });
+
         contentPane.add(dateAttestation);
         dateAttestation.setEnabled(true);
 
@@ -248,38 +266,6 @@ public class Creer extends JFrame {
 
     }
 
-    /**
-     * Méthode getDateChooser() implémentée de la méthode getMontForInt()
-     *
-     * @return la date jour int, mois letters, année int
-     */
-    public String getDateChooser() {
-        Calendar calendar = Calendar.getInstance();
-        return calendar.get(Calendar.DAY_OF_MONTH) + " " + getMonthForInt(calendar.get(Calendar.MONTH)) + " " + calendar.get(Calendar.YEAR);
-    }
-
-    /**
-     * Méthode changement des mois number en mois letters
-     */
-    public String getMonthForInt(int m) {
-        String month = "invalid";
-        DateFormatSymbols dfs = new DateFormatSymbols();
-        String[] months = dfs.getMonths();
-        if (m >= 0 && m <= 11) {
-            month = months[m];
-        }
-        return month;
-    }
-
-    /**
-     * Méthode sélection de l'année uniquement
-     *
-     * @return l'année indiquée dans le calendrier
-     */
-    public int getYearChooser() {
-        Calendar calendar = Calendar.getInstance();
-        return calendar.get(Calendar.YEAR);
-    }
 
     /**
      * Vérification de la validité des champs
