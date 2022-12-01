@@ -32,8 +32,8 @@ public class EditerEntreprise extends JFrame {
         return "92500";
     }
 
-    public JTextField getTxtVilleEntreprise() {
-        return txtVilleEntreprise;
+    public String getTxtVilleEntreprise() {
+        return "Reuil Malmaison";
     }
 
     public String getTxtNomGerant() {

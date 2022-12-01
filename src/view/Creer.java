@@ -33,7 +33,6 @@ public class Creer extends JFrame {
     private final JTextField txtMontantAttest;
     private final JYearChooser anneeFiscale;
     private JDateChooser dateAttestation;
-    private SimpleDateFormat dateFormat;
 
     /**
      * Getters
@@ -217,7 +216,6 @@ public class Creer extends JFrame {
 
             }
         });
-
         contentPane.add(dateAttestation);
         dateAttestation.setEnabled(true);
 
@@ -272,9 +270,7 @@ public class Creer extends JFrame {
             }
         });
         btnQuitter.addActionListener(e -> close());
-
     }
-
 
     /**
      * Vérification de la validité des champs

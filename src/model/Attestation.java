@@ -6,11 +6,13 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import view.Creer;
 import view.EditerEntreprise;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,7 +24,7 @@ public class Attestation {
     static float MARGIN = 50;
     PDDocument document = new PDDocument();
 
-    public Attestation(Creer creer, EditerEntreprise editerEntreprise) {
+    public Attestation(Creer creer, EditerEntreprise editerEntreprise) throws IOException {
 
         // Set propriétés du doc
         setDocumentProperties(document);
@@ -49,14 +51,13 @@ public class Attestation {
 
         // Titre
         addTitle(document, page, "Attestation destinée au Centre des Impôts", 150, 550);
-        addTitle(document, page, "____________________________________", 150, 550);
 
         // Body
         String p1 = "               Je soussigné " + editerEntreprise.getCmbTitreGerant() + " " + editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant() + ", " +
                 "gérant de l'organisme agréé " + editerEntreprise.getTxtNomEntreprise() + ", certifie que " + creer.getCmbTitre() + " " + creer.getTxtPrenomClient() + " " +
                 creer.getTxtNomClient() + " a bénéficié d'assistance informatique à domicile, service à la personne :";
         String p2 = "                       Montant total des factures pour l'année " + creer.getAnneeFiscale() + " : " + creer.getTxtMontantAttest() + "€";
-        String p3 = "                       Montant total payé en CESU préfinancé : 0 €";
+        String p3 = "                       Montant total payé en CESU préfinancé* : 0 €";
         String p4 = "Intervenants : ";
         String p5 = "                       " + editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant();
         String p6 = "Prestations : ";
@@ -90,11 +91,13 @@ public class Attestation {
      * @param x        position x largeur
      * @param y        position y hauteur
      */
-    public void addTitle(PDDocument document, PDPage page, String myTitle, float x, float y) {
+    public void addTitle(PDDocument document, PDPage page, String myTitle, float x, float y) throws IOException {
+        PDFont pdFont = PDType0Font.load(document, new File("src/media/font/Calibri Bold.TTF"));
+        float fontSize = 20;
         try {
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
             contentStream.beginText();
-            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 17);
+            contentStream.setFont(pdFont, fontSize);
             contentStream.newLineAtOffset(x, y);
             contentStream.showText(myTitle);
             contentStream.endText();
@@ -113,15 +116,16 @@ public class Attestation {
      * @param x        position x largeur
      * @param y        position y hauteur
      */
-    public void addHeader(PDDocument document, PDPage page, String myText, float x, float y) {
+    public void addHeader(PDDocument document, PDPage page, String myText, float x, float y) throws IOException {
+        PDFont pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Regular.ttf"));
+        float fontSize = 11;
         try {
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
             contentStream.beginText();
             if (myText.equals("Arkadia PC")) {
-                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 10);
-            } else {
-                contentStream.setFont(PDType1Font.HELVETICA, 10);
+                pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Bold.TTF"));
             }
+            contentStream.setFont(pdfFont, fontSize);
             contentStream.newLineAtOffset(x, y);
             contentStream.showText(myText);
             contentStream.endText();
@@ -140,14 +144,14 @@ public class Attestation {
      * @param x        position x largeur
      * @param y        position y hauteur
      */
-    public void addParagraph(PDDocument document, PDPage page, String myText, float x, float y) {
-        float fontSize = 11;
-        PDFont pdfFont = PDType1Font.HELVETICA;
+    public void addParagraph(PDDocument document, PDPage page, String myText, float x, float y) throws IOException {
+        PDFont pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Regular.ttf"));
+        float fontSize = 12;
         try {
             if (Objects.equals(myText, "* Pour les personnes utilisant le Chèque Emploi Service Universel, seul le montant financé personnellement est déductible. " +
                     "Une attestation est délivrée par les établissements préfinançant le CESU.")) {
                 fontSize = 10;
-                pdfFont = PDType1Font.HELVETICA_OBLIQUE;
+                pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Italic.ttf"));
             }
             float leading = 1.5f * fontSize;
             PDRectangle mediabox = page.getMediaBox();

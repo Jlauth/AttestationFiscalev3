@@ -4,9 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Mise à jour du modèle Attestation reste à régler date et soulignage.">
+    <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Date affichée correctement.">
+      <change afterPath="$PROJECT_DIR$/src/media/font/Calibri Bold Italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/media/font/Calibri Bold.TTF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/media/font/Calibri Italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/media/font/Calibri Light Italic.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/media/font/Calibri Light.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/media/font/Calibri Regular.ttf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Attestation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Attestation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/Creer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Creer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/EditerEntreprise.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/EditerEntreprise.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +51,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -53,6 +63,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jean\IdeaProjects\AttestationsFiscalesv3\src\media\font" />
       <recent name="C:\Users\Jean\IdeaProjects\AttestationsFiscalesv3\src" />
     </key>
   </component>
@@ -88,7 +99,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669840223639</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Date affichée correctement.">
+      <created>1669887512311</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1669887512311</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers>
       <GitHub url="https://github.com">
         <option name="repoAuthor" value="Jlauth" />
@@ -111,7 +129,8 @@
     <MESSAGE value="Changement vers PDFBox" />
     <MESSAGE value="Mise à jour du modèle Attestation + UI" />
     <MESSAGE value="Mise à jour du modèle Attestation reste à régler date et soulignage." />
-    <option name="LAST_COMMIT_MESSAGE" value="Mise à jour du modèle Attestation reste à régler date et soulignage." />
+    <MESSAGE value="Date affichée correctement." />
+    <option name="LAST_COMMIT_MESSAGE" value="Date affichée correctement." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/AttestationsFiscalesv3$AttestationsFiscales.ic" NAME="AttestationsFiscales Coverage Results" MODIFIED="1669839934112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
