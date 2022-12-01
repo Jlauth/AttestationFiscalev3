@@ -10,13 +10,15 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.io.Serial;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class Creer extends JFrame {
@@ -71,26 +73,14 @@ public class Creer extends JFrame {
     /**
      * Méthode de formatage de la date d'attestation
      */
-    public String getDateAttestation() {
-        DateFormat formaterDateAttest = new SimpleDateFormat("EEEE d'%s' MMMM yyyy", Locale.FRANCE);
-        return String.format(formaterDateAttest.format(dateAttestation.getDateEditor().getDate()), dateSuffix(dateAttestation.getCalendar()));
+
+    public String getDateAttestation(Date date){
+        OffsetDateTime odt = date.toInstant().atOffset(ZoneOffset.UTC);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(String.format("EEEE d'%s' MMMM uuuu", dateSuffix(odt.getDayOfMonth())), Locale.FRANCE);
+        return  odt.format(formatter);
     }
 
-    /**
-     * Méthode de test sur le jour du mois
-     */
-    public static String dateSuffix(final Calendar calendar) {
-        final int date = calendar.get(Calendar.DATE);
-        if (date % 30 == 1) if (date == 1) return "er";
-        return "";
-    }
 
-    /**
-     * Méthode de récupération de l'année fiscale
-     */
-    public int getAnneeFiscale() {
-        return anneeFiscale.getYear();
-    }
 
     /**
      * Création du Frame
@@ -210,12 +200,6 @@ public class Creer extends JFrame {
         dateAttestation.setDateFormatString("dd MMMM yyyy");
         dateAttestation.setCalendar(Calendar.getInstance()); // set la date du jour dans le frame
         dateAttestation.setBounds(250, 230, 150, 20);
-        dateAttestation.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-
-            }
-        });
         contentPane.add(dateAttestation);
         dateAttestation.setEnabled(true);
 
@@ -270,6 +254,13 @@ public class Creer extends JFrame {
             }
         });
         btnQuitter.addActionListener(e -> close());
+    }
+
+    /**
+     * Méthode de test sur le jour du mois
+     */
+    static String dateSuffix(final int dayOfMonth) {
+        return (dayOfMonth % 30 == 1 || dayOfMonth == 1) ? "er" : "";
     }
 
     /**

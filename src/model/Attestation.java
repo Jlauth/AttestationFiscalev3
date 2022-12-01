@@ -14,15 +14,13 @@ import view.EditerEntreprise;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Objects;
+import java.util.*;
 
 public class Attestation {
 
     static float MARGIN = 50;
     PDDocument document = new PDDocument();
+    Date date = new Date();
 
     public Attestation(Creer creer, EditerEntreprise editerEntreprise) throws IOException {
 
@@ -47,7 +45,8 @@ public class Attestation {
         addHeader(document, page, creer.getCmbTitre() + " " + creer.getTxtNomClient() + " " + creer.getTxtPrenomClient(), 420, 660);
         addHeader(document, page, creer.getTxtAdresseClient(), 420, 645);
         addHeader(document, page, creer.getTxtCPClient() + " " + creer.getTxtVilleClient(), 420, 630);
-        addHeader(document, page, "le " + creer.getDateAttestation(), 390, 605);
+
+        addHeader(document, page, "le " + creer.getDateAttestation(date), 390, 605);
 
         // Titre
         addTitle(document, page, "Attestation destinée au Centre des Impôts", 150, 550);
@@ -56,7 +55,7 @@ public class Attestation {
         String p1 = "               Je soussigné " + editerEntreprise.getCmbTitreGerant() + " " + editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant() + ", " +
                 "gérant de l'organisme agréé " + editerEntreprise.getTxtNomEntreprise() + ", certifie que " + creer.getCmbTitre() + " " + creer.getTxtPrenomClient() + " " +
                 creer.getTxtNomClient() + " a bénéficié d'assistance informatique à domicile, service à la personne :";
-        String p2 = "                       Montant total des factures pour l'année " + creer.getAnneeFiscale() + " : " + creer.getTxtMontantAttest() + "€";
+        String p2 = "                       Montant total des factures pour l'année  : " + creer.getTxtMontantAttest() + "€";
         String p3 = "                       Montant total payé en CESU préfinancé* : 0 €";
         String p4 = "Intervenants : ";
         String p5 = "                       " + editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant();
@@ -260,7 +259,7 @@ public class Attestation {
     public void save() throws IOException {
         Creer creer = new Creer();
         String filePath = "C:\\Users\\Jean\\Documents\\AttestationsFiscalesTest\\";
-        String fileName = "AttestationFiscale-" + creer.getAnneeFiscale() + "-" + creer.getTxtNomClient() +
+        String fileName = "AttestationFiscale-" + creer.getTxtNomClient() +
                 "-" + creer.getTxtPrenomClient() + ".pdf";
         document.save(filePath + fileName);
         System.out.println("Attestation sauvegardée. Chemin : " + filePath + fileName);
