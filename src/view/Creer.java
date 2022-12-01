@@ -73,8 +73,17 @@ public class Creer extends JFrame {
      * Méthode de formatage de la date d'attestation
      */
     public String getDateAttestation() {
-        DateFormat formaterDateAttest = new SimpleDateFormat("EEEE d MMMM yyyy", Locale.FRANCE);
-        return formaterDateAttest.format(dateAttestation.getDateEditor().getDate());
+        DateFormat formaterDateAttest = new SimpleDateFormat("EEEE d'%s' MMMM yyyy", Locale.FRANCE);
+        return String.format(formaterDateAttest.format(dateAttestation.getDateEditor().getDate()), dateSuffix(dateAttestation.getCalendar()));
+    }
+
+    /**
+     * Méthode de test sur le jour du mois
+     */
+    public static String dateSuffix(final Calendar calendar) {
+        final int date = calendar.get(Calendar.DATE);
+        if (date % 30 == 1) if (date == 1) return "er";
+        return "";
     }
 
     /**
