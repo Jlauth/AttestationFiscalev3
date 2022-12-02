@@ -1,10 +1,6 @@
-import model.Attestation;
+import connect.ClientDB;
+import connect.Connect;
 import view.Accueil;
-import view.Creer;
-import view.EditerEntreprise;
-
-import java.io.IOException;
-import java.text.ParseException;
 
 public class Main {
 
@@ -12,5 +8,8 @@ public class Main {
 
         Accueil accueil = new Accueil();
         accueil.setVisible(true);
+        new Connect();
+        ClientDB clientDB = new ClientDB();
+        clientDB.selectAll();
     }
 }

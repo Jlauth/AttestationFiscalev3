@@ -1,6 +1,7 @@
 package view;
 
 import com.toedter.calendar.JDateChooser;
+import connect.ClientDB;
 import model.Attestation;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
@@ -45,7 +46,6 @@ public class Creer extends JFrame {
         }
         return Objects.requireNonNull(cmbTitreClient.getSelectedItem()).toString();
     }
-
     public String getTxtNomClient() {
         return txtNomClient.getText();
     }
@@ -69,29 +69,12 @@ public class Creer extends JFrame {
     public String getTxtMontantAttest() {
         return txtMontantAttest.getText();
     }
-    
-    public String getDateAttestationFormat() {
-        Date date = dateAttestation.getDateEditor().getDate();
-        OffsetDateTime odt = date.toInstant().atOffset(ZoneOffset.UTC);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(String.format("EEEE d'%s' MMMM uuuu", dateSuffix(odt.getDayOfMonth())), Locale.FRANCE);
-        return odt.format(formatter);
-    }
-
-    public String getAnneeFiscaleFormat() {
-        Date date = anneeFiscale.getDateEditor().getDate();
-        OffsetDateTime odtAnneeFisc = date.toInstant().atOffset(ZoneOffset.UTC);
-        DateTimeFormatter afFormater = DateTimeFormatter.ofPattern("yyyy", Locale.FRANCE);
-        return odtAnneeFisc.format(afFormater);
-    }
 
     /**
-     * Création du Frame
+     * Configuration du frame Creer
      */
     public Creer() {
 
-        /*
-          Création Creer
-         */
         JPanel contentPane = new JPanel();
         setTitle("Création attestation fiscale - Gestion des attestations fiscales Arkadia PC");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -228,9 +211,8 @@ public class Creer extends JFrame {
         lblEnregister.setBounds(50, 450, 300, 50);
         contentPane.add(lblEnregister);
 
-
-          /*
-          Btn Accueil
+        /*
+         Btn Accueil
          */
         JButton btnAccueil = new JButton("Accueil");
         btnAccueil.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -266,6 +248,32 @@ public class Creer extends JFrame {
         btnQuitter.addActionListener(e -> close());
     }
 
+
+    /**
+     * Méthode de formatage de la date attestation
+     * Récupère la date attestation renseignée dans le frame
+     * Implémente la méthode dateSuffix()
+     * Retourne la date au format "EEEE dd MMMM uuuu
+     */
+    public String getDateAttestationFormat() {
+        Date date = dateAttestation.getDateEditor().getDate();
+        OffsetDateTime odt = date.toInstant().atOffset(ZoneOffset.UTC);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(String.format("EEEE d'%s' MMMM uuuu", dateSuffix(odt.getDayOfMonth())), Locale.FRANCE);
+        return odt.format(formatter);
+    }
+
+    /**
+     * Méthode de formatage de l'année fiscale
+     * Récupère l'année fiscale renseignée dans le frame
+     * Retourne la date au format "yyyy"
+     */
+    public String getAnneeFiscaleFormat() {
+        Date date = anneeFiscale.getDateEditor().getDate();
+        OffsetDateTime odtAnneeFisc = date.toInstant().atOffset(ZoneOffset.UTC);
+        DateTimeFormatter afFormater = DateTimeFormatter.ofPattern("yyyy", Locale.FRANCE);
+        return odtAnneeFisc.format(afFormater);
+    }
+
     /**
      * Méthode de test sur le jour du mois
      */
@@ -274,17 +282,9 @@ public class Creer extends JFrame {
     }
 
     /**
-     * Fermeture de l'application
-     */
-    public void close() {
-        int n = JOptionPane.showOptionDialog(new JFrame(), "Fermer application?", "Quitter", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
-        if (n == JOptionPane.YES_OPTION) {
-            dispose();
-        }
-    }
-
-    /**
      * Vérification de la validité des champs
+     * Si champs et dossier de destination valide créé le pdf
+     * Sinon retourne erreur
      */
     public void isInputValid() throws InvalidFormatException, IOException, ParseException {
         Attestation attestation = new Attestation(this, new EditerEntreprise());
@@ -292,8 +292,25 @@ public class Creer extends JFrame {
                 "".equals(getTxtCPClient()) || "".equals(getDateAttestationFormat()) || "".equals(getAnneeFiscaleFormat()) || "".equals(getTxtMontantAttest())) {
             JOptionPane.showMessageDialog(new JOptionPane(), "Merci de remplir tous les champs");
         } else {
-            attestation.savePdf(this);
-            lblEnregister.setText("Document bien enregistré");
+            if (attestation.savePdf(this)) {
+                ClientDB clientDB = new ClientDB();
+                clientDB.insertClient(this);
+                lblEnregister.setText("Attestation enregistrée.");
+                lblEnregister.setForeground(Color.GREEN);
+            } else {
+                lblEnregister.setText("Cette attestation existe déjà.");
+                lblEnregister.setForeground(Color.RED);
+            }
+        }
+    }
+
+    /**
+     * Fermeture de fermeture de l'app
+     */
+    public void close() {
+        int n = JOptionPane.showOptionDialog(new JFrame(), "Fermer application?", "Quitter", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
+        if (n == JOptionPane.YES_OPTION) {
+            dispose();
         }
     }
 }

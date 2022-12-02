@@ -18,7 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.Objects;
 
 public class Attestation {
@@ -29,7 +29,7 @@ public class Attestation {
 
     public Attestation(Creer creer, EditerEntreprise editerEntreprise) throws IOException {
         // Set propriétés du doc
-        setDocumentProperties(document);
+        setDocumentProperties();
         // Ajout d'une page
         PDPage page = new PDPage(PDRectangle.LETTER);
         document.addPage(page);
@@ -239,39 +239,40 @@ public class Attestation {
 
     /**
      * Définition des meta propriétés
-     *
-     * @param document le document visé
      */
-    public void setDocumentProperties(PDDocument document) {
+    public void setDocumentProperties() {
         // TODO par défaut créateur, auteur, titre, sujet
-        PDDocumentInformation docInformation = document.getDocumentInformation();
+        PDDocumentInformation docInformation = this.document.getDocumentInformation();
         docInformation.setAuthor("Araujo Adelino");
         docInformation.setTitle("Attestation destinée au Centre des Impôts");
         docInformation.setCreator("ArkadiaPC");
         docInformation.setSubject("Attestation fiscale");
-        Calendar date = new GregorianCalendar();
-        date.set(2022, 11, 28);
-        docInformation.setCreationDate(date);
-        /* docInformation.setModificationDate(date);
-           docInformation.setKeywords("ArkadiaPC, attestation, fiscale"); */
+        docInformation.setCreationDate(Calendar.getInstance(Locale.FRANCE));
     }
 
-    public void savePdf(Creer creer) throws IOException {
+    public boolean savePdf(Creer creer) throws IOException {
         JFrame parentFrame = new JFrame();
         JFileChooser fileChooser = new JFileChooser();
+        FileOutputStream outputStream;
         fileChooser.setDialogTitle("Enregistrer sous");
         fileChooser.setSelectedFile(new File("Attestation-Fiscale-" + creer.getAnneeFiscaleFormat() + "-" + creer.getTxtNomClient() + "-" + creer.getTxtPrenomClient() + ".pdf"));
         int userSelection = fileChooser.showSaveDialog(parentFrame);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();
             try {
-                FileOutputStream outputStream = new FileOutputStream(fileToSave.getAbsolutePath());
-                document.save(fileToSave);
-                outputStream.close();
+                if (fileToSave.createNewFile()) {
+                    outputStream = new FileOutputStream(fileToSave.getAbsolutePath());
+                    document.save(fileToSave);
+                    outputStream.close();
+                    document.close();
+                    return true;
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+                document.close();
             }
         }
         document.close();
+        return false;
     }
 }

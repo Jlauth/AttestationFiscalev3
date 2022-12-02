@@ -9,10 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Underline configuré. Création de l'attestation terminée.">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/AttestationsFiscalesv3_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+    <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Création de la db, des tables. Données importées depuis créer.">
+      <change afterPath="$PROJECT_DIR$/src/connect/ClientDB.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/connect/Connect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AttestationsFiscalesv3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/AttestationsFiscalesv3.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Attestation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Attestation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/Creer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Creer.java" afterDir="false" />
     </list>
@@ -39,6 +42,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectId" id="2IBAST3mW9ieu6wkvuvktwfRquf" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -48,21 +54,23 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/Jean/IdeaProjects/AttestFiscale-master",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ToolWindowRun.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/env/envJava/pluggins/sqlite-jdbc-3.39.4.0/sqlite-jdbc-3.39.4.0.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jean\IdeaProjects\AttestationsFiscalesv3\src\connexion" />
       <recent name="C:\Users\Jean\IdeaProjects\AttestationsFiscalesv3\src\media\images" />
       <recent name="C:\Users\Jean\IdeaProjects\AttestationsFiscalesv3\src\media\font" />
       <recent name="C:\Users\Jean\IdeaProjects\AttestationsFiscalesv3\src" />
@@ -112,7 +120,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669976757771</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Configuration du choix de dossier d'enregistrement.">
+      <created>1669984856999</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1669984856999</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers>
       <GitHub url="https://github.com">
         <option name="repoAuthor" value="Jlauth" />
@@ -151,7 +166,13 @@
     <MESSAGE value="Review de getDateAttestation." />
     <MESSAGE value="Getters fonctionnels pour la partie Créer attestation" />
     <MESSAGE value="Underline configuré. Création de l'attestation terminée." />
-    <option name="LAST_COMMIT_MESSAGE" value="Underline configuré. Création de l'attestation terminée." />
+    <MESSAGE value="Configuration du choix de dossier d'enregistrement." />
+    <MESSAGE value="Création de la db, des tables. Données importées depuis créer." />
+    <option name="LAST_COMMIT_MESSAGE" value="Création de la db, des tables. Données importées depuis créer." />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/AttestationsFiscalesv3$AttestationsFiscales.ic" NAME="AttestationsFiscales Coverage Results" MODIFIED="1669839934112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
