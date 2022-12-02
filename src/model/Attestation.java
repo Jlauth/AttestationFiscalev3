@@ -11,18 +11,23 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import view.Creer;
 import view.EditerEntreprise;
 
+import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Objects;
 
 public class Attestation {
 
     static float MARGIN = 50;
-    public PDDocument document;
+    private final PDDocument document = new PDDocument();
+
 
     public Attestation(Creer creer, EditerEntreprise editerEntreprise) throws IOException {
-        document = new PDDocument();
         // Set propriétés du doc
         setDocumentProperties(document);
         // Ajout d'une page
@@ -39,11 +44,11 @@ public class Attestation {
         addHeader(document, page, editerEntreprise.getTxtAgrement(), MARGIN, 660);
 
         // Header droit import logo et infos client
-        addImage(document, page, "src/media/images/logoArkadiaPc-transformed.jpeg", 420, 780); // logo
-        addHeader(document, page, creer.getCmbTitre() + " " + creer.getTxtNomClient() + " " + creer.getTxtPrenomClient(), 420, 660);
-        addHeader(document, page, creer.getTxtAdresseClient(), 420, 645);
-        addHeader(document, page, creer.getTxtCPClient() + " " + creer.getTxtVilleClient(), 420, 630);
-        addHeader(document, page, "le " + creer.getDateAttestationFormat(), 390, 605);
+        addImage(document, page, "src/media/images/logoArkadiaPc-transformed.jpeg", 440, 780); // logo
+        addHeader(document, page, creer.getCmbTitre() + " " + creer.getTxtNomClient() + " " + creer.getTxtPrenomClient(), 440, 660);
+        addHeader(document, page, creer.getTxtAdresseClient(), 440, 645);
+        addHeader(document, page, creer.getTxtCPClient() + " " + creer.getTxtVilleClient(), 440, 630);
+        addHeader(document, page, "le " + creer.getDateAttestationFormat(), 440, 605);
 
         // Titre
         addTitle(document, page, "Attestation destinée au Centre des Impôts", 150, 550);
@@ -252,11 +257,21 @@ public class Attestation {
     }
 
     public void savePdf(Creer creer) throws IOException {
-        String filePath = "C:\\Users\\Jean\\Documents\\AttestationsFiscalesTest\\";
-        String fileName = "Attestation-Fiscale-" + creer.getTxtNomClient() +
-                "-" + creer.getTxtPrenomClient() + "-" + creer.getAnneeFiscaleFormat() + ".pdf";
-        document.save(filePath + fileName);
-        System.out.println("Attestation sauvegardée. Chemin : " + filePath + fileName);
+        JFrame parentFrame = new JFrame();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Enregistrer sous");
+        fileChooser.setSelectedFile(new File("Attestation-Fiscale-" + creer.getAnneeFiscaleFormat() + "-" + creer.getTxtNomClient() + "-" + creer.getTxtPrenomClient() + ".pdf"));
+        int userSelection = fileChooser.showSaveDialog(parentFrame);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            try {
+                FileOutputStream outputStream = new FileOutputStream(fileToSave.getAbsolutePath());
+                document.save(fileToSave);
+                outputStream.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
         document.close();
     }
 }

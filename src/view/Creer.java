@@ -34,6 +34,7 @@ public class Creer extends JFrame {
     private final JTextField txtMontantAttest;
     private final JDateChooser anneeFiscale;
     private final JDateChooser dateAttestation;
+    private final JLabel lblEnregister;
 
     /**
      * Getters
@@ -68,8 +69,7 @@ public class Creer extends JFrame {
     public String getTxtMontantAttest() {
         return txtMontantAttest.getText();
     }
-
-
+    
     public String getDateAttestationFormat() {
         Date date = dateAttestation.getDateEditor().getDate();
         OffsetDateTime odt = date.toInstant().atOffset(ZoneOffset.UTC);
@@ -212,7 +212,7 @@ public class Creer extends JFrame {
          */
         JButton btnEnregistrer = new JButton("Enregistrer");
         btnEnregistrer.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnEnregistrer.setBounds(50, 500, 120, 50);
+        btnEnregistrer.setBounds(50, 380, 120, 50);
         contentPane.add(btnEnregistrer);
         // Méthode isInputValid() lors de l'event clic button enregistrer
         btnEnregistrer.addActionListener(e -> {
@@ -222,6 +222,12 @@ public class Creer extends JFrame {
                 e1.printStackTrace();
             }
         });
+
+        lblEnregister = new JLabel();
+        lblEnregister.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblEnregister.setBounds(50, 450, 300, 50);
+        contentPane.add(lblEnregister);
+
 
           /*
           Btn Accueil
@@ -281,21 +287,13 @@ public class Creer extends JFrame {
      * Vérification de la validité des champs
      */
     public void isInputValid() throws InvalidFormatException, IOException, ParseException {
-        /*if (("".equals(getTxtNomClient())) || "".equals(getTxtPrenomClient()) || "".equals(getTxtVilleClient()) || "".equals(getTxtAdresseClient()) ||
+        Attestation attestation = new Attestation(this, new EditerEntreprise());
+        if (("".equals(getTxtNomClient())) || "".equals(getTxtPrenomClient()) || "".equals(getTxtVilleClient()) || "".equals(getTxtAdresseClient()) ||
                 "".equals(getTxtCPClient()) || "".equals(getDateAttestationFormat()) || "".equals(getAnneeFiscaleFormat()) || "".equals(getTxtMontantAttest())) {
             JOptionPane.showMessageDialog(new JOptionPane(), "Merci de remplir tous les champs");
-        } else */saveUI();
-    }
-
-    /**
-     * Sauvegarde de l'application
-     */
-    public void saveUI() throws IOException, ParseException {
-        int save = JOptionPane.showOptionDialog(new JFrame(), "Confirmer enregistrement", "Enregistrer",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
-        if (save == JOptionPane.YES_OPTION) {
-            Attestation attestation = new Attestation(this, new EditerEntreprise());
+        } else {
             attestation.savePdf(this);
+            lblEnregister.setText("Document bien enregistré");
         }
     }
 }

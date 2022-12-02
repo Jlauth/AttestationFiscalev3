@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AttestationsFiscalesv3:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AttestationsFiscalesv3_jar</output-path>
+    <root id="archive" name="AttestationsFiscalesv3.jar">
+      <element id="module-output" name="AttestationsFiscalesv3" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/jcalendar-1.4/lib/junit-4.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/jcalendar-1.4/lib/jcalendar-1.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/pdfbox/pdfbox-app-2.0.27.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/jcalendar-1.4/lib/jgoodies-common-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/jcalendar-1.4/lib/jgoodies-looks-2.4.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-examples-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-excelant-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-ooxml-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-ooxml-full-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-ooxml-lite-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-scratchpad-5.2.3.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
