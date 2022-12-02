@@ -4,15 +4,12 @@ import view.Creer;
 import view.EditerEntreprise;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-        Creer creer = new Creer();
-        EditerEntreprise editerEntreprise = new EditerEntreprise();
-        new Attestation(creer, editerEntreprise);
-        // true
         Accueil accueil = new Accueil();
         accueil.setVisible(true);
     }

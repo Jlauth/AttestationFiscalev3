@@ -7,26 +7,24 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import view.Creer;
 import view.EditerEntreprise;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.*;
 
 public class Attestation {
 
     static float MARGIN = 50;
-    PDDocument document = new PDDocument();
-    Date date = new Date();
+    public PDDocument document;
 
     public Attestation(Creer creer, EditerEntreprise editerEntreprise) throws IOException {
-
+        document = new PDDocument();
         // Set propriétés du doc
         setDocumentProperties(document);
-
         // Ajout d'une page
         PDPage page = new PDPage(PDRectangle.LETTER);
         document.addPage(page);
@@ -41,12 +39,11 @@ public class Attestation {
         addHeader(document, page, editerEntreprise.getTxtAgrement(), MARGIN, 660);
 
         // Header droit import logo et infos client
-        addImage(document, page, "src/media/logoArkadiaPc-transformed.jpeg", 420, 780); // logo
+        addImage(document, page, "src/media/images/logoArkadiaPc-transformed.jpeg", 420, 780); // logo
         addHeader(document, page, creer.getCmbTitre() + " " + creer.getTxtNomClient() + " " + creer.getTxtPrenomClient(), 420, 660);
         addHeader(document, page, creer.getTxtAdresseClient(), 420, 645);
         addHeader(document, page, creer.getTxtCPClient() + " " + creer.getTxtVilleClient(), 420, 630);
-
-        addHeader(document, page, "le " + creer.getDateAttestation(date), 390, 605);
+        addHeader(document, page, "le " + creer.getDateAttestationFormat(), 390, 605);
 
         // Titre
         addTitle(document, page, "Attestation destinée au Centre des Impôts", 150, 550);
@@ -55,7 +52,7 @@ public class Attestation {
         String p1 = "               Je soussigné " + editerEntreprise.getCmbTitreGerant() + " " + editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant() + ", " +
                 "gérant de l'organisme agréé " + editerEntreprise.getTxtNomEntreprise() + ", certifie que " + creer.getCmbTitre() + " " + creer.getTxtPrenomClient() + " " +
                 creer.getTxtNomClient() + " a bénéficié d'assistance informatique à domicile, service à la personne :";
-        String p2 = "                       Montant total des factures pour l'année  : " + creer.getTxtMontantAttest() + "€";
+        String p2 = "                       Montant total des factures pour l'année " + creer.getAnneeFiscaleFormat() + " : " + creer.getTxtMontantAttest() + "€";
         String p3 = "                       Montant total payé en CESU préfinancé* : 0 €";
         String p4 = "Intervenants : ";
         String p5 = "                       " + editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant();
@@ -78,7 +75,7 @@ public class Attestation {
         addParagraph(document, page, p10, MARGIN, 155);
         addParagraph(document, page, p11, MARGIN, 115);
         // signature gérant
-        addImage(document, page, "src/media/signature.jpg", 280, 150); // signature
+        addImage(document, page, "src/media/images/signature.jpg", 280, 150); // signature
     }
 
     /**
@@ -216,17 +213,13 @@ public class Attestation {
      */
     public void addImage(PDDocument document, PDPage page, String imageName, float x, float y) {
         try {
-            // Get Content Stream for Writing Data
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
-            // Creating PDImageXObject object
             PDImageXObject pdImage = PDImageXObject.createFromFile(imageName, document);
-            // Drawing the image in the PDF document
             if (imageName.equals("src/media/logoArkadiaPc-transformed.jpeg")) {
                 contentStream.drawImage(pdImage, x + 30, y - 90, 110, 80);
             } else {
                 contentStream.drawImage(pdImage, x, y - 100, 200, 70);
             }
-            // Closing the content stream
             contentStream.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -252,15 +245,10 @@ public class Attestation {
            docInformation.setKeywords("ArkadiaPC, attestation, fiscale"); */
     }
 
-    /**
-     * Méthode de sauvegarde du document
-     * Initialisation de la source et nom fichier à sauvegarder
-     */
-    public void save() throws IOException {
-        Creer creer = new Creer();
+    public void savePdf(Creer creer) throws IOException {
         String filePath = "C:\\Users\\Jean\\Documents\\AttestationsFiscalesTest\\";
-        String fileName = "AttestationFiscale-" + creer.getTxtNomClient() +
-                "-" + creer.getTxtPrenomClient() + ".pdf";
+        String fileName = "Attestation-Fiscale-" + creer.getTxtNomClient() +
+                "-" + creer.getTxtPrenomClient() + "-" + creer.getAnneeFiscaleFormat() + ".pdf";
         document.save(filePath + fileName);
         System.out.println("Attestation sauvegardée. Chemin : " + filePath + fileName);
         document.close();

@@ -1,7 +1,6 @@
 package view;
 
 import com.toedter.calendar.JDateChooser;
-import com.toedter.calendar.JYearChooser;
 import model.Attestation;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
@@ -12,14 +11,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.Serial;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Creer extends JFrame {
 
@@ -33,8 +32,8 @@ public class Creer extends JFrame {
     private final JTextField txtVilleClient;
     private final JTextField txtCpClient;
     private final JTextField txtMontantAttest;
-    private final JYearChooser anneeFiscale;
-    private JDateChooser dateAttestation;
+    private final JDateChooser anneeFiscale;
+    private final JDateChooser dateAttestation;
 
     /**
      * Getters
@@ -43,44 +42,47 @@ public class Creer extends JFrame {
         if (cmbTitreClient.getSelectedItem() == "Aucun titre") {
             return "";
         }
-        return "Monsieur";
+        return Objects.requireNonNull(cmbTitreClient.getSelectedItem()).toString();
     }
 
     public String getTxtNomClient() {
-        return "Lauth";
+        return txtNomClient.getText();
     }
 
     public String getTxtPrenomClient() {
-        return "Jean";
+        return txtPrenomClient.getText();
     }
 
     public String getTxtAdresseClient() {
-        return "18, rue Leconte de Lisle";
+        return txtAdresseClient.getText();
     }
 
     public String getTxtVilleClient() {
-        return "Romans-sur-Isère";
+        return txtVilleClient.getText();
     }
 
     public String getTxtCPClient() {
-        return "26100";
+        return txtCpClient.getText();
     }
 
     public String getTxtMontantAttest() {
         return txtMontantAttest.getText();
     }
 
-    /**
-     * Méthode de formatage de la date d'attestation
-     */
 
-    public String getDateAttestation(Date date){
+    public String getDateAttestationFormat() {
+        Date date = dateAttestation.getDateEditor().getDate();
         OffsetDateTime odt = date.toInstant().atOffset(ZoneOffset.UTC);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(String.format("EEEE d'%s' MMMM uuuu", dateSuffix(odt.getDayOfMonth())), Locale.FRANCE);
-        return  odt.format(formatter);
+        return odt.format(formatter);
     }
 
-
+    public String getAnneeFiscaleFormat() {
+        Date date = anneeFiscale.getDateEditor().getDate();
+        OffsetDateTime odtAnneeFisc = date.toInstant().atOffset(ZoneOffset.UTC);
+        DateTimeFormatter afFormater = DateTimeFormatter.ofPattern("yyyy", Locale.FRANCE);
+        return odtAnneeFisc.format(afFormater);
+    }
 
     /**
      * Création du Frame
@@ -184,7 +186,9 @@ public class Creer extends JFrame {
         lblAnneeFiscale.setBounds(250, 160, 120, 14);
         contentPane.add(lblAnneeFiscale);
 
-        anneeFiscale = new JYearChooser();
+        anneeFiscale = new JDateChooser();
+        anneeFiscale.setDateFormatString("yyyy");
+        anneeFiscale.setDate(Calendar.getInstance(Locale.FRANCE).getTime());
         anneeFiscale.setBounds(250, 180, 150, 20);
         contentPane.add(anneeFiscale);
         anneeFiscale.setEnabled(true);
@@ -198,7 +202,7 @@ public class Creer extends JFrame {
 
         dateAttestation = new JDateChooser();
         dateAttestation.setDateFormatString("dd MMMM yyyy");
-        dateAttestation.setCalendar(Calendar.getInstance()); // set la date du jour dans le frame
+        dateAttestation.setDate(Calendar.getInstance(Locale.FRANCE).getTime());
         dateAttestation.setBounds(250, 230, 150, 20);
         contentPane.add(dateAttestation);
         dateAttestation.setEnabled(true);
@@ -214,7 +218,7 @@ public class Creer extends JFrame {
         btnEnregistrer.addActionListener(e -> {
             try {
                 isInputValid();
-            } catch (InvalidFormatException | IOException e1) {
+            } catch (InvalidFormatException | IOException | ParseException e1) {
                 e1.printStackTrace();
             }
         });
@@ -260,17 +264,7 @@ public class Creer extends JFrame {
      * Méthode de test sur le jour du mois
      */
     static String dateSuffix(final int dayOfMonth) {
-        return (dayOfMonth % 30 == 1 || dayOfMonth == 1) ? "er" : "";
-    }
-
-    /**
-     * Vérification de la validité des champs
-     */
-    public void isInputValid() throws InvalidFormatException, IOException {
-       /* if (("".equals(getTxtNom())) || "".equals(getTxtPrenom()) || "".equals(getTxtVille()) || "".equals(getTxtAdresse()) || "".equals(getTxtMontantAttest())) {
-            JOptionPane.showMessageDialog(contentPane, "Merci de remplir tous les champs");
-        } else {*/
-        save();
+        return (dayOfMonth % 31 == 1 || dayOfMonth == 1) ? "er" : " ";
     }
 
     /**
@@ -284,14 +278,24 @@ public class Creer extends JFrame {
     }
 
     /**
+     * Vérification de la validité des champs
+     */
+    public void isInputValid() throws InvalidFormatException, IOException, ParseException {
+        if (("".equals(getTxtNomClient())) || "".equals(getTxtPrenomClient()) || "".equals(getTxtVilleClient()) || "".equals(getTxtAdresseClient()) ||
+                "".equals(getTxtCPClient()) || "".equals(getDateAttestationFormat()) || "".equals(getAnneeFiscaleFormat()) || "".equals(getTxtMontantAttest())) {
+            JOptionPane.showMessageDialog(new JOptionPane(), "Merci de remplir tous les champs");
+        } else saveUI();
+    }
+
+    /**
      * Sauvegarde de l'application
      */
-    public void save() throws IOException {
-        Attestation attestation = new Attestation(this, new EditerEntreprise());
-        int n = JOptionPane.showOptionDialog(new JFrame(), "Confirmer enregistrement", "Enregistrer",
+    public void saveUI() throws IOException, ParseException {
+        int save = JOptionPane.showOptionDialog(new JFrame(), "Confirmer enregistrement", "Enregistrer",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
-        if (n == JOptionPane.YES_OPTION) {
-            attestation.save();
+        if (save == JOptionPane.YES_OPTION) {
+            Attestation attestation = new Attestation(this, new EditerEntreprise());
+            attestation.savePdf(this);
         }
     }
 }
