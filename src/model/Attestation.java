@@ -88,6 +88,9 @@ public class Attestation {
      * @param y        position y hauteur
      */
     public void addTitle(PDDocument document, PDPage page, String myTitle, float x, float y) throws IOException {
+        float yCordinate = page.getCropBox().getUpperRightY() - 245;
+        float startX = page.getCropBox().getLowerLeftX() + 150;
+        float endX = page.getCropBox().getUpperRightX() - 111;
         PDFont pdFont = PDType0Font.load(document, new File("src/media/font/Calibri Bold.TTF"));
         float fontSize = 20;
         try {
@@ -97,6 +100,9 @@ public class Attestation {
             contentStream.newLineAtOffset(x, y);
             contentStream.showText(myTitle);
             contentStream.endText();
+            contentStream.moveTo(startX, yCordinate);
+            contentStream.lineTo(endX, yCordinate);
+            contentStream.stroke();
             contentStream.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -215,7 +221,7 @@ public class Attestation {
         try {
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
             PDImageXObject pdImage = PDImageXObject.createFromFile(imageName, document);
-            if (imageName.equals("src/media/logoArkadiaPc-transformed.jpeg")) {
+            if (imageName.equals("src/media/images/logoArkadiaPc-transformed.jpeg")) {
                 contentStream.drawImage(pdImage, x + 30, y - 90, 110, 80);
             } else {
                 contentStream.drawImage(pdImage, x, y - 100, 200, 70);

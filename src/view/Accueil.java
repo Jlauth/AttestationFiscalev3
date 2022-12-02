@@ -12,7 +12,7 @@ public class Accueil extends JFrame {
           Création Accueil
          */
         JPanel accueilPane = new JPanel();
-        setTitle("Creer Fiscale");
+        setTitle("Accueil - Gestion des attestations fiscales Arkadia PC");
         setBackground(new Color(37,88,167));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(100, 100, 600, 600);
@@ -24,7 +24,7 @@ public class Accueil extends JFrame {
         /*
           Bouton nouvelle attestation
          */
-        JButton btnAttestation = new JButton("Nouvelle attestation");
+        JButton btnAttestation = new JButton("Créer attestation");
         btnAttestation.setFont(new Font("Tahoma", Font.BOLD, 14));
         btnAttestation.setBounds(175, 100, 200, 50);
         accueilPane.add(btnAttestation);

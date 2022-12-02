@@ -93,7 +93,7 @@ public class Creer extends JFrame {
           Création Creer
          */
         JPanel contentPane = new JPanel();
-        setTitle("Creer Fiscale");
+        setTitle("Création attestation fiscale - Gestion des attestations fiscales Arkadia PC");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 600, 600);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -281,10 +281,10 @@ public class Creer extends JFrame {
      * Vérification de la validité des champs
      */
     public void isInputValid() throws InvalidFormatException, IOException, ParseException {
-        if (("".equals(getTxtNomClient())) || "".equals(getTxtPrenomClient()) || "".equals(getTxtVilleClient()) || "".equals(getTxtAdresseClient()) ||
+        /*if (("".equals(getTxtNomClient())) || "".equals(getTxtPrenomClient()) || "".equals(getTxtVilleClient()) || "".equals(getTxtAdresseClient()) ||
                 "".equals(getTxtCPClient()) || "".equals(getDateAttestationFormat()) || "".equals(getAnneeFiscaleFormat()) || "".equals(getTxtMontantAttest())) {
             JOptionPane.showMessageDialog(new JOptionPane(), "Merci de remplir tous les champs");
-        } else saveUI();
+        } else */saveUI();
     }
 
     /**
