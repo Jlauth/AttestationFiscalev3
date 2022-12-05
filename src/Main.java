@@ -1,15 +1,15 @@
-import connect.ClientDB;
+import connect.CustomerDb;
 import connect.Connect;
-import view.Accueil;
+import view.Home;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Accueil accueil = new Accueil();
-        accueil.setVisible(true);
+        Home home = new Home();
+        home.setVisible(true);
         new Connect();
-        ClientDB clientDB = new ClientDB();
-        clientDB.selectAll();
+        CustomerDb customerDb = new CustomerDb();
+        customerDb.selectAll();
     }
 }

@@ -1,10 +1,10 @@
 package connect;
 
-import view.Creer;
+import view.CreateCertificate;
 
 import java.sql.*;
 
-public class ClientDB {
+public class CustomerDb {
 
     private Connection connect() {
         String url = "jdbc:sqlite:src/connect/arkadiapc.db";
@@ -37,18 +37,18 @@ public class ClientDB {
         }
     }
 
-    public void insertClient(Creer creer) {
+    public void insertClient(CreateCertificate createCertificate) {
         String sql = "INSERT INTO client(titre,nom,prenom,adresse,ville,codepostal,montantattest,anneefiscale,dateattest) VALUES(?,?,?,?,?,?,?,?,?)";
         try (Connection connection = this.connect(); PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, creer.getCmbTitre());
-            pstmt.setString(2, creer.getTxtNomClient());
-            pstmt.setString(3, creer.getTxtPrenomClient());
-            pstmt.setString(4, creer.getTxtAdresseClient());
-            pstmt.setString(5, creer.getTxtVilleClient());
-            pstmt.setString(6, creer.getTxtCPClient());
-            pstmt.setInt(7, Integer.parseInt(creer.getTxtMontantAttest()));
-            pstmt.setString(8, creer.getAnneeFiscaleFormat());
-            pstmt.setString(9, creer.getDateAttestationFormat());
+            pstmt.setString(1, createCertificate.getCustomerTitleCmb());
+            pstmt.setString(2, createCertificate.getCustomerNameTxt());
+            pstmt.setString(3, createCertificate.getCustomerFirstnameTxt());
+            pstmt.setString(4, createCertificate.getCustomerAddressTxt());
+            pstmt.setString(5, createCertificate.getCustomerCityTxt());
+            pstmt.setString(6, createCertificate.getCustomerZipTxt());
+            pstmt.setInt(7, Integer.parseInt(createCertificate.getCertificateAmountTxt()));
+            pstmt.setString(8, createCertificate.getFiscalYearTxt());
+            pstmt.setString(9, createCertificate.getDateAttestationFormat());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

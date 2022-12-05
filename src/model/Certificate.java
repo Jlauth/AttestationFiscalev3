@@ -8,8 +8,8 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import view.Creer;
-import view.EditerEntreprise;
+import view.CreateCertificate;
+import view.EditCompany;
 
 import javax.swing.*;
 import java.io.File;
@@ -21,13 +21,13 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Objects;
 
-public class Attestation {
+public class Certificate {
 
     static float MARGIN = 50;
     private final PDDocument document = new PDDocument();
 
 
-    public Attestation(Creer creer, EditerEntreprise editerEntreprise) throws IOException {
+    public Certificate(CreateCertificate createCertificate, EditCompany editCompany) throws IOException {
         // Set propriétés du doc
         setDocumentProperties();
         // Ajout d'une page
@@ -36,38 +36,38 @@ public class Attestation {
 
         // Header partie gauche infos entreprise
         // TODO prévoir insert logo
-        addHeader(document, page, editerEntreprise.getTxtNomEntreprise(), MARGIN, 750);
-        addHeader(document, page, editerEntreprise.getTxtAdresseEntreprise(), MARGIN, 735);
-        addHeader(document, page, editerEntreprise.getTxtCpEntreprise() + " " + editerEntreprise.getTxtVilleEntreprise(), MARGIN, 720);
-        addHeader(document, page, editerEntreprise.getTxtTelEntreprise(), MARGIN, 705);
-        addHeader(document, page, editerEntreprise.getTxtMailEntreprise(), MARGIN, 690);
-        addHeader(document, page, editerEntreprise.getTxtAgrement(), MARGIN, 660);
+        addHeader(document, page, editCompany.getTxtNomEntreprise(), MARGIN, 750);
+        addHeader(document, page, editCompany.getTxtAdresseEntreprise(), MARGIN, 735);
+        addHeader(document, page, editCompany.getTxtCpEntreprise() + " " + editCompany.getTxtVilleEntreprise(), MARGIN, 720);
+        addHeader(document, page, editCompany.getTxtTelEntreprise(), MARGIN, 705);
+        addHeader(document, page, editCompany.getTxtMailEntreprise(), MARGIN, 690);
+        addHeader(document, page, editCompany.getTxtAgrement(), MARGIN, 660);
 
         // Header droit import logo et infos client
         addImage(document, page, "src/media/images/logoArkadiaPc-transformed.jpeg", 440, 780); // logo
-        addHeader(document, page, creer.getCmbTitre() + " " + creer.getTxtNomClient() + " " + creer.getTxtPrenomClient(), 440, 660);
-        addHeader(document, page, creer.getTxtAdresseClient(), 440, 645);
-        addHeader(document, page, creer.getTxtCPClient() + " " + creer.getTxtVilleClient(), 440, 630);
-        addHeader(document, page, "le " + creer.getDateAttestationFormat(), 440, 605);
+        addHeader(document, page, createCertificate.getCustomerTitleCmb() + " " + createCertificate.getCustomerNameTxt() + " " + createCertificate.getCustomerFirstnameTxt(), 440, 660);
+        addHeader(document, page, createCertificate.getCustomerAddressTxt(), 440, 645);
+        addHeader(document, page, createCertificate.getCustomerZipTxt() + " " + createCertificate.getCustomerCityTxt(), 440, 630);
+        addHeader(document, page, "le " + createCertificate.getDateAttestationFormat(), 440, 605);
 
         // Titre
-        addTitle(document, page, "Attestation destinée au Centre des Impôts", 150, 550);
+        addTitle(document, page, "Certificate destinée au Centre des Impôts", 150, 550);
 
         // Body
-        String p1 = "               Je soussigné " + editerEntreprise.getCmbTitreGerant() + " " + editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant() + ", " +
-                "gérant de l'organisme agréé " + editerEntreprise.getTxtNomEntreprise() + ", certifie que " + creer.getCmbTitre() + " " + creer.getTxtPrenomClient() + " " +
-                creer.getTxtNomClient() + " a bénéficié d'assistance informatique à domicile, service à la personne :";
-        String p2 = "                       Montant total des factures pour l'année " + creer.getAnneeFiscaleFormat() + " : " + creer.getTxtMontantAttest() + "€";
+        String p1 = "               Je soussigné " + editCompany.getCmbTitreGerant() + " " + editCompany.getTxtPrenomGerant() + " " + editCompany.getTxtNomGerant() + ", " +
+                "gérant de l'organisme agréé " + editCompany.getTxtNomEntreprise() + ", certifie que " + createCertificate.getCustomerTitleCmb() + " " + createCertificate.getCustomerFirstnameTxt() + " " +
+                createCertificate.getCustomerNameTxt() + " a bénéficié d'assistance informatique à domicile, service à la personne :";
+        String p2 = "                       Montant total des factures pour l'année " + createCertificate.getFiscalYearTxt() + " : " + createCertificate.getCertificateAmountTxt() + "€";
         String p3 = "                       Montant total payé en CESU préfinancé* : 0 €";
         String p4 = "Intervenants : ";
-        String p5 = "                       " + editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant();
+        String p5 = "                       " + editCompany.getTxtPrenomGerant() + " " + editCompany.getTxtNomGerant();
         String p6 = "Prestations : ";
         String p7 = "               Les sommes perçues pour financer les services à la personne sont à déduire de la valeur indiquée précédemment.";
         String p8 = "               La déclaration engage la responsabilité du seul contribuable";
         String p9 = "* Pour les personnes utilisant le Chèque Emploi Service Universel, seul le montant financé personnellement est déductible. " +
                 "Une attestation est délivrée par les établissements préfinançant le CESU.";
         String p10 = "              Fait pour valoir ce que de droit,";
-        String p11 = editerEntreprise.getTxtPrenomGerant() + " " + editerEntreprise.getTxtNomGerant() + ", gérant.";
+        String p11 = editCompany.getTxtPrenomGerant() + " " + editCompany.getTxtNomGerant() + ", gérant.";
         addParagraph(document, page, p1, MARGIN, 480);
         addParagraph(document, page, p2, MARGIN, 430);
         addParagraph(document, page, p3, MARGIN, 415);
@@ -244,18 +244,18 @@ public class Attestation {
         // TODO par défaut créateur, auteur, titre, sujet
         PDDocumentInformation docInformation = this.document.getDocumentInformation();
         docInformation.setAuthor("Araujo Adelino");
-        docInformation.setTitle("Attestation destinée au Centre des Impôts");
+        docInformation.setTitle("Certificate destinée au Centre des Impôts");
         docInformation.setCreator("ArkadiaPC");
-        docInformation.setSubject("Attestation fiscale");
+        docInformation.setSubject("Certificate fiscale");
         docInformation.setCreationDate(Calendar.getInstance(Locale.FRANCE));
     }
 
-    public boolean savePdf(Creer creer) throws IOException {
+    public boolean savePdf(CreateCertificate createCertificate) throws IOException {
         JFrame parentFrame = new JFrame();
         JFileChooser fileChooser = new JFileChooser();
         FileOutputStream outputStream;
         fileChooser.setDialogTitle("Enregistrer sous");
-        fileChooser.setSelectedFile(new File("Attestation-Fiscale-" + creer.getAnneeFiscaleFormat() + "-" + creer.getTxtNomClient() + "-" + creer.getTxtPrenomClient() + ".pdf"));
+        fileChooser.setSelectedFile(new File("Certificate-Fiscale-" + createCertificate.getFiscalYearTxt() + "-" + createCertificate.getCustomerNameTxt() + "-" + createCertificate.getCustomerFirstnameTxt() + ".pdf"));
         int userSelection = fileChooser.showSaveDialog(parentFrame);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();

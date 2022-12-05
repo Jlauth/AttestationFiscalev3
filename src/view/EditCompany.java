@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class EditerEntreprise extends JFrame {
+public class EditCompany extends JFrame {
 
     private JTextField txtNomEntreprise;
     private JTextField txtAgrement;
@@ -56,7 +56,7 @@ public class EditerEntreprise extends JFrame {
         return "Monsieur";
     }
 
-    public EditerEntreprise() {
+    public EditCompany() {
 
          /*
           Editer entreprise
@@ -176,15 +176,15 @@ public class EditerEntreprise extends JFrame {
         });
 
         /*
-          Btn Accueil
+          Btn Home
          */
-        JButton btnAccueil = new JButton("Accueil");
+        JButton btnAccueil = new JButton("Home");
         btnAccueil.setFont(new Font("Tahoma", Font.BOLD, 14));
         btnAccueil.setBounds(450, 10, 120, 50);
         editerEntreprisePane.add(btnAccueil);
         btnAccueil.addActionListener(e -> {
-            Accueil accueil = new Accueil();
-            accueil.setVisible(true);
+            Home home = new Home();
+            home.setVisible(true);
             dispose();
         });
 
