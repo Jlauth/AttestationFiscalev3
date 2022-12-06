@@ -91,9 +91,8 @@ public class Home extends JFrame {
 
         JButton logoutBtn = new JButton(logoutIcon);
         logoutBtn.setBounds(600, 490, 50, 50);
-        logoutBtn.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, logoutIcon));
+
         logoutBtn.setToolTipText("Quitter");
-        logoutBtn.setContentAreaFilled(false);
         homePane.add(logoutBtn);
         logoutBtn.addActionListener(e -> close());
     }

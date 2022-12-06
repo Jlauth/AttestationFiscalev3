@@ -25,7 +25,7 @@ public class Certificate {
 
     static float MARGIN = 50;
     private final PDDocument document = new PDDocument();
-
+    String p9;
 
     public Certificate(CreateCertificate createCertificate, EditCompany editCompany) throws IOException {
         // Set propriétés du doc
@@ -44,14 +44,14 @@ public class Certificate {
         addHeader(document, page, editCompany.getTxtAgrement(), MARGIN, 660);
 
         // Header droit import logo et infos client
-        addImage(document, page, "src/media/images/logoArkadiaPc-transformed.jpeg", 440, 780); // logo
-        addHeader(document, page, createCertificate.getCustomerTitleCmb() + " " + createCertificate.getCustomerNameTxt() + " " + createCertificate.getCustomerFirstnameTxt(), 440, 660);
-        addHeader(document, page, createCertificate.getCustomerAddressTxt(), 440, 645);
-        addHeader(document, page, createCertificate.getCustomerZipTxt() + " " + createCertificate.getCustomerCityTxt(), 440, 630);
-        addHeader(document, page, "le " + createCertificate.getDateAttestationFormat(), 440, 605);
+        addImage(document, page, "src/media/images/logoArkadiaPc-transformed.jpeg", 450, 780); // logo
+        addHeader(document, page, createCertificate.getCustomerTitleAbbrevCmb() + " " + createCertificate.getCustomerNameTxt() + " " + createCertificate.getCustomerFirstnameTxt(), 400, 660);
+        addHeader(document, page, createCertificate.getCustomerAddressTxt(), 400, 645);
+        addHeader(document, page, createCertificate.getCustomerZipTxt() + " " + createCertificate.getCustomerCityTxt(), 400, 630);
+        addHeader(document, page, "le " + createCertificate.getDateAttestationFormat(), 370, 605);
 
         // Titre
-        addTitle(document, page, "Certificate destinée au Centre des Impôts", 150, 550);
+        addTitle(document, page, "Attestation destinée au Centre des Impôts", 150, 550);
 
         // Body
         String p1 = "               Je soussigné " + editCompany.getCmbTitreGerant() + " " + editCompany.getTxtPrenomGerant() + " " + editCompany.getTxtNomGerant() + ", " +
@@ -64,23 +64,33 @@ public class Certificate {
         String p6 = "Prestations : ";
         String p7 = "               Les sommes perçues pour financer les services à la personne sont à déduire de la valeur indiquée précédemment.";
         String p8 = "               La déclaration engage la responsabilité du seul contribuable";
-        String p9 = "* Pour les personnes utilisant le Chèque Emploi Service Universel, seul le montant financé personnellement est déductible. " +
+        p9 = "* Pour les personnes utilisant le Chèque Emploi Service Universel, seul le montant financé personnellement est déductible. " +
                 "Une attestation est délivrée par les établissements préfinançant le CESU.";
         String p10 = "              Fait pour valoir ce que de droit,";
         String p11 = editCompany.getTxtPrenomGerant() + " " + editCompany.getTxtNomGerant() + ", gérant.";
-        addParagraph(document, page, p1, MARGIN, 480);
-        addParagraph(document, page, p2, MARGIN, 430);
-        addParagraph(document, page, p3, MARGIN, 415);
-        addParagraph(document, page, p4, MARGIN, 385);
-        addParagraph(document, page, p5, MARGIN, 355);
-        addParagraph(document, page, p6, MARGIN, 325);
-        addParagraph(document, page, p7, MARGIN, 295);
-        addParagraph(document, page, p8, MARGIN, 255);
-        addParagraph(document, page, p9, MARGIN, 225);
-        addParagraph(document, page, p10, MARGIN, 155);
-        addParagraph(document, page, p11, MARGIN, 115);
+
+
+        float y = 480;
+        addParagraph(document, page, p1, MARGIN, y);
+        int p1Length = p1.length();
+        if (p1Length < 200) {
+            y = y - 50;
+        } else {
+            y = y - 70;
+        }
+        addParagraph(document, page, p2, MARGIN, y);
+        addParagraph(document, page, p3, MARGIN, y - 15);//415
+        addParagraph(document, page, p4, MARGIN, y - 45);//385
+        addParagraph(document, page, p5, MARGIN, y - 75);//355
+        addParagraph(document, page, p6, MARGIN, y - 105);//325
+        addParagraph(document, page, p7, MARGIN, y - 135);//295
+        addParagraph(document, page, p8, MARGIN, y - 175);//255
+        addParagraph(document, page, p9, MARGIN, y - 205);//225
+        addParagraph(document, page, p10, MARGIN, y - 260);//155
+        addParagraph(document, page, p11, MARGIN, y - 305);//115
+
         // signature gérant
-        addImage(document, page, "src/media/images/signature.jpg", 280, 150); // signature
+        addImage(document, page, "src/media/images/signature.jpg", MARGIN+250, y-285);
     }
 
     /**
@@ -134,7 +144,7 @@ public class Certificate {
             }
             contentStream.setFont(pdfFont, fontSize);
             contentStream.newLineAtOffset(x, y);
-            contentStream.showText(myText);
+            contentStream.showText(myText.trim());
             contentStream.endText();
             contentStream.close();
         } catch (IOException e) {
@@ -155,15 +165,14 @@ public class Certificate {
         PDFont pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Regular.ttf"));
         float fontSize = 12;
         try {
-            if (Objects.equals(myText, "* Pour les personnes utilisant le Chèque Emploi Service Universel, seul le montant financé personnellement est déductible. " +
-                    "Une attestation est délivrée par les établissements préfinançant le CESU.")) {
-                fontSize = 10;
+            if (Objects.equals(myText, p9)) {
+                fontSize = 11;
                 pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Italic.ttf"));
             }
             float leading = 1.5f * fontSize;
             PDRectangle mediabox = page.getMediaBox();
-            float margin = MARGIN / 2;
-            float width = mediabox.getWidth() - (2 * margin);
+            float margin = MARGIN/2;
+            float width = mediabox.getWidth() - margin*2;
             float startX = mediabox.getLowerLeftX() + margin;
             float startY = mediabox.getUpperRightY() - margin;
             if (x > 0) {
@@ -197,6 +206,7 @@ public class Certificate {
                     lastSpace = spaceIndex;
                 }
             }
+
             // Get sur le stream pour écrire les données
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
             contentStream.beginText();
@@ -244,18 +254,21 @@ public class Certificate {
         // TODO par défaut créateur, auteur, titre, sujet
         PDDocumentInformation docInformation = this.document.getDocumentInformation();
         docInformation.setAuthor("Araujo Adelino");
-        docInformation.setTitle("Certificate destinée au Centre des Impôts");
+        docInformation.setTitle("Attestation destinée au Centre des Impôts");
         docInformation.setCreator("ArkadiaPC");
-        docInformation.setSubject("Certificate fiscale");
+        docInformation.setSubject("Attestation fiscale");
         docInformation.setCreationDate(Calendar.getInstance(Locale.FRANCE));
     }
 
+    /**
+     * Méthode de sauvegarde du pdf
+     */
     public boolean savePdf(CreateCertificate createCertificate) throws IOException {
         JFrame parentFrame = new JFrame();
         JFileChooser fileChooser = new JFileChooser();
         FileOutputStream outputStream;
         fileChooser.setDialogTitle("Enregistrer sous");
-        fileChooser.setSelectedFile(new File("Certificate-Fiscale-" + createCertificate.getFiscalYearTxt() + "-" + createCertificate.getCustomerNameTxt() + "-" + createCertificate.getCustomerFirstnameTxt() + ".pdf"));
+        fileChooser.setSelectedFile(new File("Attestation-Fiscale-" + createCertificate.getFiscalYearTxt() + "-" + createCertificate.getCustomerNameTxt() + "-" + createCertificate.getCustomerFirstnameTxt() + ".pdf"));
         int userSelection = fileChooser.showSaveDialog(parentFrame);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToSave = fileChooser.getSelectedFile();

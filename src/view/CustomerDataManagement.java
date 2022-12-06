@@ -5,12 +5,38 @@ import java.awt.*;
 
 public class CustomerDataManagement extends JFrame {
 
+    private JPanel customerDataManagementPane;
+    private JList list;
+    private String editCustomerCmb;
+
+    public JPanel getCustomerDataManagementPane() {
+        return customerDataManagementPane;
+    }
+
+    public String getList() {
+        return list.toString();
+    }
+
+    public void setList(JList list){
+        this.list = list;
+    }
+
+    public String getEditCustomerCmb() {
+        return editCustomerCmb;
+    }
+
+    public void setEditCustomerCmb(String editCustomerCmb) {
+        this.editCustomerCmb = editCustomerCmb;
+    }
+
+
+
     public CustomerDataManagement(){
 
          /*
           Gestion données client
          */
-        JPanel customerDataManagementPane = new JPanel();
+        customerDataManagementPane = new JPanel();
         setTitle("Gestion des données client - Arkadia PC");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 700, 720);
@@ -26,11 +52,22 @@ public class CustomerDataManagement extends JFrame {
         customerDataLbl.setHorizontalAlignment(SwingConstants.CENTER);
         customerDataManagementPane.add(customerDataLbl);
 
+        /*
+         Création de la liste
+         */
+        JList list = new JList();
+        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        list.setVisibleRowCount(-1);
+        JScrollPane listScroller = new JScrollPane(list);
+        listScroller.setPreferredSize(new Dimension(250, 80));
 
-
-
-
-
+        /*
+         Cmb
+         */
+        JComboBox<Object> editCustomerCmb = new JComboBox<>();
+        editCustomerCmb.setModel(new DefaultComboBoxModel<>());
+        editCustomerCmb.setPreferredSize(new Dimension(250, 80));
         /*
          Btn Home
          */

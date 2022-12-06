@@ -1,7 +1,6 @@
 package view;
 
 import com.toedter.calendar.JDateChooser;
-import connect.CustomerDb;
 import model.Certificate;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
@@ -36,11 +35,21 @@ public class CreateCertificate extends JFrame {
     /**
      * Getters
      */
+    public String getCustomerTitleAbbrevCmb() {
+        return switch (Objects.requireNonNull(customerTitleCmb.getSelectedItem()).toString()) {
+            case "Madame" -> "Mme";
+            case "Monsieur" -> "Mr";
+            case "Mademoiselle" -> "Mlle";
+            default -> "";
+        };
+    }
+
     public String getCustomerTitleCmb() {
-        if (customerTitleCmb.getSelectedItem() == "Aucun titre") {
+        if(customerTitleCmb.getSelectedItem()=="Aucun titre"){
             return "";
+        }else{
+            return Objects.requireNonNull(customerTitleCmb.getSelectedItem()).toString();
         }
-        return Objects.requireNonNull(customerTitleCmb.getSelectedItem()).toString();
     }
 
     public String getCustomerNameTxt() {
@@ -218,7 +227,6 @@ public class CreateCertificate extends JFrame {
         saveBtn.setBounds(50, 550, 150, 40);
         saveBtn.setForeground(new Color(37, 88, 167));
         createPane.add(saveBtn);
-        // Méthode isInputValid() lors de l'event clic button enregistrer
         saveBtn.addActionListener(e -> {
             try {
                 isInputValid();
@@ -256,7 +264,7 @@ public class CreateCertificate extends JFrame {
           Bouton Logout
          */
         ImageIcon logoutIcon = new ImageIcon("src/media/images/logout.png");
-        Image newLogoutImg = logoutIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH );
+        Image newLogoutImg = logoutIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         logoutIcon.setImage(newLogoutImg);
 
         JButton logoutBtn = new JButton(logoutIcon);
@@ -296,21 +304,21 @@ public class CreateCertificate extends JFrame {
      */
     public void isInputValid() throws InvalidFormatException, IOException, ParseException {
         Certificate certificate = new Certificate(this, new EditCompany());
-        if (("".equals(getCustomerNameTxt())) || "".equals(getCustomerFirstnameTxt()) || "".equals(getCustomerCityTxt()) || "".equals(getCustomerAddressTxt()) ||
+        /*if (("".equals(getCustomerNameTxt())) || "".equals(getCustomerFirstnameTxt()) || "".equals(getCustomerCityTxt()) || "".equals(getCustomerAddressTxt()) ||
                 "".equals(getCustomerZipTxt()) || "".equals(getDateAttestationFormat()) || "".equals(getFiscalYearTxt()) || "".equals(getCertificateAmountTxt())) {
             JOptionPane.showMessageDialog(new JOptionPane(), "Merci de remplir tous les champs");
+        } else {*/
+        if (certificate.savePdf(this)) {
+            //CustomerDb customerDb = new CustomerDb();
+            //customerDb.addCustomer(this);
+            saveLbl.setText("Attestation enregistrée.");
+            saveLbl.setForeground(Color.GREEN);
         } else {
-            if (certificate.savePdf(this)) {
-                CustomerDb customerDb = new CustomerDb();
-                customerDb.insertClient(this);
-                saveLbl.setText("Attestation enregistrée.");
-                saveLbl.setForeground(Color.GREEN);
-            } else {
-                saveLbl.setText("Cette attestation a déjà été enregistrée dans le dossier ciblé");
-                saveLbl.setForeground(Color.RED);
-            }
+            saveLbl.setText("Cette attestation a déjà été enregistrée dans le dossier ciblé");
+            saveLbl.setForeground(Color.RED);
         }
     }
+
 
     /**
      * Fermeture de l'app
