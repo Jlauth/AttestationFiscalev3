@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class CustomerDataManagement extends JFrame {
 
-    private JPanel customerDataManagementPane;
+    private final JPanel customerDataManagementPane;
     private JList list;
     private String editCustomerCmb;
 
