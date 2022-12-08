@@ -1,10 +1,15 @@
 package view;
 
 import com.toedter.calendar.JDateChooser;
+import connect.CustomerDB;
 import model.Certificate;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.io.IOException;
 import java.text.ParseException;
@@ -17,10 +22,10 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class CreateCertificate extends JFrame {
-
-    /**
-     * Variables du JFrame
-     */
+    private static JButton logoutBtn;
+    private final Border lineBorder = BorderFactory.createLineBorder(new Color(229, 83, 80));
+    private final Insets insets = lineBorder.getBorderInsets(logoutBtn);
+    private final EmptyBorder emptyBorder = new EmptyBorder(insets);
     private final JComboBox<String> customerTitleCmb;
     private final JTextField customerNameTxt;
     private final JTextField customerFirstnameTxt;
@@ -45,9 +50,9 @@ public class CreateCertificate extends JFrame {
     }
 
     public String getCustomerTitleCmb() {
-        if(customerTitleCmb.getSelectedItem()=="Aucun titre"){
+        if (customerTitleCmb.getSelectedItem() == "Aucun titre") {
             return "";
-        }else{
+        } else {
             return Objects.requireNonNull(customerTitleCmb.getSelectedItem()).toString();
         }
     }
@@ -203,6 +208,7 @@ public class CreateCertificate extends JFrame {
 
         fiscalYearTxt = new JTextField();
         fiscalYearTxt.setBounds(230, 465, 150, 25);
+        fiscalYearTxt.getText();
         createPane.add(fiscalYearTxt);
 
         /*
@@ -263,18 +269,38 @@ public class CreateCertificate extends JFrame {
         /*
           Bouton Logout
          */
-        ImageIcon logoutIcon = new ImageIcon("src/media/images/logout.png");
-        Image newLogoutImg = logoutIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        logoutIcon.setImage(newLogoutImg);
-
-        JButton logoutBtn = new JButton(logoutIcon);
-        logoutBtn.setBounds(600, 600, 50, 50);
-        logoutBtn.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, logoutIcon));
-        logoutBtn.setForeground(new Color(37, 88, 167));
-        logoutBtn.setToolTipText("Quitter");
-        createPane.add(logoutBtn);
+        // transfo icon vers image afin de pouvoir la scale aux dimensions logoutBtn
+        ImageIcon logoutIcon = new ImageIcon("src/media/images/logoutbis.png");
+        Image logoutImg = logoutIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        logoutIcon.setImage(logoutImg);
+        // logoutBtn
+        logoutBtn = new JButton(logoutIcon);
+        logoutBtn.setBounds(600, 490, 50, 50);
+        logoutBtn.setBorder(emptyBorder);
+        logoutBtn.setFocusPainted(false);
+        logoutBtn.setOpaque(false);
         logoutBtn.setContentAreaFilled(false);
+        logoutBtn.setToolTipText("Quitter");
+        // action close
         logoutBtn.addActionListener(e -> close());
+        // action changement du visuel
+        logoutBtn.getModel().addChangeListener(new ChangeListener(){
+            /**
+             * Invoked when the target of the listener has changed its state.
+             *
+             * @param e a ChangeEvent object
+             */
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ButtonModel model = (ButtonModel) e.getSource();
+                if(model.isRollover()){
+                    logoutBtn.setBorder(lineBorder);
+                } else {
+                    logoutBtn.setBorder(emptyBorder);
+                }
+            }
+        });
+        createPane.add(logoutBtn);
     }
 
     /**
@@ -309,16 +335,13 @@ public class CreateCertificate extends JFrame {
             JOptionPane.showMessageDialog(new JOptionPane(), "Merci de remplir tous les champs");
         } else {*/
         if (certificate.savePdf(this)) {
-            //CustomerDb customerDb = new CustomerDb();
+            CustomerDB customerDb = new CustomerDB();
             //customerDb.addCustomer(this);
-            saveLbl.setText("Attestation enregistrée.");
-            saveLbl.setForeground(Color.GREEN);
         } else {
             saveLbl.setText("Cette attestation a déjà été enregistrée dans le dossier ciblé");
             saveLbl.setForeground(Color.RED);
         }
     }
-
 
     /**
      * Fermeture de l'app
@@ -327,6 +350,8 @@ public class CreateCertificate extends JFrame {
         int n = JOptionPane.showOptionDialog(new JFrame(), "Fermer application?", "Quitter", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
         if (n == JOptionPane.YES_OPTION) {
             dispose();
+            saveLbl.setText("Attestation enregistrée.");
+            saveLbl.setForeground(Color.GREEN);
         }
     }
 }

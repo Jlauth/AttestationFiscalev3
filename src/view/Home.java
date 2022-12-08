@@ -1,9 +1,18 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 public class Home extends JFrame {
+
+    private static JButton logoutBtn;
+    private final Border lineBorder = BorderFactory.createLineBorder(new Color(229, 83, 80));
+    private final Insets insets = lineBorder.getBorderInsets(logoutBtn);
+    private final EmptyBorder emptyBorder = new EmptyBorder(insets);
 
     public Home() {
 
@@ -11,90 +20,85 @@ public class Home extends JFrame {
           Création Home
          */
         JPanel homePane = new JPanel();
-        setTitle("Home - Gestion des attestations fiscales Arkadia PC");
+        setTitle("Accueil - Gestion des attestations fiscales Arkadia PC");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setBounds(100, 100, 700, 600);
+        setBounds(100, 100, 600, 400);
         homePane.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, new Color(37, 88, 167)));
         setContentPane(homePane);
         setLocationRelativeTo(null);
         homePane.setLayout(null);
 
         JLabel homeLbl = new JLabel();
-        homeLbl.setBounds(30, 30, 600, 30);
+        homeLbl.setBounds(0, 30, 600, 30);
         homeLbl.setFont(new Font("Tahoma", Font.BOLD, 18));
         homeLbl.setText("Bienvenue dans votre gestionnaire d'attestations fiscales");
         homeLbl.setHorizontalAlignment(SwingConstants.CENTER);
         homePane.add(homeLbl);
 
-        JTextArea homeNewAttestLbl = new JTextArea();
-        homeNewAttestLbl.setBounds(50, 130, 600, 50);
-        homeNewAttestLbl.setFont(new Font("Tahoma", Font.BOLD, 13));
-        homeNewAttestLbl.setText("A partir de cette page d'accueil,  vous avez accès à la création d'une nouvelle attestation");
-        homeNewAttestLbl.setLineWrap(true);
-        homePane.add(homeNewAttestLbl);
-
-        JTextArea editHomeLbl = new JTextArea();
-        editHomeLbl.setBounds(50, 300, 600, 30);
-        editHomeLbl.setFont(new Font("Tahoma", Font.BOLD, 13));
-        editHomeLbl.setText("Ainsi qu'à l'édition d'un de vos clients ou de vos données d'entreprise");
-        homePane.add(editHomeLbl);
-
         /*
           Bouton nouvelle attestation
          */
-        JButton certificateBtn = new JButton("Créer attestation");
-        certificateBtn.setFont(new Font("Tahoma", Font.BOLD, 14));
-        certificateBtn.setBounds(100, 180, 180, 50);
-        certificateBtn.setForeground(new Color(37, 88, 167));
+        JButton certificateBtn = new JButton("Nouvelle attestation");
+        certificateBtn.setFont(new Font("Tahoma", Font.BOLD, 15));
+        certificateBtn.setBounds(150, 110, 300, 60);
         certificateBtn.setHorizontalAlignment(SwingConstants.CENTER);
-        homePane.add(certificateBtn);
+        certificateBtn.setToolTipText("Création d'une nouvelle attestation fiscale");
         certificateBtn.addActionListener(e -> {
             CreateCertificate createCertificate = new CreateCertificate();
             createCertificate.setVisible(true);
             dispose();
         });
-
-        /*
-          Bouton éditer client
-         */
-        JButton editCustomerBtn = new JButton("Editer client");
-        editCustomerBtn.setFont(new Font("Tahoma", Font.BOLD, 14));
-        editCustomerBtn.setBounds(100, 350, 180, 50);
-        editCustomerBtn.setForeground(new Color(37, 88, 167));
-        homePane.add(editCustomerBtn);
-        editCustomerBtn.addActionListener(e -> {
-            EditCustomer editCustomer = new EditCustomer();
-            editCustomer.setVisible(true);
-            dispose();
-        });
+        homePane.add(certificateBtn);
 
          /*
           Bouton éditer entreprise
          */
-        JButton editCompanyBtn = new JButton("Editer entreprise");
-        editCompanyBtn.setFont(new Font("Tahoma", Font.BOLD, 14));
-        editCompanyBtn.setBounds(350, 350, 180, 50);
-        editCompanyBtn.setForeground(new Color(37, 88, 167));
-        homePane.add(editCompanyBtn);
+        JButton editCompanyBtn = new JButton("Editer informations entreprise");
+        editCompanyBtn.setFont(new Font("Tahoma", Font.BOLD, 15));
+        editCompanyBtn.setBounds(150, 190, 300, 60);
+        editCompanyBtn.setToolTipText("Edition des informations de votre entreprise");
         editCompanyBtn.addActionListener(e -> {
             EditCompany editCompany = new EditCompany();
             editCompany.setVisible(true);
             dispose();
         });
+        homePane.add(editCompanyBtn);
 
          /*
           Btn Quitter
          */
-        ImageIcon logoutIcon = new ImageIcon("src/media/images/logout.png");
-        Image logoutImg = logoutIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH );
+        // transfo icon vers image afin de pouvoir la scale aux dimensions logoutBtn
+        ImageIcon logoutIcon = new ImageIcon("src/media/images/logoutbis.png");
+        Image logoutImg = logoutIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         logoutIcon.setImage(logoutImg);
-
-        JButton logoutBtn = new JButton(logoutIcon);
-        logoutBtn.setBounds(600, 490, 50, 50);
-
+        // logoutBtn
+        logoutBtn = new JButton(logoutIcon);
+        logoutBtn.setBounds(510, 290, 60, 60);
+        logoutBtn.setBorder(emptyBorder);
+        logoutBtn.setFocusPainted(false);
+        logoutBtn.setOpaque(false);
+        logoutBtn.setContentAreaFilled(false);
         logoutBtn.setToolTipText("Quitter");
-        homePane.add(logoutBtn);
+        // action close
         logoutBtn.addActionListener(e -> close());
+        // action changement du visuel
+        logoutBtn.getModel().addChangeListener(new ChangeListener() {
+            /**
+             * Invoked when the target of the listener has changed its state.
+             *
+             * @param e a ChangeEvent object
+             */
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ButtonModel model = (ButtonModel) e.getSource();
+                if (model.isRollover()) {
+                    logoutBtn.setBorder(lineBorder);
+                } else {
+                    logoutBtn.setBorder(emptyBorder);
+                }
+            }
+        });
+        homePane.add(logoutBtn);
     }
 
     public void close() {

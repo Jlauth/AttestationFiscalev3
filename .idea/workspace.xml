@@ -9,13 +9,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Optimisation de l'UI.">
+    <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Rectification mise en page Attestation.">
+      <change afterPath="$PROJECT_DIR$/src/media/images/logoutbis.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/connect/CustomerDb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connect/CustomerDb.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/connect/arkadiapc.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/connect/arkadiapc.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AttestationsFiscalesv3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/AttestationsFiscalesv3.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/connect/CustomerDb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connect/CustomerDB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Certificate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Certificate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/CreateCertificate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/CreateCertificate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/CustomerDataManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/CustomerDataManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/EditCompany.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/EditCompany.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Home.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +45,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2IBAST3mW9ieu6wkvuvktwfRquf" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -57,12 +59,16 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;ToolWindowRun.ShowToolbar&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/env/envJava/pluggins/jdatepicker/jdatepicker-1.3.4.jar&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Program Files/env/envJava/pluggins/pdfbox/pdfbox-app-3.0.0-alpha3.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;
@@ -144,7 +150,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670276813287</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Rectification mise en page Attestation.">
+      <created>1670346991925</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1670346991925</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers>
       <GitHub url="https://github.com">
         <option name="repoAuthor" value="Jlauth" />
@@ -186,7 +199,8 @@
     <MESSAGE value="Configuration du choix de dossier d'enregistrement." />
     <MESSAGE value="Création de la db, des tables. Données importées depuis créer." />
     <MESSAGE value="Optimisation de l'UI." />
-    <option name="LAST_COMMIT_MESSAGE" value="Optimisation de l'UI." />
+    <MESSAGE value="Rectification mise en page Attestation." />
+    <option name="LAST_COMMIT_MESSAGE" value="Rectification mise en page Attestation." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
@@ -194,5 +208,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/AttestationsFiscalesv3$AttestationsFiscales.ic" NAME="AttestationsFiscales Coverage Results" MODIFIED="1669839934112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/AttestationsFiscalesv3$App.ic" NAME="App Coverage Results" MODIFIED="1670396551512" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

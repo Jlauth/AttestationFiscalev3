@@ -5,7 +5,7 @@ import view.CreateCertificate;
 import java.awt.*;
 import java.sql.*;
 
-public class CustomerDb extends Component {
+public class CustomerDB extends Component {
 
     private Connection connect() {
         String url = "jdbc:sqlite:src/connect/arkadiapc.db";
