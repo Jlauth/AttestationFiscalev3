@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="3" />
+  </component>
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="AttestationsFiscalesv3:jar" />
@@ -9,16 +12,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Rectification mise en page Attestation.">
-      <change afterPath="$PROJECT_DIR$/src/media/images/logoutbis.png" afterDir="false" />
+    <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Rectification mise en page Attestation p1 p2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AttestationsFiscalesv3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/AttestationsFiscalesv3.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/connect/CustomerDb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connect/CustomerDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/connect/CustomerDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connect/CustomerDB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Certificate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Certificate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/CreateCertificate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/CreateCertificate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/EditCompany.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/EditCompany.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Home.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +69,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;
   }
 }</component>
@@ -157,7 +156,21 @@
       <option name="project" value="LOCAL" />
       <updated>1670346991925</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Rectification mise en page Attestation p1 p2">
+      <created>1670520186535</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1670520186535</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Rectification mise en page Attestation p1 p2">
+      <created>1670520219087</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1670520219087</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers>
       <GitHub url="https://github.com">
         <option name="repoAuthor" value="Jlauth" />
@@ -200,7 +213,8 @@
     <MESSAGE value="Création de la db, des tables. Données importées depuis créer." />
     <MESSAGE value="Optimisation de l'UI." />
     <MESSAGE value="Rectification mise en page Attestation." />
-    <option name="LAST_COMMIT_MESSAGE" value="Rectification mise en page Attestation." />
+    <MESSAGE value="Rectification mise en page Attestation p1 p2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rectification mise en page Attestation p1 p2" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

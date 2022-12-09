@@ -22,9 +22,10 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class CreateCertificate extends JFrame {
-    private static JButton logoutBtn;
-    private final Border lineBorder = BorderFactory.createLineBorder(new Color(229, 83, 80));
-    private final Insets insets = lineBorder.getBorderInsets(logoutBtn);
+    private static JButton logoutBtn, homeBtn, customerBtn, newCustomerBtn;
+    private final Border lineBorderLogout = BorderFactory.createLineBorder(new Color(229, 83, 80));
+    private final Border lineBorderHome = BorderFactory.createLineBorder(new Color (0, 138, 173));
+    private final Insets insets = lineBorderLogout.getBorderInsets(logoutBtn);
     private final EmptyBorder emptyBorder = new EmptyBorder(insets);
     private final JComboBox<String> customerTitleCmb;
     private final JTextField customerNameTxt;
@@ -40,14 +41,6 @@ public class CreateCertificate extends JFrame {
     /**
      * Getters
      */
-    public String getCustomerTitleAbbrevCmb() {
-        return switch (Objects.requireNonNull(customerTitleCmb.getSelectedItem()).toString()) {
-            case "Madame" -> "Mme";
-            case "Monsieur" -> "Mr";
-            case "Mademoiselle" -> "Mlle";
-            default -> "";
-        };
-    }
 
     public String getCustomerTitleCmb() {
         if (customerTitleCmb.getSelectedItem() == "Aucun titre") {
@@ -94,9 +87,9 @@ public class CreateCertificate extends JFrame {
         Création attestation
          */
         JPanel createPane = new JPanel();
-        setTitle("Nouvelle attestation fiscale - Arkadia PC");
+        setTitle("Attestation fiscale - Arkadia PC");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 700, 720);
+        setBounds(100, 100, 750, 820);
         createPane.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, new Color(37, 88, 167)));
         setContentPane(createPane);
         setLocationRelativeTo(null);
@@ -104,19 +97,19 @@ public class CreateCertificate extends JFrame {
 
         JLabel createLbl = new JLabel();
         createLbl.setBounds(30, 30, 600, 30);
-        createLbl.setFont(new Font("Tahoma", Font.BOLD, 18));
+        createLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
         createLbl.setText("Création d'une nouvelle attestation fiscale");
         createLbl.setHorizontalAlignment(SwingConstants.CENTER);
         createPane.add(createLbl);
 
         JLabel createCustomInfoLbl = new JLabel();
-        createCustomInfoLbl.setBounds(50, 110, 600, 30);
+        createCustomInfoLbl.setBounds(50, 210, 600, 30);
         createCustomInfoLbl.setFont(new Font("Tahoma", Font.BOLD, 13));
         createCustomInfoLbl.setText("Informations client");
         createPane.add(createCustomInfoLbl);
 
         JLabel createCertifInfoLbl = new JLabel();
-        createCertifInfoLbl.setBounds(50, 390, 600, 30);
+        createCertifInfoLbl.setBounds(50, 490, 600, 30);
         createCertifInfoLbl.setFont(new Font("Tahoma", Font.BOLD, 13));
         createCertifInfoLbl.setText("Informations attestation");
         createPane.add(createCertifInfoLbl);
@@ -125,89 +118,89 @@ public class CreateCertificate extends JFrame {
           Titre
          */
         JLabel customerTitleLbl = new JLabel("Titre");
-        customerTitleLbl.setBounds(50, 150, 120, 14);
+        customerTitleLbl.setBounds(50, 250, 120, 14);
         createPane.add(customerTitleLbl);
 
         customerTitleCmb = new JComboBox<>();
         customerTitleCmb.setModel(new DefaultComboBoxModel<>(new String[]{"Madame", "Mademoiselle", "Monsieur", "Aucun titre"}));
-        customerTitleCmb.setBounds(50, 175, 150, 25);
+        customerTitleCmb.setBounds(50, 275, 150, 25);
         createPane.add(customerTitleCmb);
 
         /*
           Nom
          */
         JLabel customerNameLbl = new JLabel("Nom");
-        customerNameLbl.setBounds(230, 150, 120, 14);
+        customerNameLbl.setBounds(230, 250, 120, 14);
         createPane.add(customerNameLbl);
 
         customerNameTxt = new JTextField();
-        customerNameTxt.setBounds(230, 175, 150, 25);
+        customerNameTxt.setBounds(230, 275, 150, 25);
         createPane.add(customerNameTxt);
 
         /*
           Prénom
          */
         JLabel customerFirstnameLbl = new JLabel("Prénom");
-        customerFirstnameLbl.setBounds(410, 150, 120, 14);
+        customerFirstnameLbl.setBounds(410, 250, 120, 14);
         createPane.add(customerFirstnameLbl);
 
         customerFirstnameTxt = new JTextField();
-        customerFirstnameTxt.setBounds(410, 175, 150, 25);
+        customerFirstnameTxt.setBounds(410, 275, 150, 25);
         createPane.add(customerFirstnameTxt);
 
         /*
           Adresse
          */
         JLabel customerAddressLbl = new JLabel("Adresse");
-        customerAddressLbl.setBounds(50, 230, 120, 14);
+        customerAddressLbl.setBounds(50, 330, 120, 14);
         createPane.add(customerAddressLbl);
 
         customerAddressTxt = new JTextField();
-        customerAddressTxt.setBounds(50, 255, 510, 25);
+        customerAddressTxt.setBounds(50, 355, 510, 25);
         createPane.add(customerAddressTxt);
 
         /*
           Ville
          */
         JLabel customerCityLbl = new JLabel("Ville");
-        customerCityLbl.setBounds(50, 300, 120, 14);
+        customerCityLbl.setBounds(50, 400, 120, 14);
         createPane.add(customerCityLbl);
 
         customerCityTxt = new JTextField();
-        customerCityTxt.setBounds(50, 325, 330, 25);
+        customerCityTxt.setBounds(50, 425, 330, 25);
         createPane.add(customerCityTxt);
 
         /*
           Code Postal
          */
         JLabel customerZipLbl = new JLabel("Code Postal");
-        customerZipLbl.setBounds(410, 300, 120, 14);
+        customerZipLbl.setBounds(410, 400, 120, 14);
         createPane.add(customerZipLbl);
 
         customerZipTxt = new JTextField();
-        customerZipTxt.setBounds(410, 325, 150, 25);
+        customerZipTxt.setBounds(410, 425, 150, 25);
         createPane.add(customerZipTxt);
 
         /*
          Montant attestation
         */
         JLabel certificateAmountLbl = new JLabel("Montant total");
-        certificateAmountLbl.setBounds(50, 440, 120, 14);
+        certificateAmountLbl.setBounds(50, 540, 120, 14);
         createPane.add(certificateAmountLbl);
 
         certificateAmountTxt = new JTextField();
-        certificateAmountTxt.setBounds(50, 465, 150, 25);
+        certificateAmountTxt.setBounds(50, 565, 150, 25);
         createPane.add(certificateAmountTxt);
 
         /*
           Choix exercice fiscal
          */
         JLabel fiscalYearLbl = new JLabel("Année fiscale");
-        fiscalYearLbl.setBounds(230, 440, 120, 14);
+        fiscalYearLbl.setBounds(230, 540, 120, 14);
         createPane.add(fiscalYearLbl);
 
         fiscalYearTxt = new JTextField();
-        fiscalYearTxt.setBounds(230, 465, 150, 25);
+        fiscalYearTxt.setBounds(230, 565, 150, 25);
         fiscalYearTxt.getText();
         createPane.add(fiscalYearTxt);
 
@@ -215,22 +208,22 @@ public class CreateCertificate extends JFrame {
           Date attestation
         */
         JLabel certificateDateLbl = new JLabel("Date d'émission");
-        certificateDateLbl.setBounds(410, 440, 120, 14);
+        certificateDateLbl.setBounds(410, 540, 120, 14);
         createPane.add(certificateDateLbl);
 
         certificateDate = new JDateChooser();
         certificateDate.setDateFormatString("dd MMMM yyyy");
         certificateDate.setDate(Calendar.getInstance(Locale.FRANCE).getTime());
-        certificateDate.setBounds(410, 465, 150, 25);
+        certificateDate.setBounds(410, 565, 150, 25);
         createPane.add(certificateDate);
         certificateDate.setEnabled(true);
 
         /*
-          Bouton enregistrer
+          Bouton crée attestation
          */
         JButton saveBtn = new JButton("Créer");
-        saveBtn.setFont(new Font("Tahoma", Font.BOLD, 16));
-        saveBtn.setBounds(50, 550, 150, 40);
+        saveBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
+        saveBtn.setBounds(50, 650, 200, 50);
         saveBtn.setForeground(new Color(37, 88, 167));
         createPane.add(saveBtn);
         saveBtn.addActionListener(e -> {
@@ -243,7 +236,7 @@ public class CreateCertificate extends JFrame {
 
         saveLbl = new JLabel();
         saveLbl.setFont(new Font("Tahoma", Font.BOLD, 12));
-        saveLbl.setBounds(50, 610, 500, 50);
+        saveLbl.setBounds(50, 710, 500, 50);
         saveLbl.setText("Enregistre également les données client");
         createPane.add(saveLbl);
 
@@ -251,31 +244,49 @@ public class CreateCertificate extends JFrame {
          Btn Home
          */
         ImageIcon homeIcon = new ImageIcon("src/media/images/home.png");
-        Image newHomeImg = homeIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        Image newHomeImg = homeIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         homeIcon.setImage(newHomeImg);
 
-        JButton homeBtn = new JButton(homeIcon);
-        homeBtn.setBounds(600, 10, 50, 50);
-        homeBtn.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, homeIcon));
+        homeBtn = new JButton(homeIcon);
+        homeBtn.setBounds(650, 10, 60, 60);
         homeBtn.setToolTipText("Page d'accueil");
-        createPane.add(homeBtn);
+        homeBtn.setBorder(emptyBorder);
+        homeBtn.setFocusPainted(false);
+        homeBtn.setOpaque(false);
         homeBtn.setContentAreaFilled(false);
-        homeBtn.addActionListener(e -> {
-            Home home = new Home();
-            home.setVisible(true);
-            dispose();
+        homeBtn.setToolTipText("Accueil");
+        // action changement du visuel
+        homeBtn.getModel().addChangeListener(new ChangeListener(){
+            /**
+             * Invoked when the target of the listener has changed its state.
+             *
+             * @param e a ChangeEvent object
+             */
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ButtonModel model = (ButtonModel) e.getSource();
+                if(model.isRollover()){
+                    homeBtn.setBorder(lineBorderHome);
+                } else {
+                    homeBtn.setBorder(emptyBorder);
+                }
+            }
         });
+        homeBtn.addActionListener(e -> {
+           home();
+        });
+        createPane.add(homeBtn);
 
         /*
           Bouton Logout
          */
         // transfo icon vers image afin de pouvoir la scale aux dimensions logoutBtn
         ImageIcon logoutIcon = new ImageIcon("src/media/images/logoutbis.png");
-        Image logoutImg = logoutIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        Image logoutImg = logoutIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         logoutIcon.setImage(logoutImg);
         // logoutBtn
         logoutBtn = new JButton(logoutIcon);
-        logoutBtn.setBounds(600, 490, 50, 50);
+        logoutBtn.setBounds(650, 700, 60, 60);
         logoutBtn.setBorder(emptyBorder);
         logoutBtn.setFocusPainted(false);
         logoutBtn.setOpaque(false);
@@ -294,13 +305,33 @@ public class CreateCertificate extends JFrame {
             public void stateChanged(ChangeEvent e) {
                 ButtonModel model = (ButtonModel) e.getSource();
                 if(model.isRollover()){
-                    logoutBtn.setBorder(lineBorder);
+                    logoutBtn.setBorder(lineBorderLogout);
                 } else {
                     logoutBtn.setBorder(emptyBorder);
                 }
             }
         });
         createPane.add(logoutBtn);
+
+        /*
+        Bouton nouveau client
+         */
+        newCustomerBtn = new JButton("Nouveau client");
+        newCustomerBtn.setToolTipText("Crée un client en même temps que l'attestation");
+        newCustomerBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
+        newCustomerBtn.setBounds(50, 120, 200, 50);
+        newCustomerBtn.setForeground(new Color(37, 88, 167));
+        createPane.add(newCustomerBtn);
+
+        /*
+        Bouton client existant
+         */
+        customerBtn = new JButton("Client existant");
+        customerBtn.setToolTipText("Permet la sélection d'un client enregistré en base de données");
+        customerBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
+        customerBtn.setBounds(360, 120, 200, 50);
+        customerBtn.setForeground(new Color(37, 88, 167));
+        createPane.add(customerBtn);
     }
 
     /**
@@ -344,10 +375,23 @@ public class CreateCertificate extends JFrame {
     }
 
     /**
+     * Retour Accueil
+     */
+    private void home(){
+        int n = JOptionPane.showOptionDialog(new JFrame(), "Retourner à l'accueil?", "Accueil", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
+        if (n == JOptionPane.YES_OPTION) {
+            Home home = new Home();
+            home.setVisible(true);
+            dispose();
+        }
+    }
+    /**
      * Fermeture de l'app
      */
     private void close() {
-        int n = JOptionPane.showOptionDialog(new JFrame(), "Fermer application?", "Quitter", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
+        int n = JOptionPane.showOptionDialog(new JFrame(), "Fermer application?", "Quitter", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
         if (n == JOptionPane.YES_OPTION) {
             dispose();
             saveLbl.setText("Attestation enregistrée.");

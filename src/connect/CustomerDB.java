@@ -41,7 +41,7 @@ public class CustomerDB extends Component {
     public void addCustomer(CreateCertificate createCertificate) {
         String sql = "INSERT INTO client(titre,nom,prenom,adresse,ville,codepostal,montantattest,anneefiscale,dateattest) VALUES(?,?,?,?,?,?,?,?,?)";
         try (Connection connection = this.connect(); PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, createCertificate.getCustomerTitleAbbrevCmb());
+            pstmt.setString(1, createCertificate.getCustomerTitleCmb());
             pstmt.setString(2, createCertificate.getCustomerNameTxt());
             pstmt.setString(3, createCertificate.getCustomerFirstnameTxt());
             pstmt.setString(4, createCertificate.getCustomerAddressTxt());
