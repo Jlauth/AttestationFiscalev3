@@ -93,11 +93,30 @@ public class Certificate {
          */
         p1 = tab() + "Je soussigné " + editCompany.getHolderTitleCmb() + " " + editCompany.getHolderFirstnameTxt() + " " + editCompany.getHolderNameTxt() + ", " +
                 "gérant de l'organisme agréé " + editCompany.getCompanyNameTxt() + ", certifie que " + createCertificate.getCustomerTitleCmb() + " "
-                + createCertificate.getCustomerFirstnameTxt() + " " + createCertificate.getCustomerNameTxt() + " a bénéficié d'assistance informatique à domicile, service à la personne :";
-        addParagraph(document, page, p1, MARGIN, 500);
-        String p1test = tab() + "Je soussigné " + editCompany.getHolderTitleCmb() + " " + editCompany.getHolderFirstnameTxt() + " " + editCompany.getHolderNameTxt() + ", " +
-                "gérant de l'organisme agréé " + editCompany.getCompanyNameTxt() + ", certifie que ";
-        out.println("Test sur la taille de p1 jusqu'à ... que  : " + p1test.length());
+                + createCertificate.getCustomerFirstnameTxt() + " " + createCertificate.getCustomerNameTxt() +
+                " a bénéficié d'assistance informatique à domicile, service à la personne :";
+
+        String p1L200 = tab() + "Je soussigné " + editCompany.getHolderTitleCmb() + " " + editCompany.getHolderFirstnameTxt() + " " + editCompany.getHolderNameTxt() + ", " +
+                "gérant de l'organisme agréé " + editCompany.getCompanyNameTxt() + ", certifie que " + createCertificate.getCustomerTitleCmb() + " "
+                + createCertificate.getCustomerFirstnameTxt() + " " + createCertificate.getCustomerNameTxt() +
+                " a bénéficié d'assistance informatique à domicile, service à la ";
+
+        String p1L210 = tab() + "Je soussigné " + editCompany.getHolderTitleCmb() + " " + editCompany.getHolderFirstnameTxt() + " " + editCompany.getHolderNameTxt() + ", " +
+                "gérant de l'organisme agréé " + editCompany.getCompanyNameTxt() + ", certifie que " + createCertificate.getCustomerTitleCmb() + " "
+                + createCertificate.getCustomerFirstnameTxt() + " " + createCertificate.getCustomerNameTxt() +
+                " a bénéficié d'assistance informatique à domicile,";
+
+        if (p1.length() >= 200 && p1.length() < 210) {
+            String p200 = "personne :";
+            addParagraph(document, page, p1L200, MARGIN, 500);
+            addParagraph(document, page, p200, MARGIN, 465);
+        } else if (p1.length() >= 210) {
+            String p210 = "service à la personne :";
+            addParagraph(document, page, p1L210, MARGIN, 500);
+            addParagraph(document, page, p210, MARGIN, 465);
+        } else {
+            addParagraph(document, page, p1, MARGIN, 500);
+        }
         /*
          Déconstruction du paragraphe afin d'ajouter fiscal year et certificate amount en bold
          Insertion dans la ligne p2 des différents strings formatés en bold
@@ -153,7 +172,7 @@ public class Certificate {
         setDocumentProperties();
 
         out.println("La taille totale de p1 : " + getP1Length());
-        out.println("La taille totale de p2 : " + getP2Length());
+        //out.println("La taille totale de p2 : " + getP2Length());
     }
 
     /**
@@ -262,10 +281,11 @@ public class Certificate {
                 String subString = myText.substring(0, spaceIndex); // ajout du substring
                 float size = fontSize * pdfFont.getStringWidth(subString) / 1000; // calcul de la taille du substring
                 if (size > width) { // si la taille de la ligne est supérieure à la taille du mediabox
-                    if (lastSpace < 0)
+                    if (lastSpace < 0) {
                         lastSpace = spaceIndex;
+                    }
                     subString = myText.substring(0, lastSpace);
-                    lines.add(subString); // ajout du premier substring dans la ligne
+                    lines.add(subString); // ajout d'une ligne complète
                     myText = myText.substring(lastSpace).trim();
                     lastSpace = -1;
                 } else if (spaceIndex == myText.length()) {
@@ -389,29 +409,40 @@ public class Certificate {
      */
     private String tab() {
         return "            ";
+        /*
+          String s1 ="\u0020";
+                  byte[] charset = s1.getBytes("UTF-8");
+                  return new String(charset, "UTF-8");
+         */
     }
 
     /**
-     * Méthodes dev, comptage total p1 p2
+     * Méthode dev comptage total p1
      */
     public String getP1Length() {
         return String.valueOf(p1.length());
     }
 
+    /**
+     * Méthode dev comptage total p2
+     */
     public String getP2Length() {
         String pDDots = " : ";
         String pMoney = " €";
         return String.valueOf(p2.length() + pDDots.length() + pAmount.length() + pMoney.length());
     }
 
+    /**
+     * Calcul de la taille du header droit afin d'auto aligner à gauche
+     */
     public float calcSize() {
         float nameFirstN = tCustTitleNameFirstN.length();
         float address = tCustAddress.length();
         float zipCity = tCustZipCity.length();
         int tCustSize = (int) Math.max(zipCity, (Math.max(nameFirstN, address)));
-        out.println("Taille la plus grande entre les 3 dans la méthode : " +tCustSize);
-        if(tCustSize > 40){
-            return 400 - (tCustSize*2);
+        //out.println("Taille la plus grande entre les 3 dans la méthode : " + tCustSize);
+        if (tCustSize > 40) {
+            return 400 - (tCustSize * 2);
         } else if (tCustSize > 30) {
             return 400 - tCustSize;
         } else {

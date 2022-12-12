@@ -8,7 +8,6 @@ public class Main {
     public static void main(String[] args) {
 
         Home home = new Home();
-        EditCompany editCompany = new EditCompany();
         home.setVisible(true);
         new Connect();
         CustomerDB customerDb = new CustomerDB();

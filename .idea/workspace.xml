@@ -12,9 +12,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Rectification mise en page Attestation p1 p2">
+    <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Résolution bugs d'affichage (bold, marge infos client)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/connect/CustomerDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connect/CustomerDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Certificate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Certificate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/CreateCertificate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/CreateCertificate.java" afterDir="false" />
     </list>
@@ -170,7 +170,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670520219087</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Résolution bugs d'affichage (bold, marge infos client)">
+      <created>1670604068382</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1670604068382</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers>
       <GitHub url="https://github.com">
         <option name="repoAuthor" value="Jlauth" />
@@ -214,7 +221,8 @@
     <MESSAGE value="Optimisation de l'UI." />
     <MESSAGE value="Rectification mise en page Attestation." />
     <MESSAGE value="Rectification mise en page Attestation p1 p2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rectification mise en page Attestation p1 p2" />
+    <MESSAGE value="Résolution bugs d'affichage (bold, marge infos client)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Résolution bugs d'affichage (bold, marge infos client)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

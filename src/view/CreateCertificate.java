@@ -16,10 +16,9 @@ import java.text.ParseException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Objects;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
+import java.util.*;
 
 public class CreateCertificate extends JFrame {
     private static JButton logoutBtn, homeBtn, customerBtn, newCustomerBtn;
@@ -343,17 +342,22 @@ public class CreateCertificate extends JFrame {
     public String getDateAttestationFormat() {
         Date date = certificateDate.getDateEditor().getDate();
         OffsetDateTime odt = date.toInstant().atOffset(ZoneOffset.UTC);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(String.format("EEEE d'%s' MMMM uuuu", dateSuffix(odt.getDayOfMonth())), Locale.FRANCE);
-        return odt.format(formatter);
+        return odt.format(FORMATTER_DATE_ATTEST);
     }
 
-    /**
-     * Méthode de test sur le jour du mois
-     */
-    static String dateSuffix(final int dayOfMonth) {
-        return (dayOfMonth % 31 == 1 || dayOfMonth == 1) ? "er" : " ";
-    }
+    private static final DateTimeFormatter FORMATTER_DATE_ATTEST = new DateTimeFormatterBuilder()
+            .appendPattern("EEEE ")
+            .appendText(ChronoField.DAY_OF_MONTH, getDayOfMonthMap())
+            .appendPattern(" MMMM yyyy")
+            .toFormatter(Locale.FRANCE);
 
+    public static Map<Long, String> getDayOfMonthMap(){
+        Map<Long, String> dayOfMonthMap = new HashMap<>(Map.of(1L, "1er"));
+        for(long d = 2; d <= 31; d++){
+            dayOfMonthMap.put(d, String.valueOf(d));
+        }
+        return dayOfMonthMap;
+    }
     /**
      * Vérification de la validité des champs
      * Si champs et dossier de destination valide créé le pdf
