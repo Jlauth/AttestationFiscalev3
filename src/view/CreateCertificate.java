@@ -23,7 +23,7 @@ import java.util.*;
 public class CreateCertificate extends JFrame {
     private static JButton logoutBtn, homeBtn, customerBtn, newCustomerBtn;
     private final Border lineBorderLogout = BorderFactory.createLineBorder(new Color(229, 83, 80));
-    private final Border lineBorderHome = BorderFactory.createLineBorder(new Color (0, 138, 173));
+    private final Border lineBorderHome = BorderFactory.createLineBorder(new Color(0, 138, 173));
     private final Insets insets = lineBorderLogout.getBorderInsets(logoutBtn);
     private final EmptyBorder emptyBorder = new EmptyBorder(insets);
     private final JComboBox<String> customerTitleCmb;
@@ -48,6 +48,16 @@ public class CreateCertificate extends JFrame {
             return Objects.requireNonNull(customerTitleCmb.getSelectedItem()).toString();
         }
     }
+
+    public String getCustomerTitleCmbShorted() {
+        return switch (Objects.requireNonNull(customerTitleCmb.getSelectedItem()).toString()) {
+            case "Madame" -> "Mme";
+            case "Monsieur" -> "Mr";
+            case "Mademoiselle" -> "Mlle";
+            default -> "";
+        };
+    }
+
 
     public String getCustomerNameTxt() {
         return customerNameTxt.getText();
@@ -95,7 +105,7 @@ public class CreateCertificate extends JFrame {
         createPane.setLayout(null);
 
         JLabel createLbl = new JLabel();
-        createLbl.setBounds(30, 30, 600, 30);
+        createLbl.setBounds(30, 90, 600, 30);
         createLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
         createLbl.setText("Création d'une nouvelle attestation fiscale");
         createLbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -236,7 +246,7 @@ public class CreateCertificate extends JFrame {
         saveLbl = new JLabel();
         saveLbl.setFont(new Font("Tahoma", Font.BOLD, 12));
         saveLbl.setBounds(50, 710, 500, 50);
-        saveLbl.setText("Enregistre également les données client");
+        //saveLbl.setText("Enregistre également les données client");
         createPane.add(saveLbl);
 
         /*
@@ -255,7 +265,7 @@ public class CreateCertificate extends JFrame {
         homeBtn.setContentAreaFilled(false);
         homeBtn.setToolTipText("Accueil");
         // action changement du visuel
-        homeBtn.getModel().addChangeListener(new ChangeListener(){
+        homeBtn.getModel().addChangeListener(new ChangeListener() {
             /**
              * Invoked when the target of the listener has changed its state.
              *
@@ -264,7 +274,7 @@ public class CreateCertificate extends JFrame {
             @Override
             public void stateChanged(ChangeEvent e) {
                 ButtonModel model = (ButtonModel) e.getSource();
-                if(model.isRollover()){
+                if (model.isRollover()) {
                     homeBtn.setBorder(lineBorderHome);
                 } else {
                     homeBtn.setBorder(emptyBorder);
@@ -272,7 +282,7 @@ public class CreateCertificate extends JFrame {
             }
         });
         homeBtn.addActionListener(e -> {
-           home();
+            home();
         });
         createPane.add(homeBtn);
 
@@ -294,7 +304,7 @@ public class CreateCertificate extends JFrame {
         // action close
         logoutBtn.addActionListener(e -> close());
         // action changement du visuel
-        logoutBtn.getModel().addChangeListener(new ChangeListener(){
+        logoutBtn.getModel().addChangeListener(new ChangeListener() {
             /**
              * Invoked when the target of the listener has changed its state.
              *
@@ -303,7 +313,7 @@ public class CreateCertificate extends JFrame {
             @Override
             public void stateChanged(ChangeEvent e) {
                 ButtonModel model = (ButtonModel) e.getSource();
-                if(model.isRollover()){
+                if (model.isRollover()) {
                     logoutBtn.setBorder(lineBorderLogout);
                 } else {
                     logoutBtn.setBorder(emptyBorder);
@@ -320,6 +330,7 @@ public class CreateCertificate extends JFrame {
         newCustomerBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
         newCustomerBtn.setBounds(50, 120, 200, 50);
         newCustomerBtn.setForeground(new Color(37, 88, 167));
+        newCustomerBtn.setVisible(false);
         createPane.add(newCustomerBtn);
 
         /*
@@ -330,6 +341,7 @@ public class CreateCertificate extends JFrame {
         customerBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
         customerBtn.setBounds(360, 120, 200, 50);
         customerBtn.setForeground(new Color(37, 88, 167));
+        customerBtn.setVisible(false);
         createPane.add(customerBtn);
     }
 
@@ -351,13 +363,14 @@ public class CreateCertificate extends JFrame {
             .appendPattern(" MMMM yyyy")
             .toFormatter(Locale.FRANCE);
 
-    public static Map<Long, String> getDayOfMonthMap(){
+    public static Map<Long, String> getDayOfMonthMap() {
         Map<Long, String> dayOfMonthMap = new HashMap<>(Map.of(1L, "1er"));
-        for(long d = 2; d <= 31; d++){
+        for (long d = 2; d <= 31; d++) {
             dayOfMonthMap.put(d, String.valueOf(d));
         }
         return dayOfMonthMap;
     }
+
     /**
      * Vérification de la validité des champs
      * Si champs et dossier de destination valide créé le pdf
@@ -372,16 +385,17 @@ public class CreateCertificate extends JFrame {
         if (certificate.savePdf(this)) {
             CustomerDB customerDb = new CustomerDB();
             //customerDb.addCustomer(this);
-        } else {
+        } /*else {
             saveLbl.setText("Cette attestation a déjà été enregistrée dans le dossier ciblé");
             saveLbl.setForeground(Color.RED);
-        }
+            */
     }
+
 
     /**
      * Retour Accueil
      */
-    private void home(){
+    private void home() {
         int n = JOptionPane.showOptionDialog(new JFrame(), "Retourner à l'accueil?", "Accueil", JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
         if (n == JOptionPane.YES_OPTION) {
@@ -390,6 +404,7 @@ public class CreateCertificate extends JFrame {
             dispose();
         }
     }
+
     /**
      * Fermeture de l'app
      */

@@ -14,9 +14,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Résolution bugs d'affichage (bold, marge infos client)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Certificate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Certificate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/CreateCertificate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/CreateCertificate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/EditCompany.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/EditCompany.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Home.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

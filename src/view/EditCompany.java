@@ -19,7 +19,7 @@ public class EditCompany extends JFrame {
     private final JTextField companyMailTxt;
 
     public String getCompanyTelTxt() {
-        return companyTelTxt.getText();
+        return "+33 (1) 47 08 98 38";
     }
 
     public String getCompanyMailTxt() {
@@ -52,7 +52,7 @@ public class EditCompany extends JFrame {
 
 
     public String getCompanyApprovalTxt() {
-        return "Agrément N°............";
+        return "Agrément N° SAP524160330";
     }
 
     public String getHolderTitleCmb() {
