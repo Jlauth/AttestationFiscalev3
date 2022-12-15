@@ -1,9 +1,11 @@
 package view;
 
 import com.toedter.calendar.JDateChooser;
-import connect.CustomerDB;
+import com.toedter.calendar.JTextFieldDateEditor;
 import model.Certificate;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.jdatepicker.DateModel;
+import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -11,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.OffsetDateTime;
@@ -21,7 +24,8 @@ import java.time.temporal.ChronoField;
 import java.util.*;
 
 public class CreateCertificate extends JFrame {
-    private static JButton logoutBtn, homeBtn, customerBtn, newCustomerBtn;
+    private static JButton logoutBtn;
+    private static JButton homeBtn;
     private final Border lineBorderLogout = BorderFactory.createLineBorder(new Color(229, 83, 80));
     private final Border lineBorderHome = BorderFactory.createLineBorder(new Color(0, 138, 173));
     private final Insets insets = lineBorderLogout.getBorderInsets(logoutBtn);
@@ -225,7 +229,11 @@ public class CreateCertificate extends JFrame {
         certificateDate.setDate(Calendar.getInstance(Locale.FRANCE).getTime());
         certificateDate.setBounds(410, 565, 150, 25);
         createPane.add(certificateDate);
-        certificateDate.setEnabled(true);
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) certificateDate.getDateEditor();
+        editor.setEditable(false);
+        editor.setEnabled(false);
+        editor.setDisabledTextColor(Color.BLACK);
+
 
         /*
           Bouton crée attestation
@@ -325,7 +333,7 @@ public class CreateCertificate extends JFrame {
         /*
         Bouton nouveau client
          */
-        newCustomerBtn = new JButton("Nouveau client");
+        JButton newCustomerBtn = new JButton("Nouveau client");
         newCustomerBtn.setToolTipText("Crée un client en même temps que l'attestation");
         newCustomerBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
         newCustomerBtn.setBounds(50, 120, 200, 50);
@@ -336,7 +344,7 @@ public class CreateCertificate extends JFrame {
         /*
         Bouton client existant
          */
-        customerBtn = new JButton("Client existant");
+        JButton customerBtn = new JButton("Client existant");
         customerBtn.setToolTipText("Permet la sélection d'un client enregistré en base de données");
         customerBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
         customerBtn.setBounds(360, 120, 200, 50);
@@ -382,14 +390,13 @@ public class CreateCertificate extends JFrame {
                 "".equals(getCustomerZipTxt()) || "".equals(getDateAttestationFormat()) || "".equals(getFiscalYearTxt()) || "".equals(getCertificateAmountTxt())) {
             JOptionPane.showMessageDialog(new JOptionPane(), "Merci de remplir tous les champs");
         } else {*/
-        if (certificate.savePdf(this)) {
-            CustomerDB customerDb = new CustomerDB();
-            //customerDb.addCustomer(this);
-        } /*else {
+        certificate.savePdf(this);
+        //CustomerDB customerDb = new CustomerDB();
+        //customerDb.addCustomer(this);
+    } /*else {
             saveLbl.setText("Cette attestation a déjà été enregistrée dans le dossier ciblé");
             saveLbl.setForeground(Color.RED);
             */
-    }
 
 
     /**
