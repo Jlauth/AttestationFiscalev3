@@ -2,10 +2,9 @@ package view;
 
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JTextFieldDateEditor;
+import connect.CompanyDB;
 import model.Certificate;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.jdatepicker.DateModel;
-import org.jdatepicker.JDatePicker;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -13,7 +12,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.OffsetDateTime;
@@ -32,7 +30,7 @@ public class CreateCertificate extends JFrame {
     private final EmptyBorder emptyBorder = new EmptyBorder(insets);
     private final JComboBox<String> customerTitleCmb;
     private final JTextField customerNameTxt;
-    private final JTextField customerFirstnameTxt;
+    private final JTextField customerFirstNTxt;
     private final JTextField customerAddressTxt;
     private final JTextField customerCityTxt;
     private final JTextField customerZipTxt;
@@ -67,8 +65,8 @@ public class CreateCertificate extends JFrame {
         return customerNameTxt.getText();
     }
 
-    public String getCustomerFirstnameTxt() {
-        return customerFirstnameTxt.getText();
+    public String getCustomerFirstNTxt() {
+        return customerFirstNTxt.getText();
     }
 
     public String getCustomerAddressTxt() {
@@ -109,7 +107,7 @@ public class CreateCertificate extends JFrame {
         createPane.setLayout(null);
 
         JLabel createLbl = new JLabel();
-        createLbl.setBounds(30, 90, 600, 30);
+        createLbl.setBounds(30, 50, 600, 30);
         createLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
         createLbl.setText("Création d'une nouvelle attestation fiscale");
         createLbl.setHorizontalAlignment(SwingConstants.CENTER);
@@ -119,12 +117,14 @@ public class CreateCertificate extends JFrame {
         createCustomInfoLbl.setBounds(50, 210, 600, 30);
         createCustomInfoLbl.setFont(new Font("Tahoma", Font.BOLD, 13));
         createCustomInfoLbl.setText("Informations client");
+        createCustomInfoLbl.setVisible(false);
         createPane.add(createCustomInfoLbl);
 
         JLabel createCertifInfoLbl = new JLabel();
         createCertifInfoLbl.setBounds(50, 490, 600, 30);
         createCertifInfoLbl.setFont(new Font("Tahoma", Font.BOLD, 13));
         createCertifInfoLbl.setText("Informations attestation");
+        createCertifInfoLbl.setVisible(false);
         createPane.add(createCertifInfoLbl);
 
         /*
@@ -132,11 +132,13 @@ public class CreateCertificate extends JFrame {
          */
         JLabel customerTitleLbl = new JLabel("Titre");
         customerTitleLbl.setBounds(50, 250, 120, 14);
+        customerTitleLbl.setVisible(false);
         createPane.add(customerTitleLbl);
 
         customerTitleCmb = new JComboBox<>();
         customerTitleCmb.setModel(new DefaultComboBoxModel<>(new String[]{"Madame", "Mademoiselle", "Monsieur", "Aucun titre"}));
         customerTitleCmb.setBounds(50, 275, 150, 25);
+        customerTitleCmb.setVisible(false);
         createPane.add(customerTitleCmb);
 
         /*
@@ -144,32 +146,38 @@ public class CreateCertificate extends JFrame {
          */
         JLabel customerNameLbl = new JLabel("Nom");
         customerNameLbl.setBounds(230, 250, 120, 14);
+        customerNameLbl.setVisible(false);
         createPane.add(customerNameLbl);
 
         customerNameTxt = new JTextField();
         customerNameTxt.setBounds(230, 275, 150, 25);
+        customerNameTxt.setVisible(false);
         createPane.add(customerNameTxt);
 
         /*
           Prénom
          */
-        JLabel customerFirstnameLbl = new JLabel("Prénom");
-        customerFirstnameLbl.setBounds(410, 250, 120, 14);
-        createPane.add(customerFirstnameLbl);
+        JLabel customerFirstNLbl = new JLabel("Prénom");
+        customerFirstNLbl.setBounds(410, 250, 120, 14);
+        customerFirstNLbl.setVisible(false);
+        createPane.add(customerFirstNLbl);
 
-        customerFirstnameTxt = new JTextField();
-        customerFirstnameTxt.setBounds(410, 275, 150, 25);
-        createPane.add(customerFirstnameTxt);
+        customerFirstNTxt = new JTextField();
+        customerFirstNTxt.setBounds(410, 275, 150, 25);
+        customerFirstNTxt.setVisible(false);
+        createPane.add(customerFirstNTxt);
 
         /*
           Adresse
          */
         JLabel customerAddressLbl = new JLabel("Adresse");
         customerAddressLbl.setBounds(50, 330, 120, 14);
+        customerAddressLbl.setVisible(false);
         createPane.add(customerAddressLbl);
 
         customerAddressTxt = new JTextField();
         customerAddressTxt.setBounds(50, 355, 510, 25);
+        customerAddressTxt.setVisible(false);
         createPane.add(customerAddressTxt);
 
         /*
@@ -177,10 +185,12 @@ public class CreateCertificate extends JFrame {
          */
         JLabel customerCityLbl = new JLabel("Ville");
         customerCityLbl.setBounds(50, 400, 120, 14);
+        customerCityLbl.setVisible(false);
         createPane.add(customerCityLbl);
 
         customerCityTxt = new JTextField();
         customerCityTxt.setBounds(50, 425, 330, 25);
+        customerCityTxt.setVisible(false);
         createPane.add(customerCityTxt);
 
         /*
@@ -188,10 +198,12 @@ public class CreateCertificate extends JFrame {
          */
         JLabel customerZipLbl = new JLabel("Code Postal");
         customerZipLbl.setBounds(410, 400, 120, 14);
+        customerZipLbl.setVisible(false);
         createPane.add(customerZipLbl);
 
         customerZipTxt = new JTextField();
         customerZipTxt.setBounds(410, 425, 150, 25);
+        customerZipTxt.setVisible(false);
         createPane.add(customerZipTxt);
 
         /*
@@ -199,10 +211,12 @@ public class CreateCertificate extends JFrame {
         */
         JLabel certificateAmountLbl = new JLabel("Montant total");
         certificateAmountLbl.setBounds(50, 540, 120, 14);
+        certificateAmountLbl.setVisible(false);
         createPane.add(certificateAmountLbl);
 
         certificateAmountTxt = new JTextField();
         certificateAmountTxt.setBounds(50, 565, 150, 25);
+        certificateAmountTxt.setVisible(false);
         createPane.add(certificateAmountTxt);
 
         /*
@@ -210,11 +224,13 @@ public class CreateCertificate extends JFrame {
          */
         JLabel fiscalYearLbl = new JLabel("Année fiscale");
         fiscalYearLbl.setBounds(230, 540, 120, 14);
+        fiscalYearLbl.setVisible(false);
         createPane.add(fiscalYearLbl);
 
         fiscalYearTxt = new JTextField();
         fiscalYearTxt.setBounds(230, 565, 150, 25);
         fiscalYearTxt.getText();
+        fiscalYearTxt.setVisible(false);
         createPane.add(fiscalYearTxt);
 
         /*
@@ -222,16 +238,19 @@ public class CreateCertificate extends JFrame {
         */
         JLabel certificateDateLbl = new JLabel("Date d'émission");
         certificateDateLbl.setBounds(410, 540, 120, 14);
+        certificateDateLbl.setVisible(false);
         createPane.add(certificateDateLbl);
 
         certificateDate = new JDateChooser();
         certificateDate.setDateFormatString("dd MMMM yyyy");
         certificateDate.setDate(Calendar.getInstance(Locale.FRANCE).getTime());
         certificateDate.setBounds(410, 565, 150, 25);
+        certificateDate.setVisible(false);
         createPane.add(certificateDate);
         JTextFieldDateEditor editor = (JTextFieldDateEditor) certificateDate.getDateEditor();
         editor.setEditable(false);
         editor.setEnabled(false);
+        editor.setVisible(false);
         editor.setDisabledTextColor(Color.BLACK);
 
 
@@ -289,9 +308,7 @@ public class CreateCertificate extends JFrame {
                 }
             }
         });
-        homeBtn.addActionListener(e -> {
-            home();
-        });
+        homeBtn.addActionListener(e -> home());
         createPane.add(homeBtn);
 
         /*
@@ -338,7 +355,32 @@ public class CreateCertificate extends JFrame {
         newCustomerBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
         newCustomerBtn.setBounds(50, 120, 200, 50);
         newCustomerBtn.setForeground(new Color(37, 88, 167));
-        newCustomerBtn.setVisible(false);
+        newCustomerBtn.setVisible(true);
+        newCustomerBtn.addActionListener(e -> {
+                    createCustomInfoLbl.setVisible(true);
+                    createCertifInfoLbl.setVisible(true);
+                    customerTitleLbl.setVisible(true);
+                    customerTitleCmb.setVisible(true);
+                    customerNameLbl.setVisible(true);
+                    customerNameTxt.setVisible(true);
+                    customerFirstNTxt.setVisible(true);
+                    customerAddressLbl.setVisible(true);
+                    customerAddressTxt.setVisible(true);
+                    customerCityLbl.setVisible(true);
+                    customerCityTxt.setVisible(true);
+                    customerZipLbl.setVisible(true);
+                    customerZipTxt.setVisible(true);
+                    certificateAmountLbl.setVisible(true);
+                    certificateAmountTxt.setVisible(true);
+                    fiscalYearLbl.setVisible(true);
+                    fiscalYearTxt.setVisible(true);
+                    certificateDateLbl.setVisible(true);
+                    certificateDate.setVisible(true);
+                    editor.setVisible(true);
+                }
+
+
+        );
         createPane.add(newCustomerBtn);
 
         /*
@@ -349,7 +391,7 @@ public class CreateCertificate extends JFrame {
         customerBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
         customerBtn.setBounds(360, 120, 200, 50);
         customerBtn.setForeground(new Color(37, 88, 167));
-        customerBtn.setVisible(false);
+        customerBtn.setVisible(true);
         createPane.add(customerBtn);
     }
 
@@ -385,18 +427,13 @@ public class CreateCertificate extends JFrame {
      * Sinon retourne erreur
      */
     public void isInputValid() throws InvalidFormatException, IOException, ParseException {
-        Certificate certificate = new Certificate(this, new EditCompany());
-        /*if (("".equals(getCustomerNameTxt())) || "".equals(getCustomerFirstnameTxt()) || "".equals(getCustomerCityTxt()) || "".equals(getCustomerAddressTxt()) ||
+        Certificate certificate = new Certificate(this, new CompanyDB());
+        certificate.savePdf(this);
+        /* (("".equals(getCustomerNameTxt())) || "".equals(getCustomerFirstNTxt()) || "".equals(getCustomerCityTxt()) || "".equals(getCustomerAddressTxt()) ||
                 "".equals(getCustomerZipTxt()) || "".equals(getDateAttestationFormat()) || "".equals(getFiscalYearTxt()) || "".equals(getCertificateAmountTxt())) {
             JOptionPane.showMessageDialog(new JOptionPane(), "Merci de remplir tous les champs");
-        } else {*/
-        certificate.savePdf(this);
-        //CustomerDB customerDb = new CustomerDB();
-        //customerDb.addCustomer(this);
-    } /*else {
-            saveLbl.setText("Cette attestation a déjà été enregistrée dans le dossier ciblé");
-            saveLbl.setForeground(Color.RED);
-            */
+        */
+    }
 
 
     /**

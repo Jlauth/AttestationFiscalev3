@@ -1,6 +1,4 @@
-import connect.CustomerDB;
 import connect.Connect;
-import view.EditCompany;
 import view.Home;
 
 public class Main {
@@ -9,7 +7,6 @@ public class Main {
         Home home = new Home();
         home.setVisible(true);
         new Connect();
-        CustomerDB customerDb = new CustomerDB();
-        customerDb.selectAll();
+
     }
 }

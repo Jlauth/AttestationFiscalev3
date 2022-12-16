@@ -43,7 +43,7 @@ public class CustomerDB extends Component {
         try (Connection connection = this.connect(); PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, createCertificate.getCustomerTitleCmb());
             pstmt.setString(2, createCertificate.getCustomerNameTxt());
-            pstmt.setString(3, createCertificate.getCustomerFirstnameTxt());
+            pstmt.setString(3, createCertificate.getCustomerFirstNTxt());
             pstmt.setString(4, createCertificate.getCustomerAddressTxt());
             pstmt.setString(5, createCertificate.getCustomerCityTxt());
             pstmt.setString(6, createCertificate.getCustomerZipTxt());

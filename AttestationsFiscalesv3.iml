@@ -10,15 +10,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/Program Files/env/envJava/pluggins/pdfbox/pdfbox-app-2.0.27.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://C:/Program Files/env/envJava/pluggins/jcalendar-1.4/lib/jcalendar-1.4.jar!/" />
         </CLASSES>
         <JAVADOC />

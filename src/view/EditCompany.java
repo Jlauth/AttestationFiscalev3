@@ -1,12 +1,24 @@
 package view;
 
+import connect.CompanyDB;
+
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.util.Objects;
+
+import static javax.swing.JOptionPane.YES_OPTION;
 
 public class EditCompany extends JFrame {
 
+    private static JButton logoutBtn;
+    private static JButton homeBtn;
+    private final Border lineBorderLogout = BorderFactory.createLineBorder(new Color(229, 83, 80));
+    private final Border lineBorderHome = BorderFactory.createLineBorder(new Color(0, 138, 173));
+    private final Insets insets = lineBorderLogout.getBorderInsets(logoutBtn);
+    private final EmptyBorder emptyBorder = new EmptyBorder(insets);
     private final JTextField companyApprovalTxt;
     private final JTextField companyNameTxt;
     private final JComboBox<String> holderTitleCmb;
@@ -15,10 +27,11 @@ public class EditCompany extends JFrame {
     private final JTextField companyAddressTxt;
     private final JTextField companyCityTxt;
     private final JTextField companyZipTxt;
-    private final JTextField companyTelTxt;
+    private final JTextField companyPhoneTxt;
     private final JTextField companyMailTxt;
 
-    public String getCompanyTelTxt() {
+
+    public String getCompanyPhoneTxt() {
         return "+33 (1) 47 08 98 38";
     }
 
@@ -59,173 +72,264 @@ public class EditCompany extends JFrame {
         return "Monsieur";
                 //Objects.requireNonNull(holderTitleCmb.getSelectedItem()).toString();
     }
-
     public EditCompany() {
+        // initialisation de la DB entreprise pour récupérer les infos enregistrées en interne
+        CompanyDB companyDB = new CompanyDB();
+        companyDB.selectCompanyInfo();
 
          /*
           Editer entreprise
          */
         JPanel editCompanyPane = new JPanel();
-        setTitle("Edition des données entreprise");
+        setTitle("Données entreprise - Arkadia PC");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setBounds(100, 100, 600, 600);
-        editCompanyPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setBounds(100, 100, 750, 820);
+        editCompanyPane.setBorder(BorderFactory.createMatteBorder(3, 3, 3, 3, new Color(37, 88, 167)));
         setContentPane(editCompanyPane);
         setLocationRelativeTo(null);
         editCompanyPane.setLayout(null);
 
-         /*
-          Numéro agrément
-         */
-        JLabel companyApprovalLbl = new JLabel("Numéro d'agrément");
-        companyApprovalLbl.setBounds(40, 10, 120, 14);
-        editCompanyPane.add(companyApprovalLbl);
-
-        companyApprovalTxt = new JTextField();
-        companyApprovalTxt.setBounds(40, 30, 150, 22);
-        editCompanyPane.add(companyApprovalTxt);
-
-        /*
-          Nom entreprise
-         */
-        JLabel companyNameLbl = new JLabel("Nom entreprise");
-        companyNameLbl.setBounds(40, 60, 120, 14);
-        editCompanyPane.add(companyNameLbl);
-
-        companyNameTxt = new JTextField();
-        companyNameTxt.setBounds(40, 80, 150, 20);
-        editCompanyPane.add(companyNameTxt);
+        JLabel companyLbl = new JLabel();
+        companyLbl.setBounds(30, 90, 600, 30);
+        companyLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
+        companyLbl.setText("Edition des données de votre entreprise");
+        companyLbl.setHorizontalAlignment(SwingConstants.CENTER);
+        editCompanyPane.add(companyLbl);
 
         /*
           Titre gérant
          */
         JLabel holderTitleLbl = new JLabel("Titre");
-        holderTitleLbl.setBounds(40, 60, 120, 14);
+        holderTitleLbl.setBounds(50, 250, 120, 14);
         editCompanyPane.add(holderTitleLbl);
 
         holderTitleCmb = new JComboBox<>();
         holderTitleCmb.setModel(new DefaultComboBoxModel<>(new String[]{"Madame", "Mademoiselle", "Monsieur", "Aucun titre"}));
-        holderTitleCmb.setBounds(40, 80, 150, 20);
+        holderTitleCmb.setBounds(50, 275, 150, 25);
+        holderTitleCmb.setSelectedIndex(3);
         editCompanyPane.add(holderTitleCmb);
 
         /*
           Nom gérant
          */
         JLabel holderNameLbl = new JLabel("Nom du gérant");
-        holderNameLbl.setBounds(40, 110, 120, 14);
+        holderNameLbl.setBounds(230, 250, 120, 14);
         editCompanyPane.add(holderNameLbl);
 
         holderNameTxt = new JTextField();
-        holderNameTxt.setBounds(40, 130, 150, 20);
+        holderNameTxt.setBounds(230, 275, 150, 25);
+        holderNameTxt.setText(companyDB.getHolderName());
         editCompanyPane.add(holderNameTxt);
 
         /*
           Prénom
          */
         JLabel holderFirstnameLbl = new JLabel("Prénom du gérant");
-        holderFirstnameLbl.setBounds(40, 160, 46, 14);
+        holderFirstnameLbl.setBounds(410, 250, 120, 14);
         editCompanyPane.add(holderFirstnameLbl);
 
         holderFirstnameTxt = new JTextField();
-        holderFirstnameTxt.setBounds(40, 180, 153, 20);
+        holderFirstnameTxt.setBounds(410, 275, 150, 25);
+        holderFirstnameTxt.setText(companyDB.getHolderFirstN());
         editCompanyPane.add(holderFirstnameTxt);
 
         /*
           Adresse
          */
         JLabel companyAddressLbl = new JLabel("Adresse");
-        companyAddressLbl.setBounds(40, 210, 120, 14);
+        companyAddressLbl.setBounds(50, 330, 120, 14);
         editCompanyPane.add(companyAddressLbl);
 
         companyAddressTxt = new JTextField();
-        companyAddressTxt.setBounds(40, 230, 150, 20);
+        companyAddressTxt.setBounds(50, 355, 510, 25);
+        companyAddressTxt.setText(companyDB.getCompanyAddress());
         editCompanyPane.add(companyAddressTxt);
 
         /*
           Ville
          */
         JLabel companyCityLbl = new JLabel("Ville");
-        companyCityLbl.setBounds(40, 260, 120, 14);
+        companyCityLbl.setBounds(50, 400, 120, 14);
         editCompanyPane.add(companyCityLbl);
 
         companyCityTxt = new JTextField();
-        companyCityTxt.setBounds(40, 280, 150, 20);
+        companyCityTxt.setBounds(50, 425, 330, 25);
+        companyCityTxt.setText(companyDB.getCompanyCity());
         editCompanyPane.add(companyCityTxt);
 
         /*
           Code Postal
          */
         JLabel companyZipLbl = new JLabel("Code Postal");
-        companyZipLbl.setBounds(40, 310, 120, 14);
+        companyZipLbl.setBounds(410, 400, 120, 14);
         editCompanyPane.add(companyZipLbl);
 
         companyZipTxt = new JTextField();
-        companyZipTxt.setBounds(40, 330, 150, 20);
+        companyZipTxt.setBounds(410, 425, 150, 25);
+        companyZipTxt.setText(companyDB.getCompanyZip());
         editCompanyPane.add(companyZipTxt);
+
+         /*
+          Numéro agrément
+         */
+        JLabel companyApprovalLbl = new JLabel("Numéro d'agrément");
+        companyApprovalLbl.setBounds(50, 480, 120, 14);
+        editCompanyPane.add(companyApprovalLbl);
+
+        companyApprovalTxt = new JTextField();
+        companyApprovalTxt.setBounds(50, 500, 150, 25);
+        companyApprovalTxt.setText(companyDB.getCompanyApproval());
+        editCompanyPane.add(companyApprovalTxt);
+
+        /*
+          Nom entreprise
+         */
+        JLabel companyNameLbl = new JLabel("Nom entreprise");
+        companyNameLbl.setBounds(230, 480, 120, 14);
+        editCompanyPane.add(companyNameLbl);
+
+        companyNameTxt = new JTextField();
+        companyNameTxt.setBounds(230, 500, 150, 25);
+        companyNameTxt.setText(companyDB.getCompanyName());
+        editCompanyPane.add(companyNameTxt);
 
         /*
         Tel
          */
-        JLabel companyTelLbl = new JLabel("Numéro de téléphone");
-        companyTelLbl.setBounds(40, 400, 210, 14);
+        JLabel companyTelLbl = new JLabel("Téléphone");
+        companyTelLbl.setBounds(50, 540, 120, 14);
         editCompanyPane.add(companyTelLbl);
 
-        companyTelTxt = new JTextField();
-        companyTelTxt.setBounds(40, 420, 210, 20);
-        editCompanyPane.add(companyTelTxt);
+        companyPhoneTxt = new JTextField();
+        companyPhoneTxt.setBounds(50, 565, 150, 25);
+        companyPhoneTxt.setText(companyDB.getCompanyPhone());
+        editCompanyPane.add(companyPhoneTxt);
 
         /*
         Mail
          */
         JLabel companyMailLbl = new JLabel("Mail");
-        companyMailLbl.setBounds(300, 400, 210, 14);
+        companyMailLbl.setBounds(230, 540, 120, 14);
         editCompanyPane.add(companyMailLbl);
 
         companyMailTxt = new JTextField();
-        companyMailTxt.setBounds(300, 420, 210, 20);
+        companyMailTxt.setBounds(230, 565, 150, 25);
+        companyMailTxt.setText(companyDB.getCompanyMail());
         editCompanyPane.add(companyMailTxt);
 
         /*
           Btn enregistrer
          */
         JButton companySaveBtn = new JButton("Enregistrer");
-        companySaveBtn.setFont(new Font("Tahoma", Font.BOLD, 14));
-        companySaveBtn.setBounds(50, 500, 120, 50);
+        companySaveBtn.setToolTipText("Enregistre les nouvelles informations entreprise");
+        companySaveBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
+        companySaveBtn.setBounds(50, 650, 200, 50);
         editCompanyPane.add(companySaveBtn);
         companySaveBtn.addActionListener(e -> {
-
+            companyDB.selectCompanyInfo();
+                    int n = JOptionPane.showOptionDialog(new JFrame(), "Enregistrer les modifications?", "Modifier", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, YES_OPTION);
+                    if (n == YES_OPTION) {
+                        companyDB.update(1, companyDB.setHolderTitle(String.valueOf(holderTitleCmb.getSelectedIndex())),
+                                companyDB.setHolderName(holderNameTxt.getText()),
+                                companyDB.setHolderFirstN(holderFirstnameTxt.getText()),
+                                companyDB.setCompanyAddress(companyAddressTxt.getText()),
+                                companyDB.setCompanyCity(companyCityTxt.getText()),
+                                companyDB.setCompanyZip(companyZipTxt.getText()),
+                                companyDB.setCompanyApproval(companyApprovalTxt.getText()),
+                                companyDB.setCompanyName(companyNameTxt.getText()),
+                                companyDB.setCompanyPhone(companyPhoneTxt.getText()),
+                                companyDB.setCompanyMail(companyMailTxt.getText()));
+                    }
         });
 
         /*
           Btn accueil
          */
-        JButton homeBtn = new JButton("Home");
-        homeBtn.setFont(new Font("Tahoma", Font.BOLD, 14));
-        homeBtn.setBounds(450, 10, 120, 50);
-        editCompanyPane.add(homeBtn);
-        homeBtn.addActionListener(e -> {
-            Home home = new Home();
-            home.setVisible(true);
-            dispose();
+        ImageIcon homeIcon = new ImageIcon("src/media/images/home.png");
+        Image newHomeImg = homeIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+        homeIcon.setImage(newHomeImg);
+
+        homeBtn = new JButton(homeIcon);
+        homeBtn.setBounds(650, 10, 60, 60);
+        homeBtn.setToolTipText("Page d'accueil");
+        homeBtn.setBorder(emptyBorder);
+        homeBtn.setFocusPainted(false);
+        homeBtn.setOpaque(false);
+        homeBtn.setContentAreaFilled(false);
+        homeBtn.setToolTipText("Accueil");
+        // action changement du visuel
+        homeBtn.getModel().addChangeListener(new ChangeListener() {
+            /**
+             * Invoked when the target of the listener has changed its state.
+             *
+             * @param e a ChangeEvent object
+             */
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ButtonModel model = (ButtonModel) e.getSource();
+                if (model.isRollover()) {
+                    homeBtn.setBorder(lineBorderHome);
+                } else {
+                    homeBtn.setBorder(emptyBorder);
+                }
+            }
         });
+        homeBtn.addActionListener(e -> home());
+        editCompanyPane.add(homeBtn);
 
         /*
           Btn Quitter
          */
-        JButton logoutBtn = new JButton("Quitter");
-        logoutBtn.setForeground(Color.RED);
-        logoutBtn.setFont(new Font("Tahoma", Font.BOLD, 14));
-        logoutBtn.setBounds(450, 490, 120, 50);
-        editCompanyPane.add(logoutBtn);
+        ImageIcon logoutIcon = new ImageIcon("src/media/images/logoutbis.png");
+        Image logoutImg = logoutIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+        logoutIcon.setImage(logoutImg);
+        // logoutBtn
+        logoutBtn = new JButton(logoutIcon);
+        logoutBtn.setBounds(650, 700, 60, 60);
+        logoutBtn.setBorder(emptyBorder);
+        logoutBtn.setFocusPainted(false);
+        logoutBtn.setOpaque(false);
+        logoutBtn.setContentAreaFilled(false);
+        logoutBtn.setToolTipText("Quitter");
+        // action close
         logoutBtn.addActionListener(e -> close());
+        // action changement du visuel
+        logoutBtn.getModel().addChangeListener(new ChangeListener() {
+            /**
+             * Invoked when the target of the listener has changed its state.
+             *
+             * @param e a ChangeEvent object
+             */
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ButtonModel model = (ButtonModel) e.getSource();
+                if (model.isRollover()) {
+                    logoutBtn.setBorder(lineBorderLogout);
+                } else {
+                    logoutBtn.setBorder(emptyBorder);
+                }
+            }
+        });
+        editCompanyPane.add(logoutBtn);
     }
 
-    public void close() {
-        int n = JOptionPane.showOptionDialog(new JFrame(), "Fermer application?", "Quitter", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
-        if (n == JOptionPane.YES_OPTION) {
+    /**
+     * Retour Accueil
+     */
+    private void home() {
+        int n = JOptionPane.showOptionDialog(new JFrame(), "Retourner à l'accueil?", "Accueil", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, YES_OPTION);
+        if (n == YES_OPTION) {
+            Home home = new Home();
+            home.setVisible(true);
             dispose();
         }
     }
 
-
+    public void close() {
+        int n = JOptionPane.showOptionDialog(new JFrame(), "Fermer application?", "Quitter", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, YES_OPTION);
+        if (n == YES_OPTION) {
+            dispose();
+        }
+    }
 }

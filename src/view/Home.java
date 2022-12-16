@@ -32,6 +32,7 @@ public class Home extends JFrame {
         homeLbl.setBounds(0, 30, 600, 30);
         homeLbl.setFont(new Font("Tahoma", Font.BOLD, 18));
         homeLbl.setText("Bienvenue dans votre gestionnaire d'attestations fiscales");
+        homeLbl.setForeground(Color.BLACK);
         homeLbl.setHorizontalAlignment(SwingConstants.CENTER);
         homePane.add(homeLbl);
 
@@ -39,31 +40,32 @@ public class Home extends JFrame {
           Bouton nouvelle attestation
          */
         JButton certificateBtn = new JButton("Nouvelle attestation");
-        certificateBtn.setFont(new Font("Tahoma", Font.BOLD, 17));
-        certificateBtn.setBounds(140, 140, 300, 60);
+        certificateBtn.setBounds(140, 120, 300, 60);
+        certificateBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
         certificateBtn.setForeground(new Color(37, 88, 167));
-        certificateBtn.setHorizontalAlignment(SwingConstants.CENTER);
         certificateBtn.setToolTipText("Création d'une nouvelle attestation fiscale");
         certificateBtn.addActionListener(e -> {
             CreateCertificate createCertificate = new CreateCertificate();
             createCertificate.setVisible(true);
             dispose();
         });
+        certificateBtn.setVisible(true);
         homePane.add(certificateBtn);
 
          /*
           Bouton éditer entreprise
          */
-        JButton editCompanyBtn = new JButton("Editer informations entreprise");
-        editCompanyBtn.setFont(new Font("Tahoma", Font.BOLD, 15));
-        editCompanyBtn.setBounds(150, 190, 300, 60);
+        JButton editCompanyBtn = new JButton("Editer infos entreprise");
+        editCompanyBtn.setBounds(140, 190, 300, 60);
+        editCompanyBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
+        editCompanyBtn.setForeground(new Color(37, 88, 167));
         editCompanyBtn.setToolTipText("Edition des informations de votre entreprise");
         editCompanyBtn.addActionListener(e -> {
             EditCompany editCompany = new EditCompany();
-            editCompany.setVisible(false);
+            editCompany.setVisible(true);
             dispose();
         });
-        editCompanyBtn.setVisible(false);
+        editCompanyBtn.setVisible(true);
         homePane.add(editCompanyBtn);
 
          /*
