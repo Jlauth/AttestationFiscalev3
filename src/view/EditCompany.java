@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.util.Objects;
 
 import static javax.swing.JOptionPane.YES_OPTION;
 
@@ -93,6 +94,7 @@ public class EditCompany extends JFrame {
         companyLbl.setBounds(30, 90, 600, 30);
         companyLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
         companyLbl.setText("Edition des données de votre entreprise");
+        companyLbl.setForeground(Color.BLACK);
         companyLbl.setHorizontalAlignment(SwingConstants.CENTER);
         editCompanyPane.add(companyLbl);
 
@@ -222,6 +224,7 @@ public class EditCompany extends JFrame {
          */
         JButton companySaveBtn = new JButton("Enregistrer");
         companySaveBtn.setToolTipText("Enregistre les nouvelles informations entreprise");
+        companySaveBtn.setForeground(Color.BLACK);
         companySaveBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
         companySaveBtn.setBounds(50, 650, 200, 50);
         editCompanyPane.add(companySaveBtn);
@@ -229,7 +232,7 @@ public class EditCompany extends JFrame {
             companyDB.selectCompanyInfo();
                     int n = JOptionPane.showOptionDialog(new JFrame(), "Enregistrer les modifications?", "Modifier", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, YES_OPTION);
                     if (n == YES_OPTION) {
-                        companyDB.update(1, companyDB.setHolderTitle(String.valueOf(holderTitleCmb.getSelectedIndex())),
+                        companyDB.update(1, companyDB.setHolderTitle(Objects.requireNonNull(holderTitleCmb.getSelectedItem()).toString()),
                                 companyDB.setHolderName(holderNameTxt.getText()),
                                 companyDB.setHolderFirstN(holderFirstnameTxt.getText()),
                                 companyDB.setCompanyAddress(companyAddressTxt.getText()),

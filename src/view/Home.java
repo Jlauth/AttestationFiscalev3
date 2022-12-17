@@ -41,7 +41,7 @@ public class Home extends JFrame {
          */
         JButton certificateBtn = new JButton("Nouvelle attestation");
         certificateBtn.setBounds(140, 120, 300, 60);
-        certificateBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
+        certificateBtn.setFont(new Font("Tahoma", Font.BOLD, 17));
         certificateBtn.setForeground(new Color(37, 88, 167));
         certificateBtn.setToolTipText("Création d'une nouvelle attestation fiscale");
         certificateBtn.addActionListener(e -> {
@@ -57,7 +57,7 @@ public class Home extends JFrame {
          */
         JButton editCompanyBtn = new JButton("Editer infos entreprise");
         editCompanyBtn.setBounds(140, 190, 300, 60);
-        editCompanyBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
+        editCompanyBtn.setFont(new Font("Tahoma", Font.BOLD, 17));
         editCompanyBtn.setForeground(new Color(37, 88, 167));
         editCompanyBtn.setToolTipText("Edition des informations de votre entreprise");
         editCompanyBtn.addActionListener(e -> {

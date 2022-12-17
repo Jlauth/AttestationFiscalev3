@@ -13,16 +13,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Demande principale réalisée. Création liens DB.">
-      <change afterPath="$PROJECT_DIR$/src/connect/CompanyDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AttestationsFiscalesv3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/AttestationsFiscalesv3.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/connect/CustomerDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connect/CustomerDB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/connect/arkadiapc.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/connect/arkadiapc.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Certificate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Certificate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/CreateCertificate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/CreateCertificate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/CustomerDataManagement.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/EditCompany.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/EditCompany.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/EditCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/RegisteredCustomer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/Home.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -198,7 +195,21 @@
       <option name="project" value="LOCAL" />
       <updated>1671133031042</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Demande principale réalisée. Création liens DB.">
+      <created>1671231730179</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1671231730179</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Demande principale réalisée. Création liens DB.">
+      <created>1671231829847</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1671231829847</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers>
       <GitHub url="https://github.com">
         <option name="repoAuthor" value="Jlauth" />

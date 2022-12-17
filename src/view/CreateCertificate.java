@@ -107,9 +107,10 @@ public class CreateCertificate extends JFrame {
         createPane.setLayout(null);
 
         JLabel createLbl = new JLabel();
-        createLbl.setBounds(30, 50, 600, 30);
+        createLbl.setBounds(30, 30, 600, 30);
         createLbl.setFont(new Font("Tahoma", Font.BOLD, 20));
         createLbl.setText("Création d'une nouvelle attestation fiscale");
+        createLbl.setForeground(Color.BLACK);
         createLbl.setHorizontalAlignment(SwingConstants.CENTER);
         createPane.add(createLbl);
 
@@ -253,7 +254,6 @@ public class CreateCertificate extends JFrame {
         editor.setVisible(false);
         editor.setDisabledTextColor(Color.BLACK);
 
-
         /*
           Bouton crée attestation
          */
@@ -352,7 +352,7 @@ public class CreateCertificate extends JFrame {
          */
         JButton newCustomerBtn = new JButton("Nouveau client");
         newCustomerBtn.setToolTipText("Crée un client en même temps que l'attestation");
-        newCustomerBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
+        newCustomerBtn.setFont(new Font("Tahoma", Font.BOLD, 17));
         newCustomerBtn.setBounds(50, 120, 200, 50);
         newCustomerBtn.setForeground(new Color(37, 88, 167));
         newCustomerBtn.setVisible(true);
@@ -388,11 +388,18 @@ public class CreateCertificate extends JFrame {
          */
         JButton customerBtn = new JButton("Client existant");
         customerBtn.setToolTipText("Permet la sélection d'un client enregistré en base de données");
-        customerBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
+        customerBtn.setFont(new Font("Tahoma", Font.BOLD, 17));
         customerBtn.setBounds(360, 120, 200, 50);
         customerBtn.setForeground(new Color(37, 88, 167));
         customerBtn.setVisible(true);
+        customerBtn.addActionListener(e -> {
+                    RegisteredCustomer regCust = new RegisteredCustomer();
+                    regCust.setVisible(true);
+                    dispose();
+                }
+        );
         createPane.add(customerBtn);
+
     }
 
     /**

@@ -35,6 +35,7 @@ public class Certificate {
 
 
     public Certificate(CreateCertificate createCertificate, CompanyDB companyDB) throws IOException {
+
         // initialisation de la DB entreprise pour récupérer les infos enregistrées en interne
         companyDB.selectCompanyInfo();
 
