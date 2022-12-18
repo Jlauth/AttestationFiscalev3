@@ -2,6 +2,7 @@ package connect;
 
 import view.CreateCertificate;
 
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.*;
 
@@ -18,24 +19,49 @@ public class CustomerDB extends Component {
         return connection;
     }
 
-    public void selectAll() {
-        String sql = "SELECT id, titre, nom, prenom, adresse, ville, codepostal, agrement FROM entreprise";
+    public void delete() {
+        String sql = "ALTER TABLE client DROP COLUMN dateattest";
+
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            // set the corresponding param
+            // execute the delete statement
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public DefaultTableModel selectCustomerInfo() {
+        String sql = "SELECT * FROM client";
+        DefaultTableModel model = null;
         try (Connection connection = this.connect()) {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
+            String[] columns = {"Titre", "Nom", "Prénom", "Adresse", "Ville", "Code postal"};
+            int i = 0;
+            String[][] data = new String[20][20];
             while (rs.next()) {
-                System.out.println(rs.getInt("id") +
-                        rs.getString("titre") +
-                        rs.getString("nom") +
-                        rs.getString("prenom") +
-                        rs.getString("adresse") +
-                        rs.getString("ville") +
-                        rs.getString("codepostal") +
-                        rs.getString("agrement"));
+                String titre = rs.getString("titre");
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String adresse = rs.getString("adresse");
+                String ville = rs.getString("ville");
+                String codepostal = rs.getString("codepostal");
+                data[i][0] = titre;
+                data[i][1] = nom;
+                data[i][2] = prenom;
+                data[i][3] = adresse;
+                data[i][4] = ville;
+                data[i][5] = codepostal;
+                i++;
             }
+            model = new DefaultTableModel(data, columns);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return model;
     }
 
     public void addCustomer(CreateCertificate createCertificate) {
@@ -47,49 +73,71 @@ public class CustomerDB extends Component {
             pstmt.setString(4, createCertificate.getCustomerAddressTxt());
             pstmt.setString(5, createCertificate.getCustomerCityTxt());
             pstmt.setString(6, createCertificate.getCustomerZipTxt());
-            pstmt.setInt(7, Integer.parseInt(createCertificate.getCertificateAmountTxt()));
-            pstmt.setString(8, createCertificate.getFiscalYearTxt());
-            pstmt.setString(9, createCertificate.getDateAttestationFormat());
             pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-/*
-    public void getCustomerTable(CustomerDataManagement customerDataManagement) {
-        ResultSet rs = null;
-        try (Connection connection = this.connect()) {
-            DatabaseMetaData meta = connection.getMetaData();
-            rs = meta.getTables(null, null, null, new String[]{"TABLE"});
-            while (rs.next()){
-                String client = rs.getString("CLIENT");
-                customerDataManagement.setEditCustomerCmb(client);
-            }
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void loadCustomerTable(CustomerDataManagement customerDataManagement) {
-        try (Statement stmt = this.connect().createStatement()){
-            ResultSet rs = stmt.executeQuery("SELECT * FROM [" + customerDataManagement.getEditCustomerCmb() + "];");
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int columnCount = rsmd.getColumnCount();
-            JPanel tm = customerDataManagement.getCustomerDataManagementPane();
-            tm.setColumnCount(0);
-            for (int i = 1; i >= columnCount; i++){
-                tm.addColumn(rsmd.getColumnName(i));
-            }
-            tm.setRowCount(0);
-            while(rs.next()){
-                String[] a = new String[columnCount];
-                for(int i = 0; i < columnCount; i++){
-                    a[i] = rs.getString(i+1);
-                }tm.addRow(a);
-            }tm.fireTableDataChanged();
-            rs.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e, e.getMessage(), 1, null);
-        }
-    }*/
+    private String customerTitle;
+    private String customerName;
+    private String customerFirstN;
+    private String customerAddress;
+    private String customerCity;
+    private String customerZip;
+
+    public String getCustomerTitle() {
+        return customerTitle;
+    }
+
+    public String setCustomerTitle(String customerTitle) {
+        this.customerTitle = customerTitle;
+        return customerTitle;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public String setCustomerName(String customerName) {
+        this.customerName = customerName;
+        return customerName;
+    }
+
+    public String getCustomerFirstN() {
+        return customerFirstN;
+    }
+
+    public String setCustomerFirstN(String customerFirstN) {
+        this.customerFirstN = customerFirstN;
+        return customerFirstN;
+    }
+
+    public String getCustomerAddress() {
+        return customerAddress;
+    }
+
+    public String setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
+        return customerAddress;
+    }
+
+    public String getCustomerCity() {
+        return customerCity;
+    }
+
+    public String setCustomerCity(String customerCity) {
+        this.customerCity = customerCity;
+        return customerCity;
+    }
+
+    public String getCustomerZip() {
+        return customerZip;
+    }
+
+    public String setCustomerZip(String customerZip) {
+        this.customerZip = customerZip;
+        return customerZip;
+    }
 }

@@ -1,4 +1,5 @@
 import connect.Connect;
+import connect.CustomerDB;
 import view.Home;
 
 public class Main {
@@ -7,6 +8,7 @@ public class Main {
         Home home = new Home();
         home.setVisible(true);
         new Connect();
-
+        CustomerDB customerDB = new CustomerDB();
+        //customerDB.delete();
     }
 }
