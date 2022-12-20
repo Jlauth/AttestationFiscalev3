@@ -7,17 +7,17 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 
-public class Home extends JFrame {
+public class HomeFrame extends JFrame {
 
     private static JButton logoutBtn;
     private final Border lineBorder = BorderFactory.createLineBorder(new Color(229, 83, 80));
     private final Insets insets = lineBorder.getBorderInsets(logoutBtn);
     private final EmptyBorder emptyBorder = new EmptyBorder(insets);
 
-    public Home() {
+    public HomeFrame() {
 
          /*
-          Création Home
+          Création HomeFrame
          */
         JPanel homePane = new JPanel();
         setTitle("Accueil - Gestion des attestations fiscales Arkadia PC");
@@ -45,8 +45,8 @@ public class Home extends JFrame {
         certificateBtn.setForeground(new Color(37, 88, 167));
         certificateBtn.setToolTipText("Création d'une nouvelle attestation fiscale");
         certificateBtn.addActionListener(e -> {
-            CreateCertificate createCertificate = new CreateCertificate();
-            createCertificate.setVisible(true);
+            CertificateFrame certificateFrame = new CertificateFrame();
+            certificateFrame.setVisible(true);
             dispose();
         });
         certificateBtn.setVisible(true);
@@ -61,8 +61,8 @@ public class Home extends JFrame {
         editCompanyBtn.setForeground(new Color(37, 88, 167));
         editCompanyBtn.setToolTipText("Edition des informations de votre entreprise");
         editCompanyBtn.addActionListener(e -> {
-            EditCompany editCompany = new EditCompany();
-            editCompany.setVisible(true);
+            CompanyFrame companyFrame = new CompanyFrame();
+            companyFrame.setVisible(true);
             dispose();
         });
         editCompanyBtn.setVisible(true);

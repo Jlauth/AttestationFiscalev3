@@ -9,7 +9,7 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-import view.CreateCertificate;
+import view.CertificateFrame;
 
 import javax.swing.*;
 import java.io.File;
@@ -34,7 +34,7 @@ public class Certificate {
     private final String p9;
 
 
-    public Certificate(CreateCertificate createCertificate, CompanyDB companyDB) throws IOException {
+    public Certificate(CertificateFrame certificateFrame, CompanyDB companyDB) throws IOException {
 
         // initialisation de la DB entreprise pour récupérer les infos enregistrées en interne
         companyDB.selectCompanyInfo();
@@ -65,18 +65,19 @@ public class Certificate {
           logo client et infos client
          */
         String logoPath = "src/media/images/logoArkadiaPc-transformed.jpeg";
-        addImage(document, page, logoPath, MARGIN * 7.6f, 780);
-        tCustTNFN = createCertificate.getCustomerTitleCmbShorted() + " " + createCertificate.getCustomerNameTxt() + " " + createCertificate.getCustomerFirstNTxt();
-        tCustAddress = createCertificate.getCustomerAddressTxt();
-        tCustZipCity = createCertificate.getCustomerZipTxt() + " " + createCertificate.getCustomerCityTxt();
+        addImage(document, page, logoPath, 380, 780);
+        tCustTNFN = certificateFrame.getCustomerTitleCmbShorted() + " " + certificateFrame.getCustomerNameTxt() + " " + certificateFrame.getCustomerFirstNTxt();
+        tCustAddress = certificateFrame.getCustomerAddressTxt();
+        tCustZipCity = certificateFrame.getCustomerZipTxt() + " " + certificateFrame.getCustomerCityTxt();
         addText(document, page, tCustTNFN, 541 - calcCustRight(), 660);
         addText(document, page, tCustAddress, 541 - calcCustRight(), 645);
         addText(document, page, tCustZipCity, 541 - calcCustRight(), 630);
-        String tCertDate = "Le " + createCertificate.getDateAttestationFormat() + ",";
-        if(calcCustRight() >= 100){
-            addText(document, page, tCertDate, 540 - (calcCustRight()*1.15f), 605);
-        }else{
-            addText(document, page, tCertDate, 400.5f, 605);
+        String tCertDate = "Le " + certificateFrame.getDateAttestationFormat() + ",";
+        out.println(calcCustRight() + " right");
+        if(calcCustRight()>95) {
+            addText(document, page, tCertDate, 515 - calcCustRight(), 600);
+        } else {
+            addText(document, page, tCertDate, 414, 600);
         }
         /*
         Titre
@@ -88,25 +89,51 @@ public class Certificate {
          */
         // paragraphe fixe afin de toujours obtenir la taille correspondante
         p1 = tab() + "Je soussigné " + companyDB.getHolderTitle() + " " + companyDB.getHolderFirstN() + " " + companyDB.getHolderName() + ", " +
-                "gérant de l'organisme agréé " + companyDB.getCompanyName() + ", certifie que " + createCertificate.getCustomerTitleCmb() + " "
-                + createCertificate.getCustomerFirstNTxt() + " " + createCertificate.getCustomerNameTxt() +
+                "gérant de l'organisme agréé " + companyDB.getCompanyName() + ", certifie que " + certificateFrame.getCustomerTitleCmb() + " "
+                + certificateFrame.getCustomerFirstNTxt() + " " + certificateFrame.getCustomerNameTxt() +
                 " a bénéficié d'assistance informatique à domicile, service à la personne :";
-        String p1Large = "personne :";
-        String p1XL = "service à la personne :";
-        if (calcBodySize() > 1005 && calcBodySize() < 1020) {
+        String p1personne = "personne :";
+        String p1laPers = "la personne : ";
+        String p1personnel = "à la personne :";
+        String p1ServAlaPers = "service à la personne :";
+        String p1domicile = "domicile, service à la personne";
+
+        if (calcBodySize() > 990 && calcBodySize() < 1020) {
             String p101 = tab() + "Je soussigné " + companyDB.getHolderTitle() + " " + companyDB.getHolderFirstN() + " " + companyDB.getHolderName() + ", " +
-                    "gérant de l'organisme agréé " + companyDB.getCompanyName() + ", certifie que " + createCertificate.getCustomerTitleCmb() + " "
-                    + createCertificate.getCustomerFirstNTxt() + " " + createCertificate.getCustomerNameTxt() +
+                    "gérant de l'organisme agréé " + companyDB.getCompanyName() + ", certifie que " + certificateFrame.getCustomerTitleCmb() + " "
+                    + certificateFrame.getCustomerFirstNTxt() + " " + certificateFrame.getCustomerNameTxt() +
                     " a bénéficié d'assistance informatique à domicile, service à la ";
             addParagraph(document, page, p101, MARGIN, 500);
-            addParagraph(document, page, p1Large, MARGIN, 465);
-        } else if (calcBodySize() >= 1020) {
+            addParagraph(document, page, p1personne, MARGIN, 465);
+        } else if (calcBodySize() >= 1020 && calcBodySize() < 1050) {
             String p102 = tab() + "Je soussigné " + companyDB.getHolderTitle() + " " + companyDB.getHolderFirstN() + " " + companyDB.getHolderName() + ", " +
-                    "gérant de l'organisme agréé " + companyDB.getCompanyName() + ", certifie que " + createCertificate.getCustomerTitleCmb() + " "
-                    + createCertificate.getCustomerFirstNTxt() + " " + createCertificate.getCustomerNameTxt() +
-                    " a bénéficié d'assistance informatique à domicile,";
+                    "gérant de l'organisme agréé " + companyDB.getCompanyName() + ", certifie que " + certificateFrame.getCustomerTitleCmb() + " "
+                    + certificateFrame.getCustomerFirstNTxt() + " " + certificateFrame.getCustomerNameTxt() +
+                    " a bénéficié d'assistance informatique à domicile, service à";
             addParagraph(document, page, p102, MARGIN, 500);
-            addParagraph(document, page, p1XL, MARGIN, 465);
+            addParagraph(document, page, p1laPers, MARGIN, 465);
+        }
+        else if (calcBodySize() >= 1050 && calcBodySize() < 1080){
+            String p103 = tab() + "Je soussigné " + companyDB.getHolderTitle() + " " + companyDB.getHolderFirstN() + " " + companyDB.getHolderName() + ", " +
+                    "gérant de l'organisme agréé " + companyDB.getCompanyName() + ", certifie que " + certificateFrame.getCustomerTitleCmb() + " "
+                    + certificateFrame.getCustomerFirstNTxt() + " " + certificateFrame.getCustomerNameTxt() +
+                    " a bénéficié d'assistance informatique à domicile, service ";
+            addParagraph(document, page, p103, MARGIN, 500);
+            addParagraph(document, page, p1personnel, MARGIN, 465);
+        } else if (calcBodySize() >= 1080 && calcBodySize() < 1095)  {
+            String p104 = tab() + "Je soussigné " + companyDB.getHolderTitle() + " " + companyDB.getHolderFirstN() + " " + companyDB.getHolderName() + ", " +
+                    "gérant de l'organisme agréé " + companyDB.getCompanyName() + ", certifie que " + certificateFrame.getCustomerTitleCmb() + " "
+                    + certificateFrame.getCustomerFirstNTxt() + " " + certificateFrame.getCustomerNameTxt() +
+                    " a bénéficié d'assistance informatique à domicile, ";
+            addParagraph(document, page, p104, MARGIN, 500);
+            addParagraph(document, page, p1ServAlaPers, MARGIN, 465);
+        } else if(calcBodySize() >= 1095 && calcBodySize() < 1125){
+            String p105 = tab() + "Je soussigné " + companyDB.getHolderTitle() + " " + companyDB.getHolderFirstN() + " " + companyDB.getHolderName() + ", " +
+                    "gérant de l'organisme agréé " + companyDB.getCompanyName() + ", certifie que " + certificateFrame.getCustomerTitleCmb() + " "
+                    + certificateFrame.getCustomerFirstNTxt() + " " + certificateFrame.getCustomerNameTxt() +
+                    " a bénéficié d'assistance informatique à ";
+            addParagraph(document, page, p105, MARGIN, 500);
+            addParagraph(document, page,p1domicile, MARGIN, 465 );
         } else {
             addParagraph(document, page, p1, MARGIN, 500);
         }
@@ -116,14 +143,14 @@ public class Certificate {
         String p2 = "Montant total des factures pour l'année ";
         addParagraph(document, page, p2, MARGIN + 70, scalingY());
         // année fiscale
-        pFiscYear = createCertificate.getFiscalYearTxt();
+        pFiscYear = certificateFrame.getFiscalYearTxt();
         addParagraph(document, page, pFiscYear, 317, scalingY());
 
         // insert double points
         String pDDots = " : ";
         addParagraph(document, page, pDDots, 341, scalingY());
         // montant attestation fiscale
-        pAmount = createCertificate.getCertificateAmountTxt();
+        pAmount = certificateFrame.getCertificateAmountTxt();
         addParagraph(document, page, pAmount, 349, scalingY());
         // signe monétaire
         String pMoney = " €";
@@ -152,17 +179,12 @@ public class Certificate {
         String p11 = companyDB.getHolderFirstN() + " " + companyDB.getHolderName() + ", gérant.";
         addParagraph(document, page, p11, MARGIN, scalingY() - 335);//115
         // signature gérant
-        addImage(document, page, "src/media/images/signature.jpg", MARGIN * 6, scalingY() - 315);
+        addImage(document, page, "src/media/images/logoArkadiaPc-transformed.jpeg", MARGIN * 6, scalingY() - 315);
 
         /*
         Meta propriétés du pdf
         */
         setDocumentProperties();
-
-        out.println("La taille totale de p1 : " + p1.length());
-        //out.println("La taille totale de p2 : " + getP2Length());
-        //calcCustRight();
-        out.println("Taille body : " + calcBodySize());
     }
 
     /**
@@ -342,13 +364,13 @@ public class Certificate {
     /**
      * Méthode de sauvegarde du pdf
      */
-    public void savePdf(CreateCertificate createCertificate) throws IOException {
+    public void savePdf(CertificateFrame certificateFrame) throws IOException {
         JFrame parentFrame = new JFrame();
         JFileChooser fileChooser = new JFileChooser();
         FileOutputStream outputStream;
         fileChooser.setDialogTitle("Enregistrer sous");
-        String file = String.valueOf(new File("Attestation-Fiscale-" + createCertificate.getFiscalYearTxt()
-                + "-" + createCertificate.getCustomerNameTxt() + "-" + createCertificate.getCustomerFirstNTxt() + ".pdf"));
+        String file = String.valueOf(new File("Attestation-Fiscale-" + certificateFrame.getFiscalYearTxt()
+                + "-" + certificateFrame.getCustomerNameTxt() + "-" + certificateFrame.getCustomerFirstNTxt() + ".pdf"));
         String replaceFileName = file.replace(' ', '-');
         fileChooser.setSelectedFile(new File(replaceFileName));
         int userSelection = fileChooser.showSaveDialog(parentFrame);
@@ -375,7 +397,7 @@ public class Certificate {
      * Y en fonction de p1.length()
      */
     public float scalingY() throws IOException {
-        if (calcBodySize() < 1005) {
+        if (calcBodySize() < 990) {
             return 450;
         } else {
             return 435;
@@ -402,7 +424,6 @@ public class Certificate {
      * Calcul de la taille du header droit afin d'auto aligner sur la gauche
      */
     public float calcCustRight() throws IOException {
-        String biggestOne;
         int fontSize = 11;
         PDFont pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Regular.ttf"));
         // calcul de la taille de chaque variable en fonction du font
@@ -410,19 +431,7 @@ public class Certificate {
         int sizeTNFN = (int) (fontSize * pdfFont.getStringWidth(tCustTNFN) / 1000);
         int sizeAddress = (int) (fontSize * pdfFont.getStringWidth(tCustAddress) / 1000);
         // comparaison et enregistrement taille du plus grand des trois
-        int calcSize = Math.max(sizeZC, (Math.max(sizeTNFN, sizeAddress)));
-        // comparaison du plus grand enregistré sur biggestOne
-        if (calcSize == sizeZC) {
-            biggestOne = tCustZipCity;
-        } else if (calcSize == sizeTNFN) {
-            biggestOne = tCustTNFN;
-        } else {
-            biggestOne = tCustAddress;
-        }
-        // calcul taille finale en fonction du plus grand
-        int size = (int) (fontSize * pdfFont.getStringWidth(biggestOne) / 1000);
-        out.println(size);
-        return size;
+        return Math.max(sizeZC, (Math.max(sizeTNFN, sizeAddress)));
     }
 
     public int calcBodySize() throws IOException {

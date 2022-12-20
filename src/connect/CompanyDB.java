@@ -1,7 +1,5 @@
 package connect;
 
-import view.EditCompany;
-
 import java.awt.*;
 import java.sql.*;
 
@@ -20,45 +18,6 @@ public class CompanyDB extends Component {
             out.println(e.getMessage());
         }
         return connection;
-    }
-
-    public void createNewCompany() {
-        String sql = "CREATE TABLE IF NOT EXISTS entreprise(" +
-                "id INTEGER PRIMARY KEY NOT NULL," +
-                "titre TEXT NOT NULL," +
-                "nom TEXT NOT NULL," +
-                "prenom TEXT NOT NULL," +
-                "adresse TEXT NOT NULL," +
-                "ville TEXT NOT NULL," +
-                "codepostal TEXT NOT NULL," +
-                "agrement TEXT NOT NULL," +
-                "nomentreprise TEXT NOT NULL," +
-                "tel TEXT NOT NULL," +
-                "mail TEXT NOT NULL);";
-        try (Connection connection = DriverManager.getConnection(url); Statement stmt = connection.createStatement()) {
-            stmt.execute(sql);
-        } catch (SQLException e) {
-            out.println(e.getMessage());
-        }
-    }
-
-    public void addCompany(EditCompany editCompany) {
-        String sql = "INSERT INTO entreprise(titre, nom, prenom, adresse, ville, codepostal, agrement, nomentreprise, tel, mail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection connection = this.connect(); PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, editCompany.getHolderTitleCmb());
-            pstmt.setString(2, editCompany.getHolderNameTxt());
-            pstmt.setString(3, editCompany.getHolderFirstnameTxt());
-            pstmt.setString(4, editCompany.getCompanyAddressTxt());
-            pstmt.setString(5, editCompany.getCompanyCityTxt());
-            pstmt.setString(6, editCompany.getCompanyZipTxt());
-            pstmt.setString(7, editCompany.getCompanyApprovalTxt());
-            pstmt.setString(8, editCompany.getCompanyNameTxt());
-            pstmt.setString(9, editCompany.getCompanyPhoneTxt());
-            pstmt.setString(10, editCompany.getCompanyMailTxt());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            out.println(e.getMessage());
-        }
     }
 
     public void update(int id, String titre, String nom, String prenom, String adresse, String ville, String codepostal, String agrement, String nomentreprise, String tel, String mail) {

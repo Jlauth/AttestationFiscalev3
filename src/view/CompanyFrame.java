@@ -12,7 +12,7 @@ import java.util.Objects;
 
 import static javax.swing.JOptionPane.YES_OPTION;
 
-public class EditCompany extends JFrame {
+public class CompanyFrame extends JFrame {
 
     private static JButton logoutBtn;
     private static JButton homeBtn;
@@ -31,49 +31,7 @@ public class EditCompany extends JFrame {
     private final JTextField companyPhoneTxt;
     private final JTextField companyMailTxt;
 
-
-    public String getCompanyPhoneTxt() {
-        return "+33 (1) 47 08 98 38";
-    }
-
-    public String getCompanyMailTxt() {
-        return "contact@arkadia-pc.fr";
-    }
-
-    public String getCompanyAddressTxt() {
-        return "4, rue des Pyrénées";
-    }
-
-    public String getCompanyZipTxt() {
-        return "92500";
-    }
-
-    public String getCompanyCityTxt() {
-        return "Reuil Malmaison";
-    }
-
-    public String getHolderNameTxt() {
-        return "ARAUJO";
-    }
-
-    public String getHolderFirstnameTxt() {
-        return "Adelino";
-    }
-
-    public String getCompanyNameTxt() {
-        return "Arkadia PC";
-    }
-
-
-    public String getCompanyApprovalTxt() {
-        return "Agrément N° SAP524160330";
-    }
-
-    public String getHolderTitleCmb() {
-        return "Monsieur";
-                //Objects.requireNonNull(holderTitleCmb.getSelectedItem()).toString();
-    }
-    public EditCompany() {
+    public CompanyFrame() {
         // initialisation de la DB entreprise pour récupérer les infos enregistrées en interne
         CompanyDB companyDB = new CompanyDB();
         companyDB.selectCompanyInfo();
@@ -108,7 +66,7 @@ public class EditCompany extends JFrame {
         holderTitleCmb = new JComboBox<>();
         holderTitleCmb.setModel(new DefaultComboBoxModel<>(new String[]{"Madame", "Mademoiselle", "Monsieur", "Aucun titre"}));
         holderTitleCmb.setBounds(50, 275, 150, 25);
-        holderTitleCmb.setSelectedIndex(3);
+        holderTitleCmb.setSelectedItem(companyDB.getHolderTitle());
         editCompanyPane.add(holderTitleCmb);
 
         /*
@@ -323,8 +281,8 @@ public class EditCompany extends JFrame {
         int n = JOptionPane.showOptionDialog(new JFrame(), "Retourner à l'accueil?", "Accueil", JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, YES_OPTION);
         if (n == YES_OPTION) {
-            Home home = new Home();
-            home.setVisible(true);
+            HomeFrame homeFrame = new HomeFrame();
+            homeFrame.setVisible(true);
             dispose();
         }
     }
