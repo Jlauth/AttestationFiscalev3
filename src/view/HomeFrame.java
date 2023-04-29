@@ -7,17 +7,26 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 
+/**
+ * Classe HomeFrame représentant la fenêtre principale de l'application.
+ * Permet à l'utilisateur de naviguer entre les différentes fonctionnalités de l'application.
+ */
 public class HomeFrame extends JFrame {
 
+    // Déclaration du bouton de déconnexion
     private static JButton logoutBtn;
+
+    // Création des bordures pour les boutons de déconnexion et de retour à l'accueil
     private final Border lineBorder = BorderFactory.createLineBorder(new Color(229, 83, 80));
     private final Insets insets = lineBorder.getBorderInsets(logoutBtn);
+
+    // Récupération des insets (marges intérieures) de la bordure de déconnexion pour créer une EmptyBorder
     private final EmptyBorder emptyBorder = new EmptyBorder(insets);
 
     public HomeFrame() {
 
-         /*
-          Création HomeFrame
+        /*
+         * Crée une nouvelle fenêtre d'accueil pour la gestion des attestations fiscales.
          */
         JPanel homePane = new JPanel();
         setTitle("Accueil - Gestion des attestations fiscales Arkadia PC");
@@ -37,7 +46,7 @@ public class HomeFrame extends JFrame {
         homePane.add(homeLbl);
 
         /*
-          Bouton nouvelle attestation
+         * Bouton nouvelle attestation
          */
         JButton certificateBtn = new JButton("Nouvelle attestation");
         certificateBtn.setBounds(140, 120, 300, 60);
@@ -52,8 +61,8 @@ public class HomeFrame extends JFrame {
         certificateBtn.setVisible(true);
         homePane.add(certificateBtn);
 
-         /*
-          Bouton éditer entreprise
+        /*
+         * Bouton éditer entreprise
          */
         JButton editCompanyBtn = new JButton("Editer infos entreprise");
         editCompanyBtn.setBounds(140, 190, 300, 60);
@@ -68,14 +77,14 @@ public class HomeFrame extends JFrame {
         editCompanyBtn.setVisible(true);
         homePane.add(editCompanyBtn);
 
-         /*
-          Btn Quitter
+        /*
+         * Bouton quitter : Crée un bouton quitter avec une icône
          */
-        // transfo icon vers image afin de pouvoir la scale aux dimensions logoutBtn
-        ImageIcon logoutIcon = new ImageIcon("src/media/images/logoutbis.png");
+        // Création de l'icône pour le bouton quitter
+        ImageIcon logoutIcon = new ImageIcon("C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\images\\logoutbis.png");
         Image logoutImg = logoutIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         logoutIcon.setImage(logoutImg);
-        // logoutBtn
+        // Création du bouton Quitter
         logoutBtn = new JButton(logoutIcon);
         logoutBtn.setBounds(510, 290, 60, 60);
         logoutBtn.setBorder(emptyBorder);
@@ -83,9 +92,9 @@ public class HomeFrame extends JFrame {
         logoutBtn.setOpaque(false);
         logoutBtn.setContentAreaFilled(false);
         logoutBtn.setToolTipText("Quitter");
-        // action close
+        // Action pour fermer l'application
         logoutBtn.addActionListener(e -> close());
-        // action changement du visuel
+        // Action pour changer le visuel du bouton lorsqu'il est survolé
         logoutBtn.getModel().addChangeListener(new ChangeListener() {
             /**
              * Invoked when the target of the listener has changed its state.
@@ -105,6 +114,9 @@ public class HomeFrame extends JFrame {
         homePane.add(logoutBtn);
     }
 
+    /**
+     * Ferme l'application après confirmation de l'utilisateur.
+     */
     public void close() {
         int n = JOptionPane.showOptionDialog(new JFrame(), "Fermer application?", "Quitter", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
         if (n == JOptionPane.YES_OPTION) {

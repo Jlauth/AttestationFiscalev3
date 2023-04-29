@@ -12,10 +12,7 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import view.CertificateFrame;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -23,31 +20,57 @@ import java.util.Objects;
 
 import static java.lang.System.out;
 
+/**
+ * Classe Certificate représentant le modèle pour générer une attestation fiscale.
+ * Récupère les données de la vue via un objet de la classe CertificateFrame
+ * Utilise une base de données de la classe CompanyDB pour récupérer les informations de l'entreprise.
+ */
 public class Certificate {
 
+    /**
+     * Constante représentant la marge de la page
+     */
     static float MARGIN = 50;
+
+    /**
+     * Document PDF en cours de création
+     */
     private final PDDocument document = new PDDocument();
-    private final String p1;
-    private final String pFiscYear;
-    private final String pAmount;
-    private final String tCustTNFN, tCustAddress, tCustZipCity, tCompName, tCompApproval;
-    private final String p9;
 
+    /**
+     * Paramètres de la facture
+     */
+    private final String p1; // premier paragraphe dynamique
+    private final String pFiscYear; // année fiscale
+    private final String pAmount; // montant total de l'attestation
+    private final String tCustTNFN; //
+    private final String tCustAddress; // adresse du client
+    private final String tCustZipCity; // code postal et ville du client
+    private final String tCompName; // nom de l'entreprise
+    private final String tCompApproval; // numéro d'agrément de l'entreprise
+    private final String p9; // paragraphe dynamique du CESU
 
+    /**
+     * Construit une nouvelle attestation PDF en récupérant les données saisies dans le formulaire
+     * CertificateFrame et les informations de l'entreprise stockées dans la base de données CompanyDB.
+     * Les données sont insérées dans le document PDF créé à l'aide de la librairie Apache PDFBox.
+     *
+     * @param certificateFrame Le formulaire CertificateFrame contenant les données à insérer dans l'attestation
+     * @param companyDB La base de données CompanyDB contenant les informations de l'entreprise
+     * @throws IOException en cas d'erreur lors de la création du document PDF ou de l'écriture des données dans le fichier PDF
+     */
     public Certificate(CertificateFrame certificateFrame, CompanyDB companyDB) throws IOException {
-
-        // initialisation de la DB entreprise pour récupérer les infos enregistrées en interne
+        // Récupération des informations de l'entreprise enregistrées dans la base de données
         companyDB.selectCompanyInfo();
-
-        // Création de la page unique taille A4
+        // Création d'une nouvelle page PDF de taille A4
         PDPage page = new PDPage(PDRectangle.LETTER);
         document.addPage(page);
 
         /*
-          Header gauche
-          infos entreprise
+        Récupération des informations de l'entreprise depuis la base de données
          */
         tCompName = companyDB.getCompanyName();
+        out.println("check du tcompname = "+tCompName);
         addText(document, page, tCompName, MARGIN, 750);
         String tCompAddress = companyDB.getCompanyAddress();
         addText(document, page, tCompAddress, MARGIN, 735);
@@ -60,11 +83,10 @@ public class Certificate {
         tCompApproval = companyDB.getCompanyApproval();
         addText(document, page, tCompApproval, MARGIN, 660);
 
-        /*
-          Header droit
-          logo client et infos client
-         */
-        String logoPath = "src/media/images/logoArkadiaPc-transformed.jpeg";
+       /*
+        Ajout du logo client et des informations client dans le header droit
+        */
+        String logoPath = "C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\images\\logoArkadiaPc-transformed.jpeg";
         addImage(document, page, logoPath, 380, 780);
         tCustTNFN = certificateFrame.getCustomerTitleCmbShorted() + " " + certificateFrame.getCustomerNameTxt() + " " + certificateFrame.getCustomerFirstNTxt();
         tCustAddress = certificateFrame.getCustomerAddressTxt();
@@ -79,15 +101,16 @@ public class Certificate {
         } else {
             addText(document, page, tCertDate, 414, 600);
         }
-        /*
-        Titre
-        */
+
+        // Ajout du titre "Attestation fiscale destinée au Centre des Impôts"
         addTitle(document, page, "Attestation fiscale destinée au Centre des Impôts", MARGIN * 2, 550);
 
         /*
-         Body
+         Construit le corps du certificat en fonction de la taille de la lettre et des informations de l'utilisateur.
+         Génère un paragraphe fixe pour garantir la taille correspondante et ajoute un paragraphe dynamique
+         en fonction de la taille de la lettre. La méthode calcule la taille du corps pour déterminer quel paragraphe dynamique
+         doit être utilisé. Elle ajoute ensuite les paragraphes statiques et dynamiques au document PDF en utilisant la méthode addParagraph.
          */
-        // paragraphe fixe afin de toujours obtenir la taille correspondante
         p1 = tab() + "Je soussigné " + companyDB.getHolderTitle() + " " + companyDB.getHolderFirstN() + " " + companyDB.getHolderName() + ", " +
                 "gérant de l'organisme agréé " + companyDB.getCompanyName() + ", certifie que " + certificateFrame.getCustomerTitleCmb() + " "
                 + certificateFrame.getCustomerFirstNTxt() + " " + certificateFrame.getCustomerNameTxt() +
@@ -97,7 +120,6 @@ public class Certificate {
         String p1personnel = "à la personne :";
         String p1ServAlaPers = "service à la personne :";
         String p1domicile = "domicile, service à la personne";
-
         if (calcBodySize() > 990 && calcBodySize() < 1020) {
             String p101 = tab() + "Je soussigné " + companyDB.getHolderTitle() + " " + companyDB.getHolderFirstN() + " " + companyDB.getHolderName() + ", " +
                     "gérant de l'organisme agréé " + companyDB.getCompanyName() + ", certifie que " + certificateFrame.getCustomerTitleCmb() + " "
@@ -138,69 +160,86 @@ public class Certificate {
             addParagraph(document, page, p1, MARGIN, 500);
         }
 
-        // Déconstruction du paragraphe afin d'ajouter fiscal year et certificate amount en bold
-        //Insertion dans la ligne p2 des différents strings formatés en bold
+        // Décompose le paragraphe afin d'ajouter "année fiscale" et "montant d'attestation" en gras.
+        // Insère les différentes chaînes de caractères formatées en gras dans la ligne p2.
         String p2 = "Montant total des factures pour l'année ";
         addParagraph(document, page, p2, MARGIN + 70, scalingY());
-        // année fiscale
+
+        // Année fiscale
         pFiscYear = certificateFrame.getFiscalYearTxt();
         addParagraph(document, page, pFiscYear, 317, scalingY());
 
-        // insert double points
+        // Insertion de doubles points
         String pDDots = " : ";
         addParagraph(document, page, pDDots, 341, scalingY());
-        // montant attestation fiscale
+
+        // Montant d'attestation fiscale
         pAmount = certificateFrame.getCertificateAmountTxt();
         addParagraph(document, page, pAmount, 349, scalingY());
-        // signe monétaire
+
+        // Symbole monétaire
         String pMoney = " €";
         addParagraph(document, page, pMoney, 349 + scalingMoney(), scalingY());
 
+        // Ajoute le paragraphe fixe "Montant total payé en CESU préfinancé : 0 €"
         String p3 = "Montant total payé en CESU préfinancé* : 0 €";
         addParagraph(document, page, p3, MARGIN + 70, scalingY() - 15);//415
 
+        // Ajoute le paragraphe fixe "Intervenants : "
         String p4 = "Intervenants : ";
         addParagraph(document, page, p4, MARGIN, scalingY() - 45);//385
-        // prénom et nom gérant
+
+        // Ajoute le prénom et le nom du gérant
         String p5 = companyDB.getHolderFirstN() + " " + companyDB.getHolderName();
         addParagraph(document, page, p5, MARGIN + 70, scalingY() - 75);//355
+
+        // Ajoute le paragraphe fixe "Prestations : "
         String p6 = "Prestations : ";
         addParagraph(document, page, p6, MARGIN, scalingY() - 105);//325
+
+        // Ajoute le paragraphe dynamique contenant les informations sur les sommes perçues pour financer les services à la personne
         String p7 = tab() + "Les sommes perçues pour financer les services à la personne sont à déduire de la valeur indiquée précédemment.";
         addParagraph(document, page, p7, MARGIN, scalingY() - 135);//295
+
+        // Ajoute le paragraphe dynamique contenant les informations sur la responsabilité du contribuable
         String p8 = tab() + "La déclaration engage la responsabilité du seul contribuable.";
         addParagraph(document, page, p8, MARGIN, scalingY() - 175);//255
+
+        // Ajoute le paragraphe dynamique contenant les informations sur le CESU
         p9 = "* Pour les personnes utilisant le Chèque Emploi Service Universel, seul le montant financé personnellement est déductible. " +
                 "Une attestation est délivrée par les établissements préfinançant le CESU.";
         addParagraph(document, page, p9, MARGIN, scalingY() - 210);//225
+
+        // Ajoute le paragraphe fixe "Fait pour valoir ce que de droit"
         String p10 = tab() + "Fait pour valoir ce que de droit,";
         addParagraph(document, page, p10, MARGIN, scalingY() - 275);//155
-        // prénom et nom gérant
+
+        // Ajoute le prénom et le nom du gérant
         String p11 = companyDB.getHolderFirstN() + " " + companyDB.getHolderName() + ", gérant.";
         addParagraph(document, page, p11, MARGIN, scalingY() - 335);//115
-        // signature gérant
-        addImage(document, page, "src/media/images/logoArkadiaPc-transformed.jpeg", MARGIN * 6, scalingY() - 315);
 
-        /*
-        Meta propriétés du pdf
-        */
+        // Signature gérant
+        addImage(document, page, "C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\images\\signature.jpg", MARGIN * 6, scalingY() - 315);
+
+        // Définition des propriétés du document PDF généré
         setDocumentProperties();
     }
 
     /**
-     * Méthode d'ajout d'un titre
+     * Permet d'ajouter un titre à une page PDF avec une ligne de séparation en dessous.
      *
-     * @param document le document visé
-     * @param page     la page visée
-     * @param myTitle  le titre en String
-     * @param x        position x largeur
-     * @param y        position y hauteur
+     * @param document le document PDF concerné
+     * @param page la page PDF concernée
+     * @param myTitle le titre à afficher en tant que chaîne de caractères
+     * @param x la position horizontale du titre
+     * @param y la position verticale du titre
+     * @throws IOException si une erreur survient lors de l'écriture sur la page PDF
      */
     public void addTitle(PDDocument document, PDPage page, String myTitle, float x, float y) throws IOException {
         float yCordinate = page.getCropBox().getUpperRightY() - 245;
         float startX = page.getCropBox().getLowerLeftX() + 100;
         float endX = page.getCropBox().getUpperRightX() - 105;
-        PDFont pdFont = PDType0Font.load(document, new File("src/media/font/Calibri Bold.TTF"));
+        PDFont pdFont = PDType0Font.load(document, new File("C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\font\\Calibri Bold.TTF"));
         float fontSize = 20;
         try {
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.PREPEND, true);
@@ -221,18 +260,20 @@ public class Certificate {
     /**
      * Méthode d'ajout du header
      *
-     * @param document le document visé
-     * @param page     la page visée
-     * @param myText   le texte en String
-     * @param x        position x largeur
-     * @param y        position y hauteur
+     * @param document le document PDF visé
+     * @param page la page PDF visée
+     * @param myText le texte à ajouter en tant que chaîne de caractères
+     * @param x la position horizontale en points
+     * @param y la position verticale en points
+     * @throws IOException si une erreur survient lors de l'écriture dans le contenu de la page PDF
      */
     public void addText(PDDocument document, PDPage page, String myText, float x, float y) throws IOException {
-        PDFont pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Regular.ttf"));
-        float fontSize = 11;
+        // Chargement de la police de caractères et déclaration de la taille de police
+        PDFont pdfFont = PDType0Font.load(document, new File("C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\font\\Calibri Regular.ttf"));
+        float fontSize = 12;
         try {
             if (myText.equals(tCompName) || myText.equals(tCompApproval)) {
-                pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Bold.TTF"));
+                pdfFont = PDType0Font.load(document, new File("C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\font\\Calibri Bold.TTF"));
             }
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
             contentStream.beginText();
@@ -247,25 +288,29 @@ public class Certificate {
     }
 
     /**
-     * Méthode d'ajout d'un paragraphe
+     * Méthode d'ajout d'un paragraphe.
      *
      * @param document le document visé
      * @param page     la page visée
      * @param myText   le texte en String
      * @param x        position x largeur
      * @param y        position y hauteur
+     * @throws IOException si une erreur se produit lors de l'écriture du contenu sur la page
      */
     public void addParagraph(PDDocument document, PDPage page, String myText, float x, float y) throws IOException {
-        PDFont pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Regular.ttf"));
+        // Chargement de la police de caractères et déclaration de la taille de police
+        PDFont pdfFont = PDType0Font.load(document, new File("C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\font\\Calibri Regular.ttf"));
         float fontSize = 12;
         try {
+            // Vérification du texte à afficher pour définir la police et la taille appropriées
             if (Objects.equals(myText, p9)) {
+                pdfFont = PDType0Font.load(document, new File("C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\font\\Calibri Light Italic.ttf"));
                 fontSize = 11;
-                pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Italic.ttf"));
             }
             if (myText.equals(pFiscYear) || myText.equals(pAmount)) {
-                pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Bold.TTF"));
+                pdfFont = PDType0Font.load(document, new File("C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\font\\Calibri Bold.TTF"));
             }
+            // Déclaration des variables pour la mise en forme du paragraphe
             float leading = 1.5f * fontSize;
             PDRectangle mediabox = page.getMediaBox();
             float width = mediabox.getWidth() - 50;
@@ -278,7 +323,6 @@ public class Certificate {
             if (y > 0) {
                 startY = y;
             }
-
             // Division du paragraphe en plusieurs lignes, en fonction de la largeur et taille police
             ArrayList<String> lines = new ArrayList<>();
             int lastSpace = -1;
@@ -303,7 +347,6 @@ public class Certificate {
                     lastSpace = spaceIndex;
                 }
             }
-
             // Get sur le stream pour écrire les données
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
             contentStream.beginText();
@@ -319,7 +362,6 @@ public class Certificate {
                 IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -335,7 +377,7 @@ public class Certificate {
         try {
             PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true);
             PDImageXObject pdImage = PDImageXObject.createFromFile(imageName, document);
-            if (imageName.equals("src/media/images/logoArkadiaPc-transformed.jpeg")) {
+            if (imageName.equals("C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\images\\logoArkadiaPc-transformed.jpeg")) {
                 contentStream.drawImage(pdImage, x + 30, y - 90, 110, 80);
             } else {
                 contentStream.drawImage(pdImage, x, y - 100, 200, 70);
@@ -346,12 +388,10 @@ public class Certificate {
         }
     }
 
-
     /**
-     * Définition des meta propriétés
+     * Définit les propriétés du document PDF telles que le créateur, l'auteur, le titre et le sujet.
      */
     public void setDocumentProperties() {
-        // TODO par défaut créateur, auteur, titre, sujet
         PDDocumentInformation docInformation = this.document.getDocumentInformation();
         docInformation.setAuthor("Araujo Adelino");
         docInformation.setTitle("Attestation destinée au Centre des Impôts");
@@ -360,9 +400,11 @@ public class Certificate {
         docInformation.setCreationDate(Calendar.getInstance(Locale.FRANCE));
     }
 
-
     /**
-     * Méthode de sauvegarde du pdf
+     * Méthode permettant de sauvegarder le PDF généré.
+     *
+     * @param certificateFrame le certificat à sauvegarder.
+     * @throws IOException si une erreur d'entrée/sortie se produit.
      */
     public void savePdf(CertificateFrame certificateFrame) throws IOException {
         JFrame parentFrame = new JFrame();
@@ -392,9 +434,12 @@ public class Certificate {
         document.close();
     }
 
-
     /**
-     * Y en fonction de p1.length()
+     * Calcule la valeur de l'axe Y à utiliser pour adapter la taille du corps du document en fonction de la longueur de p1.
+     * Si la longueur de p1 est inférieure à 990, retourne 450, sinon retourne 435.
+     *
+     * @return La valeur de l'axe Y pour adapter la taille du corps du document.
+     * @throws IOException Si une erreur survient lors de la lecture ou de l'écriture du fichier PDF.
      */
     public float scalingY() throws IOException {
         if (calcBodySize() < 990) {
@@ -405,27 +450,31 @@ public class Certificate {
     }
 
     /**
-     * X en fonction de pAmount
+     * Détermine la valeur de l'axe X en fonction du montant présenté
      */
     public float scalingMoney() throws IOException {
-        PDFont pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Regular.ttf"));
+        PDFont pdfFont = PDType0Font.load(document, new File("C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\font\\Calibri Regular.ttf"));
         int fontSize = 12;
-        return (int) (fontSize * pdfFont.getStringWidth(pAmount) / 1000);
+        return (int)(fontSize * pdfFont.getStringWidth(pAmount) / 1000);
     }
 
     /**
-     * Impossible d'utiliser \t, méthode de contournement
+     * Renvoie une chaîne de caractères correspondant à une indentation de 15 espaces.
+     * Méthode créée, car il est impossible d'utiliser la tabulation (\t) avec PDFBox.
      */
     private String tab() {
         return "               ";
     }
 
     /**
-     * Calcul de la taille du header droit afin d'auto aligner sur la gauche
+     * Calcule la taille nécessaire pour le header droit afin de l'aligner automatiquement à gauche.
+     *
+     * @return La taille maximale nécessaire pour afficher les informations du client (code postal et ville, nom et prénom, adresse).
+     * @throws IOException Si une erreur survient lors du chargement de la police PDF.
      */
     public float calcCustRight() throws IOException {
+        PDFont pdfFont = PDType0Font.load(document, new File("C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\font\\Calibri Regular.ttf"));
         int fontSize = 11;
-        PDFont pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Regular.ttf"));
         // calcul de la taille de chaque variable en fonction du font
         int sizeZC = (int) (fontSize * pdfFont.getStringWidth(tCustZipCity) / 1000);
         int sizeTNFN = (int) (fontSize * pdfFont.getStringWidth(tCustTNFN) / 1000);
@@ -434,8 +483,14 @@ public class Certificate {
         return Math.max(sizeZC, (Math.max(sizeTNFN, sizeAddress)));
     }
 
+    /**
+     * Calcule la taille du corps du texte de l'attestation en fonction de la police et de la taille de police utilisées.
+     *
+     * @return La taille en pixels de la zone de texte pour le corps du texte.
+     * @throws IOException si une erreur se produit lors du chargement de la police.
+     */
     public int calcBodySize() throws IOException {
-        PDFont pdfFont = PDType0Font.load(document, new File("src/media/font/Calibri Regular.ttf"));
+        PDFont pdfFont = PDType0Font.load(document, new File("C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\font\\Calibri Regular.ttf"));
         int fontSize = 12;
         return (int) (fontSize * pdfFont.getStringWidth(p1) / 1000);
     }

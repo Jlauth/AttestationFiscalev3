@@ -1,0 +1,41 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="CreerAttestationFiscale.jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Executable_jar</output-path>
+    <root id="archive" name="AttestationsFiscalesv2.jar">
+      <element id="module-output" name="AttestationsFiscalesv2" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/sqlite-jdbc-3.41.2.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/jdatepicker-2.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/pdfbox-3.0.0-alpha3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/jcalendar-1.4/lib/jcalendar-1.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/jcalendar-1.4/lib/junit-4.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/fontbox-3.0.0-alpha3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/jcalendar-1.4/lib/jgoodies-common-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-examples-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-excelant-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-ooxml-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-ooxml-full-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-ooxml-lite-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-scratchpad-5.2.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/commons-logging-1.2/commons-logging-1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/jcalendar-1.4/lib/jgoodies-looks-2.4.1.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/commons-logging-1.2/commons-logging-1.2.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/fontbox-3.0.0-alpha3.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/jcalendar-1.4/lib/jcalendar-1.4.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/jcalendar-1.4/lib/jgoodies-common-1.2.0.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/jcalendar-1.4/lib/jgoodies-looks-2.4.1.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/jdatepicker-2.0.3.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/jcalendar-1.4/lib/junit-4.6.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/pdfbox-3.0.0-alpha3.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-5.2.3.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-examples-5.2.3.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-excelant-5.2.3.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-ooxml-5.2.3.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-ooxml-full-5.2.3.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-ooxml-lite-5.2.3.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/poi-bin-5.2.3/poi-scratchpad-5.2.3.jar" />
+      <element id="file-copy" path="$PROJECT_DIR$/../../../../Program Files/env/envJava/pluggins/sqlite-jdbc-3.41.2.1.jar" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/connect/db" />
+    </root>
+  </artifact>
+</component>

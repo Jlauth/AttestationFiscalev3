@@ -12,14 +12,24 @@ import java.util.Objects;
 
 import static javax.swing.JOptionPane.YES_OPTION;
 
+/**
+ * Classe CompanyFrame représentant la fenêtre d'édition des données de l'entreprise.
+ */
 public class CompanyFrame extends JFrame {
 
+    // Déclaration des boutons de déconnexion et de retour à l'accueil
     private static JButton logoutBtn;
     private static JButton homeBtn;
+
+    // Création des bordures pour les boutons de déconnexion et de retour à l'accueil
     private final Border lineBorderLogout = BorderFactory.createLineBorder(new Color(229, 83, 80));
     private final Border lineBorderHome = BorderFactory.createLineBorder(new Color(0, 138, 173));
+
+    // Récupération des insets (marges intérieures) de la bordure de déconnexion pour créer une EmptyBorder
     private final Insets insets = lineBorderLogout.getBorderInsets(logoutBtn);
     private final EmptyBorder emptyBorder = new EmptyBorder(insets);
+
+    // Création des champs pour les informations entreprise
     private final JTextField companyApprovalTxt;
     private final JTextField companyNameTxt;
     private final JComboBox<String> holderTitleCmb;
@@ -32,12 +42,15 @@ public class CompanyFrame extends JFrame {
     private final JTextField companyMailTxt;
 
     public CompanyFrame() {
-        // initialisation de la DB entreprise pour récupérer les infos enregistrées en interne
+        // Crée une instance de la classe CompanyDB pour interagir avec une base de données contenant des informations sur l'entreprise.
         CompanyDB companyDB = new CompanyDB();
+        // La méthode selectCompanyInfo() est appelée pour récupérer les informations de l'entreprise à partir de la base de données.
         companyDB.selectCompanyInfo();
 
-         /*
-          Editer entreprise
+        /*
+         * Crée une fenêtre permettant d'éditer les données de l'entreprise.
+         * La fenêtre comporte un titre, une bordure, une taille et une position spécifiés.
+         * Elle affiche également une étiquette de texte indiquant le but de la fenêtre.
          */
         JPanel editCompanyPane = new JPanel();
         setTitle("Données entreprise - Arkadia PC");
@@ -57,7 +70,7 @@ public class CompanyFrame extends JFrame {
         editCompanyPane.add(companyLbl);
 
         /*
-          Titre gérant
+         * Titre du gérant
          */
         JLabel holderTitleLbl = new JLabel("Titre");
         holderTitleLbl.setBounds(50, 250, 120, 14);
@@ -70,7 +83,7 @@ public class CompanyFrame extends JFrame {
         editCompanyPane.add(holderTitleCmb);
 
         /*
-          Nom gérant
+         * Nom gérant
          */
         JLabel holderNameLbl = new JLabel("Nom du gérant");
         holderNameLbl.setBounds(230, 250, 120, 14);
@@ -82,7 +95,7 @@ public class CompanyFrame extends JFrame {
         editCompanyPane.add(holderNameTxt);
 
         /*
-          Prénom
+         * Prénom du gérant
          */
         JLabel holderFirstnameLbl = new JLabel("Prénom du gérant");
         holderFirstnameLbl.setBounds(410, 250, 120, 14);
@@ -94,7 +107,7 @@ public class CompanyFrame extends JFrame {
         editCompanyPane.add(holderFirstnameTxt);
 
         /*
-          Adresse
+         * Adresse de l'entreprise.
          */
         JLabel companyAddressLbl = new JLabel("Adresse");
         companyAddressLbl.setBounds(50, 330, 120, 14);
@@ -106,7 +119,7 @@ public class CompanyFrame extends JFrame {
         editCompanyPane.add(companyAddressTxt);
 
         /*
-          Ville
+         * Ville de l'entreprise
          */
         JLabel companyCityLbl = new JLabel("Ville");
         companyCityLbl.setBounds(50, 400, 120, 14);
@@ -118,7 +131,7 @@ public class CompanyFrame extends JFrame {
         editCompanyPane.add(companyCityTxt);
 
         /*
-          Code Postal
+         * Code postal de l'entreprise
          */
         JLabel companyZipLbl = new JLabel("Code Postal");
         companyZipLbl.setBounds(410, 400, 120, 14);
@@ -129,8 +142,8 @@ public class CompanyFrame extends JFrame {
         companyZipTxt.setText(companyDB.getCompanyZip());
         editCompanyPane.add(companyZipTxt);
 
-         /*
-          Numéro agrément
+        /*
+         * Numéro d'agrément
          */
         JLabel companyApprovalLbl = new JLabel("Numéro d'agrément");
         companyApprovalLbl.setBounds(50, 480, 120, 14);
@@ -142,7 +155,7 @@ public class CompanyFrame extends JFrame {
         editCompanyPane.add(companyApprovalTxt);
 
         /*
-          Nom entreprise
+         * Nom de l'entreprise
          */
         JLabel companyNameLbl = new JLabel("Nom entreprise");
         companyNameLbl.setBounds(230, 480, 120, 14);
@@ -154,7 +167,7 @@ public class CompanyFrame extends JFrame {
         editCompanyPane.add(companyNameTxt);
 
         /*
-        Tel
+         * Numéro de téléphone de l'entreprise
          */
         JLabel companyTelLbl = new JLabel("Téléphone");
         companyTelLbl.setBounds(50, 540, 120, 14);
@@ -166,7 +179,7 @@ public class CompanyFrame extends JFrame {
         editCompanyPane.add(companyPhoneTxt);
 
         /*
-        Mail
+         * EMail de l'entreprise
          */
         JLabel companyMailLbl = new JLabel("Mail");
         companyMailLbl.setBounds(230, 540, 120, 14);
@@ -178,8 +191,11 @@ public class CompanyFrame extends JFrame {
         editCompanyPane.add(companyMailTxt);
 
         /*
-          Btn enregistrer
-         */
+        Crée un bouton "Enregistrer" pour enregistrer les nouvelles informations de l'entreprise.
+        Le bouton est ajouté à l'interface graphique et un listener d'action est attaché pour déclencher une boîte de dialogue demandant
+        à l'utilisateur s'il souhaite enregistrer les modifications. Si l'utilisateur clique sur "Oui", les modifications sont enregistrées
+        dans la base de données en utilisant la classe companyDB.
+        */
         JButton companySaveBtn = new JButton("Enregistrer");
         companySaveBtn.setToolTipText("Enregistre les nouvelles informations entreprise");
         companySaveBtn.setForeground(Color.BLACK);
@@ -188,7 +204,8 @@ public class CompanyFrame extends JFrame {
         editCompanyPane.add(companySaveBtn);
         companySaveBtn.addActionListener(e -> {
             companyDB.selectCompanyInfo();
-                    int n = JOptionPane.showOptionDialog(new JFrame(), "Enregistrer les modifications?", "Modifier", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, YES_OPTION);
+                    int n = JOptionPane.showOptionDialog(new JFrame(), "Enregistrer les modifications?", "Modifier",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, YES_OPTION);
                     if (n == YES_OPTION) {
                         companyDB.update(1, companyDB.setHolderTitle(Objects.requireNonNull(holderTitleCmb.getSelectedItem()).toString()),
                                 companyDB.setHolderName(holderNameTxt.getText()),
@@ -204,12 +221,14 @@ public class CompanyFrame extends JFrame {
         });
 
         /*
-          Btn accueil
+         * Bouton accueil : Crée un bouton d'accueil avec une icône
          */
-        ImageIcon homeIcon = new ImageIcon("src/media/images/home.png");
+        // création de l'icône home
+        ImageIcon homeIcon = new ImageIcon("C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\images\\home.png");
         Image newHomeImg = homeIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         homeIcon.setImage(newHomeImg);
 
+        // création du bouton d'accueil
         homeBtn = new JButton(homeIcon);
         homeBtn.setBounds(650, 10, 60, 60);
         homeBtn.setToolTipText("Page d'accueil");
@@ -218,7 +237,7 @@ public class CompanyFrame extends JFrame {
         homeBtn.setOpaque(false);
         homeBtn.setContentAreaFilled(false);
         homeBtn.setToolTipText("Accueil");
-        // action changement du visuel
+        // changement visuel lorsqu'on survole le bouton
         homeBtn.getModel().addChangeListener(new ChangeListener() {
             /**
              * Invoked when the target of the listener has changed its state.
@@ -239,12 +258,13 @@ public class CompanyFrame extends JFrame {
         editCompanyPane.add(homeBtn);
 
         /*
-          Btn Quitter
+         * Bouton quitter : Crée un bouton quitter avec une icône
          */
-        ImageIcon logoutIcon = new ImageIcon("src/media/images/logoutbis.png");
+        // Création de l'icône pour le bouton quitter
+        ImageIcon logoutIcon = new ImageIcon("C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\images\\logoutbis.png");
         Image logoutImg = logoutIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
         logoutIcon.setImage(logoutImg);
-        // logoutBtn
+        // Création du bouton Quitter
         logoutBtn = new JButton(logoutIcon);
         logoutBtn.setBounds(650, 700, 60, 60);
         logoutBtn.setBorder(emptyBorder);
@@ -252,9 +272,9 @@ public class CompanyFrame extends JFrame {
         logoutBtn.setOpaque(false);
         logoutBtn.setContentAreaFilled(false);
         logoutBtn.setToolTipText("Quitter");
-        // action close
+        // Action pour fermer l'application
         logoutBtn.addActionListener(e -> close());
-        // action changement du visuel
+        // Action pour changer le visuel du bouton lorsqu'il est survolé
         logoutBtn.getModel().addChangeListener(new ChangeListener() {
             /**
              * Invoked when the target of the listener has changed its state.
@@ -275,7 +295,7 @@ public class CompanyFrame extends JFrame {
     }
 
     /**
-     * Retour Accueil
+     * Permet de retourner à la page d'accueil après confirmation de l'utilisateur.
      */
     private void home() {
         int n = JOptionPane.showOptionDialog(new JFrame(), "Retourner à l'accueil?", "Accueil", JOptionPane.YES_NO_OPTION,
@@ -287,6 +307,9 @@ public class CompanyFrame extends JFrame {
         }
     }
 
+    /**
+     * Ferme l'application après confirmation de l'utilisateur.
+     */
     public void close() {
         int n = JOptionPane.showOptionDialog(new JFrame(), "Fermer application?", "Quitter", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, YES_OPTION);
         if (n == YES_OPTION) {
