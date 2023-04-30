@@ -17,30 +17,59 @@ import static javax.swing.JOptionPane.YES_OPTION;
  */
 public class CompanyFrame extends JFrame {
 
-    // Déclaration des boutons de déconnexion et de retour à l'accueil
+    /** Déclaration du bouton de déconnexion. */
     private static JButton logoutBtn;
+
+    /** Déclaration du bouton de retour à l'accueil. */
     private static JButton homeBtn;
 
-    // Création des bordures pour les boutons de déconnexion et de retour à l'accueil
+    /** Création des bordures pour le bouton de déconnexion. */
     private final Border lineBorderLogout = BorderFactory.createLineBorder(new Color(229, 83, 80));
+
+    /** Création des bordures pour le bouton de retour à l'accueil. */
     private final Border lineBorderHome = BorderFactory.createLineBorder(new Color(0, 138, 173));
 
-    // Récupération des insets (marges intérieures) de la bordure de déconnexion pour créer une EmptyBorder
+    /** Récupération des insets (marges intérieures) de la bordure de déconnexion pour créer une EmptyBorder. */
     private final Insets insets = lineBorderLogout.getBorderInsets(logoutBtn);
+
+    /** Création d'une EmptyBorder avec les insets récupérées pour ajouter des marges vides autour du bouton de déconnexion. */
     private final EmptyBorder emptyBorder = new EmptyBorder(insets);
 
-    // Création des champs pour les informations entreprise
+    /** Champ texte pour le numéro d'agrément de l'entreprise. */
     private final JTextField companyApprovalTxt;
+
+    /** Champ texte pour le nom de l'entreprise. */
     private final JTextField companyNameTxt;
+
+    /** Menu déroulant pour le titre du gérant de l'entreprise. */
     private final JComboBox<String> holderTitleCmb;
+
+    /** Champ texte pour le nom de famille du gérant de l'entreprise. */
     private final JTextField holderNameTxt;
+
+    /** Champ texte pour le prénom du gérant de l'entreprise. */
     private final JTextField holderFirstnameTxt;
+
+    /** Champ texte pour l'adresse de l'entreprise. */
     private final JTextField companyAddressTxt;
+
+    /** Champ texte pour la ville de l'entreprise. */
     private final JTextField companyCityTxt;
+
+    /** Champ texte pour le code postal de l'entreprise. */
     private final JTextField companyZipTxt;
+
+    /** Champ texte pour le numéro de téléphone de l'entreprise. */
     private final JTextField companyPhoneTxt;
+
+    /** Champ texte pour l'adresse email de l'entreprise. */
     private final JTextField companyMailTxt;
 
+    /**
+     * Constructeur de la classe CompanyFrame.
+     * Crée une fenêtre permettant d'éditer les données de l'entreprise.
+     * Les champs de saisie et les listes déroulantes sont préremplis avec les informations de l'entreprise récupérées depuis la base de données.
+     */
     public CompanyFrame() {
         // Crée une instance de la classe CompanyDB pour interagir avec une base de données contenant des informations sur l'entreprise.
         CompanyDB companyDB = new CompanyDB();
@@ -207,7 +236,7 @@ public class CompanyFrame extends JFrame {
                     int n = JOptionPane.showOptionDialog(new JFrame(), "Enregistrer les modifications?", "Modifier",
                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, YES_OPTION);
                     if (n == YES_OPTION) {
-                        companyDB.update(1, companyDB.setHolderTitle(Objects.requireNonNull(holderTitleCmb.getSelectedItem()).toString()),
+                        boolean success = companyDB.update(1, companyDB.setHolderTitle(Objects.requireNonNull(holderTitleCmb.getSelectedItem()).toString()),
                                 companyDB.setHolderName(holderNameTxt.getText()),
                                 companyDB.setHolderFirstN(holderFirstnameTxt.getText()),
                                 companyDB.setCompanyAddress(companyAddressTxt.getText()),
@@ -217,6 +246,11 @@ public class CompanyFrame extends JFrame {
                                 companyDB.setCompanyName(companyNameTxt.getText()),
                                 companyDB.setCompanyPhone(companyPhoneTxt.getText()),
                                 companyDB.setCompanyMail(companyMailTxt.getText()));
+                        if (success) {
+                            JOptionPane.showMessageDialog(new JFrame(), "Les modifications ont été enregistrées avec succès.");
+                        } else {
+                            JOptionPane.showMessageDialog(new JFrame(), "Une erreur est survenue lors de l'enregistrement des modifications.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
         });
 
@@ -241,7 +275,6 @@ public class CompanyFrame extends JFrame {
         homeBtn.getModel().addChangeListener(new ChangeListener() {
             /**
              * Invoked when the target of the listener has changed its state.
-             *
              * @param e a ChangeEvent object
              */
             @Override
@@ -278,7 +311,6 @@ public class CompanyFrame extends JFrame {
         logoutBtn.getModel().addChangeListener(new ChangeListener() {
             /**
              * Invoked when the target of the listener has changed its state.
-             *
              * @param e a ChangeEvent object
              */
             @Override

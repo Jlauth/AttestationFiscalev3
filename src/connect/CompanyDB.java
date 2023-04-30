@@ -12,59 +12,38 @@ import static java.lang.System.out;
 public class CompanyDB extends Component {
 
 
-    /**
-     * L'adresse de l'entreprise
-     */
+    /** L'adresse de l'entreprise. */
     private String companyAddress;
 
-    /**
-     * Le titre du détenteur de l'entreprise
-     */
+    /** Le titre du détenteur de l'entreprise. */
     private String holderTitle;
 
-    /**
-     * Le nom du détenteur de l'entreprise
-     */
+    /** Le nom du détenteur de l'entreprise. */
     private String holderName;
 
-    /**
-     * Le prénom du détenteur de l'entreprise
-     */
+    /** Le prénom du détenteur de l'entreprise. */
     private String holderFirstN;
 
-    /**
-     * La ville de l'entreprise
-     */
+    /** La ville de l'entreprise. */
     private String companyCity;
 
-    /**
-     * Le code postal de l'entreprise
-     */
+    /** Le code postal de l'entreprise. */
     private String companyZip;
 
-    /**
-     * Le numéro d'agrément de l'entreprise
-     */
+    /** Le numéro d'agrément de l'entreprise. */
     private String companyApproval;
 
-    /**
-     * Le nom de l'entreprise
-     */
+    /** Le nom de l'entreprise. */
     private String companyName;
 
-    /**
-     * Le numéro de téléphone de l'entreprise
-     */
+    /** Le numéro de téléphone de l'entreprise. */
     private String companyPhone;
 
-    /**
-     * L'adresse e-mail de l'entreprise
-     */
+    /** L'adresse e-mail de l'entreprise. */
     private String companyMail;
 
     /**
      * Retourne le titre du détenteur de l'entreprise
-     *
      * @return la chaîne de caractères représentant le titre du détenteur de l'entreprise
      */
     public String getHolderTitle() {
@@ -73,7 +52,6 @@ public class CompanyDB extends Component {
 
     /**
      * Modifie le titre du détenteur de l'entreprise et retourne le nouveau titre
-     *
      * @param holderTitle le nouveau titre du détenteur de l'entreprise
      * @return le nouveau titre du détenteur de l'entreprise modifié
      */
@@ -84,7 +62,6 @@ public class CompanyDB extends Component {
 
     /**
      * Retourne le nom du détenteur de l'entreprise
-     *
      * @return la chaîne de caractères représentant le nom du détenteur de l'entreprise
      */
     public String getHolderName() {
@@ -93,7 +70,6 @@ public class CompanyDB extends Component {
 
     /**
      * Modifie le nom du détenteur de l'entreprise et retourne le nouveau nom
-     *
      * @param holderName le nouveau nom du détenteur de l'entreprise
      * @return le nouveau nom du détenteur de l'entreprise modifié
      */
@@ -104,7 +80,6 @@ public class CompanyDB extends Component {
 
     /**
      * Retourne le prénom du détenteur de l'entreprise
-     *
      * @return la chaîne de caractères représentant le prénom du détenteur de l'entreprise
      */
     public String getHolderFirstN() {
@@ -113,7 +88,6 @@ public class CompanyDB extends Component {
 
     /**
      * Modifie le prénom du détenteur de l'entreprise et retourne le nouveau prénom
-     *
      * @param holderFirstN le nouveau prénom du détenteur de l'entreprise
      * @return le nouveau prénom du détenteur de l'entreprise modifié
      */
@@ -124,7 +98,6 @@ public class CompanyDB extends Component {
 
     /**
      * Retourne la ville de l'entreprise
-     *
      * @return la chaîne de caractères représentant la ville de l'entreprise
      */
     public String getCompanyCity() {
@@ -133,7 +106,6 @@ public class CompanyDB extends Component {
 
     /**
      * Modifie la ville de l'entreprise et retourne la nouvelle ville
-     *
      * @param companyCity la nouvelle ville de l'entreprise
      * @return la nouvelle ville modifiée
      */
@@ -144,7 +116,6 @@ public class CompanyDB extends Component {
 
     /**
      * Retourne le code postal de l'entreprise
-     *
      * @return la chaîne de caractères représentant le code postal de l'entreprise
      */
     public String getCompanyZip() {
@@ -153,7 +124,6 @@ public class CompanyDB extends Component {
 
     /**
      * Modifie le code postal de l'entreprise et retourne le nouveau code postal
-     *
      * @param companyZip le nouveau code postal de l'entreprise
      * @return le nouveau code postal modifié
      */
@@ -164,7 +134,6 @@ public class CompanyDB extends Component {
 
     /**
      * Retourne le numéro d'agrément de l'entreprise
-     *
      * @return la chaîne de caractères représentant le numéro d'agrément de l'entreprise
      */
     public String getCompanyApproval() {
@@ -173,7 +142,6 @@ public class CompanyDB extends Component {
 
     /**
      * Modifie le numéro d'agrément de l'entreprise et retourne la nouvelle approbation
-     *
      * @param companyApproval le nouveau numéro d'agrément de l'entreprise
      * @return le nouveau numéro d'agrément modifié
      */
@@ -184,7 +152,6 @@ public class CompanyDB extends Component {
 
     /**
      * Retourne le nom de l'entreprise
-     *
      * @return la chaîne de caractères représentant le nom de l'entreprise
      */
     public String getCompanyName() {
@@ -193,7 +160,6 @@ public class CompanyDB extends Component {
 
     /**
      * Modifie le nom de l'entreprise et retourne le nouveau nom
-     *
      * @param companyName le nouveau nom de l'entreprise
      * @return le nouveau nom de l'entreprise modifié
      */
@@ -204,7 +170,6 @@ public class CompanyDB extends Component {
 
     /**
      * Retourne l'adresse de l'entreprise
-     *
      * @return la chaîne de caractères représentant l'adresse de l'entreprise
      */
     public String getCompanyAddress() {
@@ -213,7 +178,6 @@ public class CompanyDB extends Component {
 
     /**
      * Modifie l'adresse de l'entreprise et retourne la nouvelle adresse
-     *
      * @param companyAddress la nouvelle adresse de l'entreprise
      * @return la nouvelle adresse modifiée
      */
@@ -224,7 +188,6 @@ public class CompanyDB extends Component {
 
     /**
      * Retourne le numéro de téléphone de l'entreprise
-     *
      * @return la chaîne de caractères représentant le numéro de téléphone de l'entreprise
      */
     public String getCompanyPhone() {
@@ -233,7 +196,6 @@ public class CompanyDB extends Component {
 
     /**
      * Modifie le numéro de téléphone de l'entreprise et retourne le nouveau numéro de téléphone
-     *
      * @param companyPhone le nouveau numéro de téléphone de l'entreprise
      * @return le nouveau numéro de téléphone modifié
      */
@@ -244,7 +206,6 @@ public class CompanyDB extends Component {
 
     /**
      * Retourne l'adresse email de l'entreprise
-     *
      * @return la chaîne de caractères représentant l'adresse email de l'entreprise
      */
     public String getCompanyMail() {
@@ -253,7 +214,6 @@ public class CompanyDB extends Component {
 
     /**
      * Modifie l'adresse email de l'entreprise et retourne la nouvelle adresse email
-     *
      * @param companyMail la nouvelle adresse email de l'entreprise
      * @return la nouvelle adresse email modifiée
      */
@@ -263,8 +223,24 @@ public class CompanyDB extends Component {
     }
 
     /**
+     * Constructeur par défaut de la classe CompanyDB.
+     * Initialise les variables de la classe.
+     */
+    public CompanyDB() {
+        companyAddress = "";
+        holderTitle = "";
+        holderName = "";
+        holderFirstN = "";
+        companyCity = "";
+        companyZip = "";
+        companyApproval = "";
+        companyName = "";
+        companyPhone = "";
+        companyMail = "";
+    }
+
+    /**
      * Met à jour les informations d'une entreprise dans la base de données.
-     *
      * @param id            l'identifiant de l'entreprise à mettre à jour
      * @param titre         le titre de la personne de contact de l'entreprise
      * @param nom           le nom de la personne de contact de l'entreprise
@@ -275,8 +251,9 @@ public class CompanyDB extends Component {
      * @param agrement      le numéro d'agrément de l'entreprise
      * @param nomentreprise le nom de l'entreprise
      * @param tel           le numéro de téléphone de l'entreprise
+     * @return true si la mise à jour s'est effectuée avec succès, false sinon
      */
-    public void update(int id, String titre, String nom, String prenom, String adresse, String ville, String codepostal, String agrement,
+    public boolean update(int id, String titre, String nom, String prenom, String adresse, String ville, String codepostal, String agrement,
                        String nomentreprise, String tel, String mail) {
         // Création de la requête SQL avec les champs à mettre à jour
         String sql = "UPDATE entreprise SET titre = ?, nom = ?, prenom = ?, adresse = ?, ville = ?, codepostal = ?, agrement = ?, " +
@@ -301,13 +278,12 @@ public class CompanyDB extends Component {
             pstmt.setString(10, companyMail);
             pstmt.setInt(11, id);
             // Exécution de la requête SQL
-            pstmt.executeUpdate();
-            // Fermeture de la connexion et de la requête SQL
-            pstmt.close();
-            connection.close();
+            int rowsUpdated = pstmt.executeUpdate();
+            return rowsUpdated > 0;
         } catch (SQLException e) {
             out.println(e.getMessage());
         }
+        return  false;
     }
 
     /**
@@ -330,7 +306,6 @@ public class CompanyDB extends Component {
                 companyName = rs.getString("nomentreprise");
                 companyPhone = rs.getString("tel");
                 companyMail = rs.getString("mail");
-
                 // Affichage des données de l'entreprise dans la console
                 System.out.println(holderTitle + " " + holderName + " " + holderName + " " + companyAddress + " " + companyCity + " " + companyZip +
                         " " + companyApproval + " " + companyName + " " + companyPhone + " " + companyMail);

@@ -13,16 +13,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Résolutions de bug de déploiement">
-      <change afterPath="$PROJECT_DIR$/AttestationFiscalev3.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/connect/DBManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/AttestationsFiscalesv3_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/CreerAttestationFiscale_jar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AttestationsFiscalesv3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/AttestationsFiscalesv2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/connect/CompanyDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connect/CompanyDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/connect/Connect.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/connect/arkadiapc.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/connect/DBManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connect/DBManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/Certificate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Certificate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/CertificateFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/CertificateFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/CompanyFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/CompanyFrame.java" afterDir="false" />
@@ -64,25 +60,25 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Downloaded.Files.Path.Enabled": "true",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ToolWindowRun.ShowToolbar": "false",
-    "last_opened_file_path": "C:/Users/Jean/IdeaProjects/AttestationFiscalev3/src/connect/db",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.externalTools"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ToolWindowRun.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jean/IdeaProjects/AttestationFiscalev3/src/connect/db&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.externalTools&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="view" />
@@ -102,7 +98,7 @@
   </component>
   <component name="RunManager">
     <configuration name="App" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+      <option name="MAIN_CLASS_NAME" value="main.Main" />
       <module name="AttestationsFiscalesv2" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -223,7 +219,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671300200383</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Résolutions de bug de déploiement">
+      <created>1682805066247</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1682805066247</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers>
       <GitHub url="https://github.com">
         <option name="repoAuthor" value="Jlauth" />

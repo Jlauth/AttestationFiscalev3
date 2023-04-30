@@ -1,9 +1,17 @@
+package main;
+
 import view.HomeFrame;
 
 /**
  * Classe Main représentant le point d'entrée de l'application.
  */
 public class Main {
+
+    /**
+     * Constructeur par défaut vide
+     */
+    public Main() { }
+
     /**
      * Méthode main qui crée la fenêtre principale de l'application et initialise la base de données.
      * @param args les arguments de ligne de commande (non utilisés ici)

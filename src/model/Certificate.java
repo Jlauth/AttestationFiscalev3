@@ -22,42 +22,50 @@ import static java.lang.System.out;
 
 /**
  * Classe Certificate représentant le modèle pour générer une attestation fiscale.
- * Récupère les données de la vue via un objet de la classe CertificateFrame
+ * Récupère les données de la vue via un objet de la classe CertificateFrame.
  * Utilise une base de données de la classe CompanyDB pour récupérer les informations de l'entreprise.
  */
 public class Certificate {
 
-    /**
-     * Constante représentant la marge de la page
-     */
+    /** Constante représentant la marge de la page. */
     static float MARGIN = 50;
 
-    /**
-     * Document PDF en cours de création
-     */
+    /** Document PDF en cours de création. */
     private final PDDocument document = new PDDocument();
 
-    /**
-     * Paramètres de la facture
-     */
-    private final String p1; // premier paragraphe dynamique
-    private final String pFiscYear; // année fiscale
-    private final String pAmount; // montant total de l'attestation
-    private final String tCustTNFN; //
-    private final String tCustAddress; // adresse du client
-    private final String tCustZipCity; // code postal et ville du client
-    private final String tCompName; // nom de l'entreprise
-    private final String tCompApproval; // numéro d'agrément de l'entreprise
-    private final String p9; // paragraphe dynamique du CESU
+    /** Premier paragraphe dynamique. */
+    private final String p1;
+
+    /** Année fiscale. */
+    private final String pFiscYear;
+
+    /** Montant total de l'attestation. */
+    private final String pAmount;
+
+    /** Titre, nom et prénom du client. */
+    private final String tCustTNFN;
+
+    /** Adresse du client. */
+    private final String tCustAddress;
+
+    /** Code postal et ville du client. */
+    private final String tCustZipCity;
+
+    /** Nom de l'entreprise. */
+    private final String tCompName;
+
+    /** Numéro d'agrément de l'entreprise. */
+    private final String tCompApproval;
+
+    /** Paragraphe dynamique du CESU. */
+    private final String p9;
 
     /**
      * Construit une nouvelle attestation PDF en récupérant les données saisies dans le formulaire
-     * CertificateFrame et les informations de l'entreprise stockées dans la base de données CompanyDB.
      * Les données sont insérées dans le document PDF créé à l'aide de la librairie Apache PDFBox.
-     *
-     * @param certificateFrame Le formulaire CertificateFrame contenant les données à insérer dans l'attestation
-     * @param companyDB La base de données CompanyDB contenant les informations de l'entreprise
-     * @throws IOException en cas d'erreur lors de la création du document PDF ou de l'écriture des données dans le fichier PDF
+     * @param certificateFrame Le formulaire CertificateFrame contenant les données à insérer dans l'attestation.
+     * @param companyDB La base de données CompanyDB contenant les informations de l'entreprise.
+     * @throws IOException en cas d'erreur lors de la création du document PDF ou de l'écriture des données dans le fichier PDF.
      */
     public Certificate(CertificateFrame certificateFrame, CompanyDB companyDB) throws IOException {
         // Récupération des informations de l'entreprise enregistrées dans la base de données
@@ -70,7 +78,6 @@ public class Certificate {
         Récupération des informations de l'entreprise depuis la base de données
          */
         tCompName = companyDB.getCompanyName();
-        out.println("check du tcompname = "+tCompName);
         addText(document, page, tCompName, MARGIN, 750);
         String tCompAddress = companyDB.getCompanyAddress();
         addText(document, page, tCompAddress, MARGIN, 735);
@@ -227,13 +234,12 @@ public class Certificate {
 
     /**
      * Permet d'ajouter un titre à une page PDF avec une ligne de séparation en dessous.
-     *
-     * @param document le document PDF concerné
-     * @param page la page PDF concernée
-     * @param myTitle le titre à afficher en tant que chaîne de caractères
-     * @param x la position horizontale du titre
-     * @param y la position verticale du titre
-     * @throws IOException si une erreur survient lors de l'écriture sur la page PDF
+     * @param document le document PDF concerné.
+     * @param page la page PDF concernée.
+     * @param myTitle le titre à afficher en tant que chaîne de caractères.
+     * @param x la position horizontale du titre.
+     * @param y la position verticale du titre.
+     * @throws IOException si une erreur survient lors de l'écriture sur la page PDF.
      */
     public void addTitle(PDDocument document, PDPage page, String myTitle, float x, float y) throws IOException {
         float yCordinate = page.getCropBox().getUpperRightY() - 245;
@@ -258,14 +264,13 @@ public class Certificate {
     }
 
     /**
-     * Méthode d'ajout du header
-     *
-     * @param document le document PDF visé
-     * @param page la page PDF visée
-     * @param myText le texte à ajouter en tant que chaîne de caractères
-     * @param x la position horizontale en points
-     * @param y la position verticale en points
-     * @throws IOException si une erreur survient lors de l'écriture dans le contenu de la page PDF
+     * Méthode d'ajout du header.
+     * @param document le document PDF visé.
+     * @param page la page PDF visée.
+     * @param myText le texte à ajouter en tant que chaîne de caractères.
+     * @param x la position horizontale en points.
+     * @param y la position verticale en points.
+     * @throws IOException si une erreur survient lors de l'écriture dans le contenu de la page PDF.
      */
     public void addText(PDDocument document, PDPage page, String myText, float x, float y) throws IOException {
         // Chargement de la police de caractères et déclaration de la taille de police
@@ -289,13 +294,12 @@ public class Certificate {
 
     /**
      * Méthode d'ajout d'un paragraphe.
-     *
-     * @param document le document visé
-     * @param page     la page visée
-     * @param myText   le texte en String
-     * @param x        position x largeur
-     * @param y        position y hauteur
-     * @throws IOException si une erreur se produit lors de l'écriture du contenu sur la page
+     * @param document le document visé.
+     * @param page     la page visée.
+     * @param myText   le texte en String.
+     * @param x        position x largeur.
+     * @param y        position y hauteur.
+     * @throws IOException si une erreur se produit lors de l'écriture du contenu sur la page.
      */
     public void addParagraph(PDDocument document, PDPage page, String myText, float x, float y) throws IOException {
         // Chargement de la police de caractères et déclaration de la taille de police
@@ -365,13 +369,12 @@ public class Certificate {
     }
 
     /**
-     * Méthode ajout d'une image
-     *
-     * @param document  le document visé
-     * @param page      la page visée
-     * @param imageName le nom de l'image en String
-     * @param x         position x largeur
-     * @param y         position y hauteur
+     * Méthode ajout d'une image.
+     * @param document  le document visé.
+     * @param page      la page visée.
+     * @param imageName le nom de l'image en String.
+     * @param x         position x largeur.
+     * @param y         position y hauteur.
      */
     public void addImage(PDDocument document, PDPage page, String imageName, float x, float y) {
         try {
@@ -389,7 +392,7 @@ public class Certificate {
     }
 
     /**
-     * Définit les propriétés du document PDF telles que le créateur, l'auteur, le titre et le sujet.
+     * Définit les propriétés du document PDF.
      */
     public void setDocumentProperties() {
         PDDocumentInformation docInformation = this.document.getDocumentInformation();
@@ -402,11 +405,11 @@ public class Certificate {
 
     /**
      * Méthode permettant de sauvegarder le PDF généré.
-     *
      * @param certificateFrame le certificat à sauvegarder.
      * @throws IOException si une erreur d'entrée/sortie se produit.
+     * @return true si la sauvegarde a réussi, false sinon.
      */
-    public void savePdf(CertificateFrame certificateFrame) throws IOException {
+    public boolean savePdf(CertificateFrame certificateFrame) throws IOException {
         JFrame parentFrame = new JFrame();
         JFileChooser fileChooser = new JFileChooser();
         FileOutputStream outputStream;
@@ -424,7 +427,7 @@ public class Certificate {
                     document.save(fileToSave);
                     outputStream.close();
                     document.close();
-                    return;
+                    return true; // renvoie true si la sauvegarde a réussi
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -432,12 +435,13 @@ public class Certificate {
             }
         }
         document.close();
+        return false; // renvoie false si la sauvegarde a échoué
     }
+
 
     /**
      * Calcule la valeur de l'axe Y à utiliser pour adapter la taille du corps du document en fonction de la longueur de p1.
      * Si la longueur de p1 est inférieure à 990, retourne 450, sinon retourne 435.
-     *
      * @return La valeur de l'axe Y pour adapter la taille du corps du document.
      * @throws IOException Si une erreur survient lors de la lecture ou de l'écriture du fichier PDF.
      */
@@ -450,7 +454,9 @@ public class Certificate {
     }
 
     /**
-     * Détermine la valeur de l'axe X en fonction du montant présenté
+     * Détermine la valeur de l'axe X en fonction du montant présenté.
+     * @return la valeur de l'axe X.
+     * @throws IOException si une erreur d'entrée/sortie se produit.
      */
     public float scalingMoney() throws IOException {
         PDFont pdfFont = PDType0Font.load(document, new File("C:\\Users\\Jean\\IdeaProjects\\AttestationFiscalev3\\src\\media\\font\\Calibri Regular.ttf"));
@@ -461,6 +467,7 @@ public class Certificate {
     /**
      * Renvoie une chaîne de caractères correspondant à une indentation de 15 espaces.
      * Méthode créée, car il est impossible d'utiliser la tabulation (\t) avec PDFBox.
+     * @return une chaîne de caractères avec 15 espaces.
      */
     private String tab() {
         return "               ";
@@ -468,7 +475,6 @@ public class Certificate {
 
     /**
      * Calcule la taille nécessaire pour le header droit afin de l'aligner automatiquement à gauche.
-     *
      * @return La taille maximale nécessaire pour afficher les informations du client (code postal et ville, nom et prénom, adresse).
      * @throws IOException Si une erreur survient lors du chargement de la police PDF.
      */
@@ -485,7 +491,6 @@ public class Certificate {
 
     /**
      * Calcule la taille du corps du texte de l'attestation en fonction de la police et de la taille de police utilisées.
-     *
      * @return La taille en pixels de la zone de texte pour le corps du texte.
      * @throws IOException si une erreur se produit lors du chargement de la police.
      */

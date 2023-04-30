@@ -13,16 +13,23 @@ import java.awt.*;
  */
 public class HomeFrame extends JFrame {
 
-    // Déclaration du bouton de déconnexion
+    /** Déclaration du bouton de déconnexion. */
     private static JButton logoutBtn;
 
-    // Création des bordures pour les boutons de déconnexion et de retour à l'accueil
+    /** Création des bordures pour le bouton de déconnexion. */
     private final Border lineBorder = BorderFactory.createLineBorder(new Color(229, 83, 80));
+
+    /** Récupération des insets (marges intérieures) de la bordure de déconnexion pour créer une EmptyBorder. */
     private final Insets insets = lineBorder.getBorderInsets(logoutBtn);
 
-    // Récupération des insets (marges intérieures) de la bordure de déconnexion pour créer une EmptyBorder
+    /** Création d'une EmptyBorder avec les insets récupérées pour ajouter des marges vides autour du bouton de déconnexion. */
     private final EmptyBorder emptyBorder = new EmptyBorder(insets);
 
+    /**
+     * Constructeur de la classe HomeFrame.
+     * Crée une fenêtre d'accueil avec l'accès à la création d'une attestation fiscale
+     * et l'édition des informations de l'entreprise.
+     */
     public HomeFrame() {
 
         /*
@@ -98,7 +105,6 @@ public class HomeFrame extends JFrame {
         logoutBtn.getModel().addChangeListener(new ChangeListener() {
             /**
              * Invoked when the target of the listener has changed its state.
-             *
              * @param e a ChangeEvent object
              */
             @Override

@@ -12,6 +12,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.OffsetDateTime;
@@ -26,33 +28,50 @@ import java.util.*;
  */
 public class CertificateFrame extends JFrame {
 
-    // Déclaration des boutons de déconnexion et de retour à l'accueil
+    /** Déclaration du bouton de déconnexion. */
     private static JButton logoutBtn;
+
+    /** Déclaration du bouton de retour à l'accueil. */
     private static JButton homeBtn;
 
-    // Création des bordures pour les boutons de déconnexion et de retour à l'accueil
+    /** Création des bordures pour le bouton de déconnexion. */
     private final Border lineBorderLogout = BorderFactory.createLineBorder(new Color(229, 83, 80));
+
+    /** Création des bordures pour le bouton de retour à l'accueil. */
     private final Border lineBorderHome = BorderFactory.createLineBorder(new Color(0, 138, 173));
 
-    // Récupération des insets (marges intérieures) de la bordure de déconnexion pour créer une EmptyBorder
+    /** Récupération des insets (marges intérieures) de la bordure de déconnexion pour créer une EmptyBorder. */
     private final Insets insets = lineBorderLogout.getBorderInsets(logoutBtn);
+
+    /** Création d'une EmptyBorder avec les insets récupérées pour ajouter des marges vides autour du bouton de déconnexion. */
     private final EmptyBorder emptyBorder = new EmptyBorder(insets);
 
-    // Création des champs pour les informations du client
+    /** Menu déroulant pour le titre du client. */
     private final JComboBox<String> customerTitleCmb;
+
+    /** Sélecteur de date pour la date de l'attestation. */
+    private final JDateChooser certificateDate;
+
+    /** Champ texte pour le nom du client. */
     private final JTextField customerNameTxt;
+
+    /** Champ texte pour le prénom du client. */
     private final JTextField customerFirstNTxt;
+
+    /** Champ texte pour l'adresse du client. */
     private final JTextField customerAddressTxt;
+
+    /** Champ texte pour la ville du client. */
     private final JTextField customerCityTxt;
+
+    /** Champ texte pour le code postal du client. */
     private final JTextField customerZipTxt;
 
-    // Création des champs pour le montant, la date et l'année fiscale de l'attestation
+    /** Champ texte pour le montant de l'attestation. */
     private final JTextField certificateAmountTxt;
-    private final JDateChooser certificateDate;
-    private final JTextField fiscalYearTxt;
 
-    // Affichage du label de sauvegarde
-    private final JLabel saveLbl;
+    /** Champ texte pour l'année fiscale de l'attestation. */
+    private final JTextField fiscalYearTxt;
 
     /**
      * Getter pour récupérer le titre de civilité du client sélectionné dans la liste déroulante.
@@ -138,7 +157,8 @@ public class CertificateFrame extends JFrame {
     }
 
     /**
-     * Configuration du frame CertificateFrame
+     * Constructeur de la classe CertificateFrame.
+     * Crée une fenêtre permettant de créer une attestation fiscale.
      */
     public CertificateFrame() {
 
@@ -252,6 +272,16 @@ public class CertificateFrame extends JFrame {
         certificateAmountTxt.setBounds(50, 565, 150, 25);
         createPane.add(certificateAmountTxt);
 
+        certificateAmountTxt.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Veuillez saisir un nombre valide");
+                }
+            }
+        });
+
         /*
          * Choix de l'exercice fiscal
          */
@@ -263,6 +293,18 @@ public class CertificateFrame extends JFrame {
         fiscalYearTxt.setBounds(230, 565, 150, 25);
         fiscalYearTxt.getText();
         createPane.add(fiscalYearTxt);
+
+        fiscalYearTxt.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Veuillez saisir un nombre valide");
+                } else if (fiscalYearTxt.getText().length() >= 4) {
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "Veuillez saisir une date valide comportant 4 chiffres.", "Erreur de saisie", JOptionPane.ERROR_MESSAGE);                }
+            }
+        });
 
         /*
          * Date attestation
@@ -298,11 +340,6 @@ public class CertificateFrame extends JFrame {
                 e1.printStackTrace();
             }
         });
-
-        saveLbl = new JLabel();
-        saveLbl.setFont(new Font("Tahoma", Font.BOLD, 12));
-        saveLbl.setBounds(50, 710, 500, 50);
-        createPane.add(saveLbl);
 
         /*
          * Bouton d'accueil avec une icône et un effet de survol. Lorsque l'utilisateur clique sur le bouton,
@@ -412,25 +449,33 @@ public class CertificateFrame extends JFrame {
 
     /**
      * Vérifie si les entrées sont valides avant de générer le certificat.
-     * Si l'entrée est invalide, une erreur est affichée dans une boîte de dialogue.
+     * Si l'entrée ou sauvegarde est invalide, une erreur est affichée dans une boîte de dialogue.
      * @throws InvalidFormatException si une entrée est au mauvais format
      * @throws IOException si une erreur de lecture ou d'écriture se produit
      * @throws ParseException si une erreur de conversion de date se produit
      */
     public void isInputValid() throws InvalidFormatException, IOException, ParseException {
+        // Vérifie la validité des entrées
         CompanyDB companyDB = new CompanyDB();
         Certificate certificate = new Certificate(this, companyDB);
         if (!getEmptyFields().isEmpty()) {
             JOptionPane.showMessageDialog(new JOptionPane(), "Merci de remplir les champs suivants : " + getEmptyFields());
         } else {
             // Les entrées sont valides, génère le certificat
-            certificate.savePdf(this);
+            boolean success = certificate.savePdf(this);
+            if (success) {
+                JOptionPane.showMessageDialog(new JOptionPane(), "Attestation fiscale générée avec succès !");
+            } else {
+                JOptionPane.showMessageDialog(new JOptionPane(), "Erreur lors de l'enregistrement de l'attestation fiscale.");
+            }
         }
     }
+
 
     /**
      * Cette méthode renvoie une chaîne de caractères qui liste les champs obligatoires vides.
      * Elle est utilisée pour fournir un message d'erreur clair lorsque les entrées de l'utilisateur sont invalides.
+     * @return la liste des champs obligatoires vides sous forme de chaîne de caractères
      */
      public String getEmptyFields() {
         String emptyFields = "";
@@ -486,8 +531,6 @@ public class CertificateFrame extends JFrame {
                 JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Oui", "Non"}, JOptionPane.YES_OPTION);
         if (n == JOptionPane.YES_OPTION) {
             dispose();
-            saveLbl.setText("Attestation enregistrée.");
-            saveLbl.setForeground(Color.GREEN);
         }
     }
 }
