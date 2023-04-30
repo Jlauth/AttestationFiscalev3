@@ -12,17 +12,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Résolutions de bug de déploiement">
+    <list default="true" id="7d77366a-22e4-4d74-a802-4ef041f042a8" name="Changes" comment="Réécriture de la documentation.">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/connect/CompanyDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connect/CompanyDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/connect/DBManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/connect/DBManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Certificate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Certificate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/CertificateFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/CertificateFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/CompanyFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/CompanyFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/view/HomeFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/HomeFrame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,11 +76,11 @@
       <recent name="view" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jean\IdeaProjects\AttestationFiscalev3\out\artifacts\Executable_jar" />
+      <recent name="C:\Users\Jean\IdeaProjects\AttestationFiscalev3\src\executable" />
       <recent name="C:\Users\Jean\IdeaProjects\AttestationFiscalev3\src\connect\db" />
       <recent name="C:\Users\Jean\IdeaProjects\AttestationFiscalev3\src\connect" />
       <recent name="C:\Users\Jean\IdeaProjects\AttestationsFiscalesv3\src\connexion" />
-      <recent name="C:\Users\Jean\IdeaProjects\AttestationsFiscalesv3\src\media\images" />
-      <recent name="C:\Users\Jean\IdeaProjects\AttestationsFiscalesv3\src\media\font" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -226,7 +218,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682805066247</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Réécriture de la documentation.">
+      <created>1682842586234</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1682842586234</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers>
       <GitHub url="https://github.com">
         <option name="repoAuthor" value="Jlauth" />
@@ -278,7 +277,8 @@
     <MESSAGE value="App finale." />
     <MESSAGE value="App finale, UI à upgrade encore." />
     <MESSAGE value="Résolutions de bug de déploiement" />
-    <option name="LAST_COMMIT_MESSAGE" value="Résolutions de bug de déploiement" />
+    <MESSAGE value="Réécriture de la documentation." />
+    <option name="LAST_COMMIT_MESSAGE" value="Réécriture de la documentation." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
