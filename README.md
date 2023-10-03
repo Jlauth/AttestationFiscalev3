@@ -1,6 +1,6 @@
 # Attestation Fiscale - Stage de 2ème année
 
-<p>Stage de six semaines réalisé au sein de l'entreprise ArkadiaPC</p>
+<p>Résultat de mes deux stages d'un total de dix semaines réalisés au sein de l'entreprise ArkadiaPC</p>
 
  <h3>Contexte</h3>
 <p>
